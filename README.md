@@ -1,7 +1,11 @@
 Plan de Proiect: AwA (Actor Awards Visualizer)
+
 Echipa: Dumitrița (Student 1) & Laura (Student 2)
+
 Perioada: 10 Mai 2026 – 23 Mai 2026 (14 Zile)
+
 Atenție (Reguli stricte respectate): 
+
 •	Fără framework-uri pe Front-end (Nu React, Nu Bootstrap). Se va folosi exclusiv HTML5, CSS3 pur și Vanilla JavaScript (AJAX/Fetch).
 •	Fără framework-uri pe Back-end (Nu Laravel). Se va folosi PHP nativ.
 •	Fără biblioteci de grafice: Pentru a asigura conformitatea totală, cele 3 vizualizări vor fi desenate 100% nativ folosind generare de elemente SVG direct din JavaScript. (Fără Chart.js).
