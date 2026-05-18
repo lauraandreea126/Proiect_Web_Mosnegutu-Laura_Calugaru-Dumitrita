@@ -10,68 +10,51 @@ if (empty($query)) {
 }
 
 try {
-    // Preluăm toate sursele de știri din baza de date
+    // luam sursele din baza de date
     $stmt = $pdo->query("SELECT name, url FROM news_sources");
     $sources = $stmt->fetchAll();
     
+    // adaugam o sursa google news pentru siguranta
+    $sources[] = [
+        'name' => 'Google News',
+        'url' => 'https://news.google.com/rss/search?q=' . urlencode($query . ' actor') . '&hl=ro&gl=RO&ceid=RO:ro'
+    ];
+
     $allNews = [];
+    $seenTitles = [];
 
     foreach ($sources as $source) {
         $ch = curl_init();
         curl_setopt($ch, CURLOPT_URL, $source['url']);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
         curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true);
-        curl_setopt($ch, CURLOPT_TIMEOUT, 10);
-        curl_setopt($ch, CURLOPT_USERAGENT, 'AwA News Aggregator/1.0');
+        curl_setopt($ch, CURLOPT_TIMEOUT, 5);
+        curl_setopt($ch, CURLOPT_USERAGENT, 'Mozilla/5.0');
+        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
         
         $content = curl_exec($ch);
-        $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
         curl_close($ch);
 
-        if ($httpCode === 200 && $content) {
-            // Încercăm să parsam conținutul ca XML (RSS/Atom)
+        if ($content) {
             libxml_use_internal_errors(true);
             $xml = simplexml_load_string($content);
             
             if ($xml) {
-                // Suport pentru RSS 2.0
-                if (isset($xml->channel->item)) {
-                    foreach ($xml->channel->item as $item) {
-                        $title = (string)$item->title;
-                        $description = (string)$item->description;
-                        $link = (string)$item->link;
+                $items = isset($xml->channel->item) ? $xml->channel->item : (isset($xml->item) ? $xml->item : []);
 
-                        if (stripos($title, $query) !== false || stripos($description, $query) !== false) {
-                            $allNews[] = [
-                                'title' => $title,
-                                'link' => $link,
-                                'source' => $source['name']
-                            ];
-                        }
-                    }
-                } 
-                // Suport pentru Atom
-                elseif (isset($xml->entry)) {
-                    foreach ($xml->entry as $entry) {
-                        $title = (string)$entry->title;
-                        $summary = (string)$entry->summary;
-                        $link = (string)$entry->link['href'];
+                foreach ($items as $item) {
+                    $title = (string)$item->title;
+                    $link = (string)$item->link;
 
-                        if (stripos($title, $query) !== false || stripos($summary, $query) !== false) {
-                            $allNews[] = [
-                                'title' => $title,
-                                'link' => $link,
-                                'source' => $source['name']
-                            ];
-                        }
+                    if (!isset($seenTitles[$title])) {
+                        $allNews[] = [
+                            'title' => $title,
+                            'link' => $link,
+                            'source' => $source['name']
+                        ];
+                        $seenTitles[$title] = true;
                     }
-                }
-            } else {
-                // Dacă nu e XML, facem o căutare brută în text (fallback pentru pagini HTML simple)
-                if (stripos($content, $query) !== false) {
-                    // Notă: Parsarea HTML brută fără biblioteci e imprecisă, dar conform cerinței "filtrare nativă simplă"
-                    // Vom returna doar un indicator că am găsit ceva în această sursă dacă nu e RSS
-                    // Dar pentru un agregator de știri, RSS-ul este standardul.
+                    if (count($allNews) >= 15) break 2;
                 }
             }
         }
@@ -79,8 +62,8 @@ try {
 
     echo json_encode($allNews);
 
-} catch (PDOException $e) {
+} catch (Exception $e) {
     http_response_code(500);
-    echo json_encode(['error' => 'Eroare la procesarea știrilor.', 'message' => $e->getMessage()]);
+    echo json_encode(['error' => $e->getMessage()]);
 }
 ?>
