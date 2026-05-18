@@ -29,7 +29,7 @@
             <h1>Actor Awards Visualizer</h1>
             <div class="search-container">
                 <!-- câmp căutare actori -->
-                <input type="text" id="actor-search" placeholder="caută un actor (ex: meryl streep)..." autocomplete="off">
+                <input type="text" id="search-actor" placeholder="caută un actor (ex: meryl streep)..." autocomplete="off">
                 <button type="button" class="search-btn">caută</button>
                 <div id="search-results" class="search-suggestions"></div>
             </div>
@@ -65,5 +65,6 @@
     <!-- buton scroll sus -->
     <button id="back-to-top" title="înapoi sus">&#8593;</button>
     <script src="js/app.js"></script>
+    <script src="js/search.js"></script>
 </body>
 </html>
