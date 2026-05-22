@@ -24,5 +24,5 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    console.log('AwA: Aplicatie pornita (v2)');
+    // console.log('AwA: Aplicatie pornita (v2)');
 });

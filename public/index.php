@@ -39,21 +39,52 @@
     <main class="main-content">
         <div class="container grid-layout">
             <section id="actor-profile" class="section-box">
-                <h2>Profil Actor</h2>
-                <div class="placeholder-content">datele vor fi preluate din tmdb api.</div>
+                <h2>Profil actor</h2>
+                <div class="empty-state-msg">
+                    <p>Descoperă povestea din spatele succesului. Căutați un actor pentru a-i vedea biografia și galeria de imagini.</p>
+                </div>
             </section>
 
             <section id="stats-container" class="section-box">
                 <h2>Statistici</h2>
-                <div id="bar-chart-container" class="chart-wrapper"></div>
-                <div id="pie-chart-container" class="chart-wrapper"></div>
-                <div id="donut-chart-container" class="chart-wrapper"></div>
+                <div class="empty-state-msg">
+                    <p>Analiză și performanță. Diagramele de premii vor fi generate instantaneu după selectarea unui profil.</p>
+                </div>
+
+                
+                <div class="chart-controls hidden">
+                    <div id="bar-chart-container" class="chart-wrapper"></div>
+                    <div class="export-actions">
+                        <button class="export-btn" onclick="exportSVG('bar-chart-container')">Download SVG</button>
+                        <button class="export-btn" onclick="exportWebP('bar-chart-container')">Download WebP</button>
+                    </div>
+                </div>
+                <div class="chart-controls hidden">
+                    <div id="pie-chart-container" class="chart-wrapper"></div>
+                    <div class="export-actions">
+                        <button class="export-btn" onclick="exportSVG('pie-chart-container')">Download SVG</button>
+                        <button class="export-btn" onclick="exportWebP('pie-chart-container')">Download WebP</button>
+                    </div>
+                </div>
+                <div class="chart-controls hidden">
+                    <div id="donut-chart-container" class="chart-wrapper"></div>
+                    <div class="export-actions">
+                        <button class="export-btn" onclick="exportSVG('donut-chart-container')">Download SVG</button>
+                        <button class="export-btn" onclick="exportWebP('donut-chart-container')">Download WebP</button>
+                    </div>
+                </div>
             </section>
 
             <section id="news-feed" class="section-box">
-                <h2>Știri & Noutăți</h2>
-                <div class="placeholder-content">fluxul de știri externe va apărea aici.</div>
+                <h2>Stiri & noutati</h2>
+                <div class="empty-state-msg">
+                    <p>Rămâneți la curent. Cele mai noi știri din sursele internaționale vor fi agregate aici în funcție de căutarea dumneavoastră.</p>
+                </div>
+                <div id="news-results" class="hidden"></div>
             </section>
+
+
+
         </div>
     </main>
 
@@ -64,7 +95,7 @@
         </div>
     </footer>
 
-    <!-- buton scroll sus -->
+    <!-- buton sus -->
     <button id="back-to-top" title="înapoi sus">&#8593;</button>
     <script src="js/app.js?v=999"></script>
     <script src="js/charts.js?v=999"></script>
@@ -72,3 +103,5 @@
     <script src="js/news.js?v=999"></script>
 </body>
 </html>
+
+

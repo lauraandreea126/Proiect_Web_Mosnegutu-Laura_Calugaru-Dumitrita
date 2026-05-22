@@ -6,25 +6,25 @@ $actor = isset($_GET['actor']) ? trim($_GET['actor']) : null;
 
 try {
     if ($actor) {
-        // 1. Statistici pe categorii pentru actor
-        $stmt1 = $pdo->prepare("SELECT category, COUNT(*) as count FROM nominations WHERE nominee = :actor GROUP BY category");
+        // stats categorii pt actor (case-insensitive)
+        $stmt1 = $pdo->prepare("SELECT category, COUNT(*) as count FROM nominations WHERE nominee = :actor COLLATE NOCASE GROUP BY category");
         $stmt1->execute(['actor' => $actor]);
         $byCategory = $stmt1->fetchAll();
 
-        // 2. Statistici pe ani pentru actor
-        $stmt2 = $pdo->prepare("SELECT year, COUNT(*) as count FROM nominations WHERE nominee = :actor GROUP BY year ORDER BY year ASC");
+        // stats pe ani pt actor
+        $stmt2 = $pdo->prepare("SELECT year, COUNT(*) as count FROM nominations WHERE nominee = :actor COLLATE NOCASE GROUP BY year ORDER BY year ASC");
         $stmt2->execute(['actor' => $actor]);
         $byYear = $stmt2->fetchAll();
 
-        // 3. Raport Câștigători vs Nominalizați pentru actor
+        // win vs lost pt actor
         $stmt3 = $pdo->prepare("SELECT 
             SUM(CASE WHEN is_winner = 1 THEN 1 ELSE 0 END) as winners,
             SUM(CASE WHEN is_winner = 0 THEN 1 ELSE 0 END) as nominees
-            FROM nominations WHERE nominee = :actor");
+            FROM nominations WHERE nominee = :actor COLLATE NOCASE");
         $stmt3->execute(['actor' => $actor]);
         $winLoss = $stmt3->fetch();
     } else {
-        // Statistici globale (default)
+        // stats globale
         $stmt1 = $pdo->query("SELECT category, COUNT(*) as count FROM nominations GROUP BY category");
         $byCategory = $stmt1->fetchAll();
 

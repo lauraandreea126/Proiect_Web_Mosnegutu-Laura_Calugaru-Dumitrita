@@ -1,7 +1,5 @@
 <?php
-/**
- * ajutor tmdb
- */
+// legatura cu api tmdb
 
 define('TMDB_API_KEY', '9259655519f11c5dcc31a50d4ee07103'); 
 define('TMDB_BASE_URL', 'https://api.themoviedb.org/3');
@@ -10,7 +8,7 @@ define('TMDB_IMAGE_BASE', 'https://image.tmdb.org/t/p/w500');
 function fetchActorFromTMDb($name) {
     if (TMDB_API_KEY === 'YOUR_TMDB_API_KEY_HERE') return null;
 
-    // cautare persoana
+    // cautam actoru
     $url = TMDB_BASE_URL . '/search/person?api_key=' . TMDB_API_KEY . '&query=' . urlencode($name);
     $ch = curl_init();
     curl_setopt($ch, CURLOPT_URL, $url);
@@ -27,7 +25,7 @@ function fetchActorFromTMDb($name) {
     $person = $data['results'][0];
     $personId = $person['id'];
 
-    // detalii biografie
+    // luam bio detaliat
     $detailsUrl = TMDB_BASE_URL . '/person/' . $personId . '?api_key=' . TMDB_API_KEY;
     $ch = curl_init();
     curl_setopt($ch, CURLOPT_URL, $detailsUrl);

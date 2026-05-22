@@ -3,17 +3,10 @@
  */
 
 document.addEventListener('DOMContentLoaded', () => {
-    const searchInput = document.getElementById('search-actor'); // Folosim același input pentru a filtra știri
-    const newsContainer = document.querySelector('#news-feed .placeholder-content') || document.getElementById('news-results');
+    const searchInput = document.getElementById('search-actor'); 
+    const newsContainer = document.getElementById('news-results');
 
     if (!searchInput) return;
-
-    // Redenumim containerul pentru claritate dacă există
-    if (newsContainer && newsContainer.classList.contains('placeholder-content')) {
-        newsContainer.id = 'news-results';
-        newsContainer.classList.remove('placeholder-content');
-        newsContainer.innerHTML = '<p>Introdu un nume pentru a vedea știri relevante.</p>';
-    }
 
     let timeout = null;
     searchInput.addEventListener('input', (e) => {
