@@ -7,7 +7,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400&family=Playfair+Display:wght@400;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/style.css?v=999">
 </head>
 <body>
     <header class="main-header">
@@ -18,7 +18,7 @@
                     <li><a href="#actor-profile">profil</a></li>
                     <li><a href="#stats-container">statistici</a></li>
                     <li><a href="#news-feed">știri</a></li>
-                    <li><a href="#">admin</a></li>
+                    <li><a href="admin.php">admin</a></li>
                 </ul>
             </nav>
         </div>
@@ -45,7 +45,9 @@
 
             <section id="stats-container" class="section-box">
                 <h2>Statistici</h2>
-                <div class="placeholder-content">graficele svg vor fi generate aici.</div>
+                <div id="bar-chart-container" class="chart-wrapper"></div>
+                <div id="pie-chart-container" class="chart-wrapper"></div>
+                <div id="donut-chart-container" class="chart-wrapper"></div>
             </section>
 
             <section id="news-feed" class="section-box">
@@ -64,7 +66,9 @@
 
     <!-- buton scroll sus -->
     <button id="back-to-top" title="înapoi sus">&#8593;</button>
-    <script src="js/app.js"></script>
-    <script src="js/search.js"></script>
+    <script src="js/app.js?v=999"></script>
+    <script src="js/charts.js?v=999"></script>
+    <script src="js/search_v2.js?v=999"></script>
+    <script src="js/news.js?v=999"></script>
 </body>
 </html>
