@@ -57,9 +57,16 @@ document.addEventListener('DOMContentLoaded', () => {
         resultsContainer.innerHTML = '';
         searchInput.value = actor.nominee;
 
+        // Ascundem mesajele de placeholder și afișăm structura de date
+        document.querySelectorAll('.empty-state-msg').forEach(el => el.classList.add('hidden'));
+        document.querySelectorAll('.chart-controls').forEach(el => el.classList.remove('hidden'));
+        
+        const newsRes = document.getElementById('news-results');
+        if (newsRes) newsRes.classList.remove('hidden');
+
         const profileBox = document.getElementById('actor-profile');
         if (profileBox) {
-            profileBox.innerHTML = `<h2>profil actor: ${actor.nominee}</h2><p>se incarca...</p>`;
+            profileBox.innerHTML = `<h2>Profil actor: ${actor.nominee}</h2><p>se incarca...</p>`;
             profileBox.scrollIntoView({ behavior: 'smooth' });
         }
 
@@ -69,8 +76,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
             if (profileBox) {
                 profileBox.innerHTML = `
-                    <h2>profil actor: ${actor.nominee}</h2>
+                    <h2>Profil actor: ${actor.nominee}</h2>
                     <div class="tmdb-details" style="display: flex; gap: 20px; margin-top: 20px;">
+
+
+
                         ${details.image_url ? `<img src="${details.image_url}" alt="${actor.nominee}" class="actor-photo" style="width: 150px; border-radius: 8px;">` : ''}
                         <div><p class="actor-bio" style="font-size: 1.1rem;">${details.bio || 'biografie indisponibila'}</p></div>
                     </div>

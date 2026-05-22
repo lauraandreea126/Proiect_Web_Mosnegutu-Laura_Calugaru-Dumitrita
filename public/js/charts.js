@@ -3,7 +3,7 @@
  */
 
 document.addEventListener('DOMContentLoaded', () => {
-    fetchStats();
+    // Așteptăm selecția unui actor pentru a încărca datele
 });
 
 async function fetchStats(actorName = null) {
@@ -27,8 +27,11 @@ async function fetchStats(actorName = null) {
 function renderBarChart(data, containerId, titleSuffix = '') {
     const container = document.getElementById(containerId);
     if (!container) return;
+    const title = `Nominalizari pe ani${titleSuffix}`;
     if (!data || data.length === 0) {
-        container.innerHTML = `<h3>nominalizari pe ani${titleSuffix}</h3><p>nu exista date</p>`;
+
+
+        container.innerHTML = `<h3>${title}</h3><p>nu exista date</p>`;
         return;
     }
 
@@ -54,14 +57,15 @@ function renderBarChart(data, containerId, titleSuffix = '') {
                 <text x="${x + barWidth / 2}" y="${y - 5}" font-size="10" text-anchor="middle" font-weight="bold">${val}</text>`;
     });
     svg += `<line x1="${padding}" y1="${height - padding}" x2="${width - padding}" y2="${height - padding}" stroke="#333" stroke-width="2" /></svg>`;
-    container.innerHTML = `<h3>nominalizari pe ani${titleSuffix}</h3>` + svg;
+    container.innerHTML = `<h3>${title}</h3>` + svg;
 }
 
 function renderPieChart(data, containerId, titleSuffix = '') {
     const container = document.getElementById(containerId);
     if (!container) return;
+    const title = `Categorii${titleSuffix}`;
     if (!data || data.length === 0) {
-        container.innerHTML = `<h3>categorii${titleSuffix}</h3><p>nu exista date</p>`;
+        container.innerHTML = `<h3>${title}</h3><p>nu exista date</p>`;
         return;
     }
 
@@ -95,20 +99,28 @@ function renderPieChart(data, containerId, titleSuffix = '') {
     });
     legend += '</div>';
 
-    container.innerHTML = `<h3>categorii${titleSuffix}</h3>` + svg + legend;
+    container.innerHTML = `<h3>${title}</h3>` + svg + legend;
 }
 
 function renderDonutChart(data, containerId, titleSuffix = '') {
     const container = document.getElementById(containerId);
     if (!container) return;
+    const title = `Rata castig${titleSuffix}`;
 
     const size = 300, radius = 100, innerRadius = 65, centerX = size / 2, centerY = size / 2;
+    
+    // protectie pt date lipsa
+    if (!data) {
+        container.innerHTML = `<h3>${title}</h3><p>nu exista date</p>`;
+        return;
+    }
+
     const winners = parseInt(data.winners || 0);
     const nominees = parseInt(data.nominees || 0);
     const total = winners + nominees;
     
     if (total === 0) {
-        container.innerHTML = `<h3>rata castig${titleSuffix}</h3><p>nu exista date</p>`;
+        container.innerHTML = `<h3>${title}</h3><p>nu exista date</p>`;
         return;
     }
 
@@ -121,7 +133,7 @@ function renderDonutChart(data, containerId, titleSuffix = '') {
     const activeData = chartData.filter(d => d.count > 0);
 
     if (activeData.length === 1) {
-        // inel complet
+        // daca e plin
         const d = activeData[0];
         const pathData = `M ${centerX} ${centerY - radius} A ${radius} ${radius} 0 1 1 ${centerX} ${centerY + radius} A ${radius} ${radius} 0 1 1 ${centerX} ${centerY - radius} Z 
                           M ${centerX} ${centerY - innerRadius} A ${innerRadius} ${innerRadius} 0 1 0 ${centerX} ${centerY + innerRadius} A ${innerRadius} ${innerRadius} 0 1 0 ${centerX} ${centerY - innerRadius} Z`;
@@ -149,5 +161,44 @@ function renderDonutChart(data, containerId, titleSuffix = '') {
     });
     legend += '</div>';
 
-    container.innerHTML = `<h3>rata castig${titleSuffix}</h3>` + svg + legend;
+    container.innerHTML = `<h3>${title}</h3>` + svg + legend;
+}
+
+function exportSVG(containerId) {
+    const container = document.getElementById(containerId);
+    const svg = container.querySelector('svg');
+    if (!svg) return;
+    const serializer = new XMLSerializer();
+    const source = serializer.serializeToString(svg);
+    const blob = new Blob([source], { type: 'image/svg+xml;charset=utf-8' });
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement('a');
+    link.href = url;
+    link.download = `${containerId}.svg`;
+    link.click();
+}
+
+function exportWebP(containerId) {
+    const container = document.getElementById(containerId);
+    const svg = container.querySelector('svg');
+    if (!svg) return;
+    const canvas = document.createElement('canvas');
+    const bbox = svg.getBoundingClientRect();
+    canvas.width = bbox.width;
+    canvas.height = bbox.height;
+    const ctx = canvas.getContext('2d');
+    const xml = new XMLSerializer().serializeToString(svg);
+    const svg64 = btoa(unescape(encodeURIComponent(xml)));
+    const img = new Image();
+    img.onload = function() {
+        ctx.fillStyle = 'white';
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+        ctx.drawImage(img, 0, 0);
+        const url = canvas.toDataURL('image/webp');
+        const link = document.createElement('a');
+        link.href = url;
+        link.download = `${containerId}.webp`;
+        link.click();
+    };
+    img.src = 'data:image/svg+xml;base64,' + svg64;
 }
