@@ -1,5 +1,5 @@
 <?php
-// Configurație bază de date
+// config baza de date
 $dbPath = __DIR__ . '/../data/awa.db';
 
 try {

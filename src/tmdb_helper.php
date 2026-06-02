@@ -8,7 +8,7 @@ define('TMDB_IMAGE_BASE', 'https://image.tmdb.org/t/p/w500');
 function fetchActorFromTMDb($name) {
     if (TMDB_API_KEY === 'YOUR_TMDB_API_KEY_HERE') return null;
 
-    // cautam actoru
+    // cautam actorul
     $url = TMDB_BASE_URL . '/search/person?api_key=' . TMDB_API_KEY . '&query=' . urlencode($name);
     $ch = curl_init();
     curl_setopt($ch, CURLOPT_URL, $url);
