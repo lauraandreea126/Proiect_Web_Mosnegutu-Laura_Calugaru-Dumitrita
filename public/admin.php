@@ -48,6 +48,32 @@ $is_logged_in = isset($_SESSION['admin_logged_in']) && $_SESSION['admin_logged_i
             </form>
             <p id="login-msg"></p>
         <?php else: ?>
+            <section style="margin-bottom: 3rem; padding-bottom: 2rem; border-bottom: 2px solid var(--border-soft);">
+                <h2>Gestionare Date (Import/Export)</h2>
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem; margin-top: 1.5rem;">
+                    <div style="padding: 1.5rem; background: #fdfaf7; border: 1px solid var(--border-soft); border-radius: 4px;">
+                        <h3 style="margin-bottom: 1rem;">Export CSV</h3>
+                        <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 1.5rem;">Descarcă baza de date curentă pentru backup sau analiză externă.</p>
+                        <div style="display: flex; flex-direction: column; gap: 10px;">
+                            <a href="export_csv.php?target=nominations" class="export-btn" style="text-align: center; display: block;">Export Nominalizări</a>
+                            <a href="export_csv.php?target=actors" class="export-btn" style="text-align: center; display: block;">Export Actori</a>
+                        </div>
+                    </div>
+
+                    <div style="padding: 1.5rem; background: #fdfaf7; border: 1px solid var(--border-soft); border-radius: 4px;">
+                        <h3 style="margin-bottom: 1rem;">Import Nominalizări</h3>
+                        <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 1rem;">Încarcă un fișier CSV (format: year, category, nominee, production, won).</p>
+                        <form action="import_data.php" method="POST" enctype="multipart/form-data">
+                            <input type="file" name="csv_file" accept=".csv" required style="margin-bottom: 1rem; width: 100%; font-size: 0.8rem;">
+                            <button type="submit" class="search-btn" style="width: 100%; padding: 0.8rem;">Apasă pentru Import</button>
+                        </form>
+                        <?php if (isset($_GET['import']) && $_GET['import'] === 'success'): ?>
+                            <p style="color: #4bc0c0; font-weight: bold; font-size: 0.85rem; margin-top: 10px;">✓ Import realizat cu succes!</p>
+                        <?php endif; ?>
+                    </div>
+                </div>
+            </section>
+
             <h2>Gestionare Surse Știri (RSS)</h2>
             <form id="add-source-form">
                 <div class="form-group">
