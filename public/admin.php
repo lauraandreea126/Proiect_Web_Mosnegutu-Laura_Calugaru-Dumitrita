@@ -24,7 +24,10 @@ $is_logged_in = isset($_SESSION['admin_logged_in']) && $_SESSION['admin_logged_i
         <div class="container">
             <nav class="nav-wrapper">
                 <a href="index.php" class="logo">AwA Admin</a>
-                <a href="index.php">Înapoi la site</a>
+                <div style="display: flex; align-items: center;">
+                    <a href="index.php" style="margin-right: 1rem;">Înapoi la site</a>
+                    <button id="theme-toggle" class="theme-btn" title="Schimbă tema">🌙</button>
+                </div>
             </nav>
         </div>
     </header>
@@ -32,14 +35,14 @@ $is_logged_in = isset($_SESSION['admin_logged_in']) && $_SESSION['admin_logged_i
     <div class="admin-container">
         <?php if (!$is_logged_in): ?>
             <h2>Autentificare Admin</h2>
-            <form id="login-form">
+            <form id="login-form" method="POST" action="login.php">
                 <div class="form-group">
                     <label>Username</label>
-                    <input type="text" id="admin-user" required>
+                    <input type="text" id="admin-user" name="username" required>
                 </div>
                 <div class="form-group">
                     <label>Parolă</label>
-                    <input type="password" id="admin-pass" required>
+                    <input type="password" id="admin-pass" name="password" required>
                 </div>
                 <button type="submit" class="search-btn">Login</button>
             </form>

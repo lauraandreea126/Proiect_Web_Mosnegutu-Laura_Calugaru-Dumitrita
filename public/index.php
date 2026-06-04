@@ -19,6 +19,7 @@
                     <li><a href="#stats-container">statistici</a></li>
                     <li><a href="#news-feed">știri</a></li>
                     <li><a href="admin.php">admin</a></li>
+                    <li><button id="theme-toggle" class="theme-btn" title="Schimbă tema">🌙</button></li>
                 </ul>
             </nav>
         </div>
@@ -85,6 +86,20 @@
 
 
 
+            <section id="project-stats" class="section-box">
+                <h2>Statistici Proiect (Global)</h2>
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem; margin-top: 2rem;">
+                    <div class="chart-wrapper" style="height: 350px;">
+                        <h3>Top 5 Actori Nominalizați</h3>
+                        <canvas id="actorsChart"></canvas>
+                    </div>
+                    <div class="chart-wrapper" style="height: 350px;">
+                        <h3>Rata de Câștig (Total)</h3>
+                        <canvas id="victoryChart"></canvas>
+                    </div>
+                </div>
+            </section>
+
         </div>
     </main>
 
@@ -99,6 +114,7 @@
     <button id="back-to-top" title="înapoi sus">&#8593;</button>
     <script src="js/app.js?v=999"></script>
     <script src="js/charts.js?v=999"></script>
+    <script src="js/charts_v2.js?v=999"></script>
     <script src="js/search_v2.js?v=999"></script>
     <script src="js/news.js?v=999"></script>
 </body>
