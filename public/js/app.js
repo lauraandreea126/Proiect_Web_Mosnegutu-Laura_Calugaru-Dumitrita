@@ -2,6 +2,14 @@
  * awa - actor awards visualizer
  */
 
+// utilitar global pentru securitate
+window.escapeHTML = function(str) {
+    if (!str) return '';
+    const div = document.createElement('div');
+    div.textContent = str;
+    return div.innerHTML;
+};
+
 document.addEventListener('DOMContentLoaded', () => {
     
     // logică theme toggle (Dark Mode)

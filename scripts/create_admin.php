@@ -1,9 +1,4 @@
 <?php
-/**
- * Utilitar CLI pentru crearea unui cont de administrator.
- * Utilizare: php scripts/create_admin.php [username] [password]
- */
-
 require_once __DIR__ . '/../config/db.php';
 
 if (php_sapi_name() !== 'cli') {

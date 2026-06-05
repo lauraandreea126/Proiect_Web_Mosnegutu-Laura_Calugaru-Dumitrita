@@ -1,10 +1,7 @@
-/**
- * AwA - Project Statistics with Chart.js
- * Randează grafice interactive pentru datele globale din proiect.
- */
+// grafice globale cu chart.js
 
 document.addEventListener('DOMContentLoaded', () => {
-    // Încărcăm Chart.js prin CDN dacă nu este prezent
+    // incarcam chart.js prin cdn daca nu e prezent
     if (typeof Chart === 'undefined') {
         const script = document.createElement('script');
         script.src = 'https://cdn.jsdelivr.net/npm/chart.js';
@@ -23,7 +20,7 @@ async function initProjectCharts() {
         renderActorsChart(data.top_actors);
         renderVictoryChart(data.win_loss);
     } catch (error) {
-        console.error('Eroare la inițializarea graficelor:', error);
+        console.error('eroare initializare grafice:', error);
     }
 }
 
@@ -36,7 +33,7 @@ function renderActorsChart(actorsData) {
         data: {
             labels: actorsData.map(a => a.nominee),
             datasets: [{
-                label: 'Număr Nominalizări',
+                label: 'numar nominalizari',
                 data: actorsData.map(a => a.count),
                 backgroundColor: 'rgba(197, 160, 89, 0.7)',
                 borderColor: 'rgba(197, 160, 89, 1)',

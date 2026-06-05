@@ -3,7 +3,7 @@
  */
 
 document.addEventListener('DOMContentLoaded', () => {
-    // Așteptăm selecția unui actor pentru a încărca datele
+    // asteptam selectia unui actor pentru a incarca datele
 });
 
 async function fetchStats(actorName = null) {
@@ -27,11 +27,9 @@ async function fetchStats(actorName = null) {
 function renderBarChart(data, containerId, titleSuffix = '') {
     const container = document.getElementById(containerId);
     if (!container) return;
-    const title = `Nominalizari pe ani${titleSuffix}`;
+    const safeTitle = escapeHTML(`Nominalizari pe ani${titleSuffix}`);
     if (!data || data.length === 0) {
-
-
-        container.innerHTML = `<h3>${title}</h3><p>nu exista date</p>`;
+        container.innerHTML = `<h3>${safeTitle}</h3><p>nu exista date</p>`;
         return;
     }
 
@@ -53,19 +51,19 @@ function renderBarChart(data, containerId, titleSuffix = '') {
         const x = padding + (i * (width - 2 * padding) / data.length) + ( (width - 2 * padding) / data.length - barWidth ) / 2;
         const y = height - padding - h;
         svg += `<rect x="${x}" y="${y}" width="${barWidth}" height="${h}" fill="#4a90e2" rx="4"></rect>
-                <text x="${x + barWidth / 2}" y="${height - padding + 20}" font-size="10" text-anchor="middle" fill="#666">${d.year}</text>
+                <text x="${x + barWidth / 2}" y="${height - padding + 20}" font-size="10" text-anchor="middle" fill="#666">${escapeHTML(d.year)}</text>
                 <text x="${x + barWidth / 2}" y="${y - 5}" font-size="10" text-anchor="middle" font-weight="bold">${val}</text>`;
     });
     svg += `<line x1="${padding}" y1="${height - padding}" x2="${width - padding}" y2="${height - padding}" stroke="#333" stroke-width="2" /></svg>`;
-    container.innerHTML = `<h3>${title}</h3>` + svg;
+    container.innerHTML = `<h3>${safeTitle}</h3>` + svg;
 }
 
 function renderPieChart(data, containerId, titleSuffix = '') {
     const container = document.getElementById(containerId);
     if (!container) return;
-    const title = `Categorii${titleSuffix}`;
+    const safeTitle = escapeHTML(`Categorii${titleSuffix}`);
     if (!data || data.length === 0) {
-        container.innerHTML = `<h3>${title}</h3><p>nu exista date</p>`;
+        container.innerHTML = `<h3>${safeTitle}</h3><p>nu exista date</p>`;
         return;
     }
 
@@ -95,23 +93,24 @@ function renderPieChart(data, containerId, titleSuffix = '') {
     // legenda
     let legend = '<div style="display: grid; gap: 5px; margin-top: 15px; font-size: 0.8rem;">';
     data.forEach((d, i) => {
-        legend += `<div style="display:flex; align-items:center;"><span style="width:12px; height:12px; background:${colors[i % colors.length]}; display:inline-block; margin-right:5px;"></span> ${d.category} (${d.count})</div>`;
+        const safeCategory = escapeHTML(d.category);
+        legend += `<div style="display:flex; align-items:center;"><span style="width:12px; height:12px; background:${colors[i % colors.length]}; display:inline-block; margin-right:5px;"></span> ${safeCategory} (${parseInt(d.count)})</div>`;
     });
     legend += '</div>';
 
-    container.innerHTML = `<h3>${title}</h3>` + svg + legend;
+    container.innerHTML = `<h3>${safeTitle}</h3>` + svg + legend;
 }
 
 function renderDonutChart(data, containerId, titleSuffix = '') {
     const container = document.getElementById(containerId);
     if (!container) return;
-    const title = `Rata castig${titleSuffix}`;
+    const safeTitle = escapeHTML(`Rata castig${titleSuffix}`);
 
     const size = 300, radius = 100, innerRadius = 65, centerX = size / 2, centerY = size / 2;
     
     // protectie pt date lipsa
     if (!data) {
-        container.innerHTML = `<h3>${title}</h3><p>nu exista date</p>`;
+        container.innerHTML = `<h3>${safeTitle}</h3><p>nu exista date</p>`;
         return;
     }
 
@@ -120,7 +119,7 @@ function renderDonutChart(data, containerId, titleSuffix = '') {
     const total = winners + nominees;
     
     if (total === 0) {
-        container.innerHTML = `<h3>${title}</h3><p>nu exista date</p>`;
+        container.innerHTML = `<h3>${safeTitle}</h3><p>nu exista date</p>`;
         return;
     }
 
@@ -157,11 +156,12 @@ function renderDonutChart(data, containerId, titleSuffix = '') {
     
     let legend = '<div style="display: flex; justify-content: center; gap: 20px; margin-top: 15px;">';
     chartData.forEach(d => {
-        legend += `<div style="display:flex; align-items:center;"><span style="width:15px; height:15px; background:${d.color}; display:inline-block; margin-right:8px;"></span> ${d.label}: ${d.count}</div>`;
+        // label-urile sunt hardcoded aici
+        legend += `<div style="display:flex; align-items:center;"><span style="width:15px; height:15px; background:${d.color}; display:inline-block; margin-right:8px;"></span> ${escapeHTML(d.label)}: ${parseInt(d.count)}</div>`;
     });
     legend += '</div>';
 
-    container.innerHTML = `<h3>${title}</h3>` + svg + legend;
+    container.innerHTML = `<h3>${safeTitle}</h3>` + svg + legend;
 }
 
 function exportSVG(containerId) {

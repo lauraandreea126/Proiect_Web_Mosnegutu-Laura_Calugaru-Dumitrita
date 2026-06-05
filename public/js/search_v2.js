@@ -44,7 +44,9 @@ document.addEventListener('DOMContentLoaded', () => {
         data.forEach(actor => {
             const div = document.createElement('div');
             div.className = 'search-item';
-            div.innerHTML = `<strong>${actor.nominee}</strong>`;
+            // securizare: folosim escapeHTML ptnumele actorului
+            const safeNominee = escapeHTML(actor.nominee);
+            div.innerHTML = `<strong>${safeNominee}</strong>`;
             div.addEventListener('mousedown', (e) => {
                 e.preventDefault();
                 selectActor(actor);
@@ -57,7 +59,7 @@ document.addEventListener('DOMContentLoaded', () => {
         resultsContainer.innerHTML = '';
         searchInput.value = actor.nominee;
 
-        // Ascundem mesajele de placeholder și afișăm structura de date
+        // ascundem mesajele de placeholder și afisam structura de date
         document.querySelectorAll('.empty-state-msg').forEach(el => el.classList.add('hidden'));
         document.querySelectorAll('.chart-controls').forEach(el => el.classList.remove('hidden'));
         
@@ -65,8 +67,9 @@ document.addEventListener('DOMContentLoaded', () => {
         if (newsRes) newsRes.classList.remove('hidden');
 
         const profileBox = document.getElementById('actor-profile');
+        const safeNominee = escapeHTML(actor.nominee);
         if (profileBox) {
-            profileBox.innerHTML = `<h2>Profil actor: ${actor.nominee}</h2><p>se incarca...</p>`;
+            profileBox.innerHTML = `<h2>Profil actor: ${safeNominee}</h2><p>se incarca...</p>`;
             profileBox.scrollIntoView({ behavior: 'smooth' });
         }
 
@@ -75,14 +78,15 @@ document.addEventListener('DOMContentLoaded', () => {
             const details = await response.json();
 
             if (profileBox) {
+                // securizare: bio poate conține HTML malițios dacă vine dintr-o sursă externă
+                const safeBio = escapeHTML(details.bio || 'biografie indisponibila');
+                const safeImageUrl = escapeHTML(details.image_url);
+
                 profileBox.innerHTML = `
-                    <h2>Profil actor: ${actor.nominee}</h2>
+                    <h2>Profil actor: ${safeNominee}</h2>
                     <div class="tmdb-details" style="display: flex; gap: 20px; margin-top: 20px;">
-
-
-
-                        ${details.image_url ? `<img src="${details.image_url}" alt="${actor.nominee}" class="actor-photo" style="width: 150px; border-radius: 8px;">` : ''}
-                        <div><p class="actor-bio" style="font-size: 1.1rem;">${details.bio || 'biografie indisponibila'}</p></div>
+                        ${safeImageUrl ? `<img src="${safeImageUrl}" alt="${safeNominee}" class="actor-photo" style="width: 150px; border-radius: 8px;">` : ''}
+                        <div><p class="actor-bio" style="font-size: 1.1rem;">${safeBio}</p></div>
                     </div>
                 `;
             }
