@@ -3,14 +3,14 @@ session_start();
 header('Content-Type: application/json');
 require_once __DIR__ . '/../config/db.php';
 
-// Verificăm dacă cererea este de tip POST
+// verificare post
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
     http_response_code(405);
     echo json_encode(['error' => 'Metoda nepermisă. Folosiți POST.']);
     exit;
 }
 
-// Preluăm datele (JS trimite raw JSON body, nu form-data standard)
+// preluare date
 $inputJSON = file_get_contents('php://input');
 $input = json_decode($inputJSON, true);
 
@@ -29,16 +29,16 @@ try {
     $user = $stmt->fetch();
 
     if ($user && password_verify($password, $user['password_hash'])) {
-        // Autentificare reușită
+        // autentificare reusita
         $_SESSION['admin_logged_in'] = true;
         $_SESSION['username'] = $user['username'];
         $_SESSION['user_id'] = $user['id'];
 
-        // Verificăm dacă cererea a venit prin AJAX/Fetch
-        // JS fetch modern adesea nu trimite X-Requested-With by default, ne bazăm pe Content-Type sau body JSON valid
+        // verificare daca cererea este AJAX/JSON
+        $isAjax = isset($_SERVER['HTTP_X_REQUESTED_WITH']) && $_SERVER['HTTP_X_REQUESTED_WITH'] === 'XMLHttpRequest';
         $isJson = isset($_SERVER['CONTENT_TYPE']) && strpos($_SERVER['CONTENT_TYPE'], 'application/json') !== false;
 
-        if ($isJson || !empty($inputJSON)) {
+        if ($isJson || $isAjax) {
             echo json_encode([
                 'success' => true,
                 'message' => 'Autentificare reușită.',
@@ -47,12 +47,12 @@ try {
                 ]
             ]);
         } else {
-            // Fallback pentru submit normal de formular
+            // fallback pentru formular normal (navigare directa)
             header('Location: admin.php');
             exit;
         }
     } else {
-        // Autentificare eșuată
+        // autentificare esuata
         http_response_code(401);
         echo json_encode(['success' => false, 'error' => 'Username sau parolă incorectă.']);
     }

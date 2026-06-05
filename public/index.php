@@ -14,13 +14,15 @@
         <div class="container">
             <nav class="nav-wrapper">
                 <a href="index.php" class="logo">AwA</a>
-                <ul class="nav-menu">
-                    <li><a href="#actor-profile">profil</a></li>
-                    <li><a href="#stats-container">statistici</a></li>
-                    <li><a href="#news-feed">știri</a></li>
-                    <li><a href="admin.php">admin</a></li>
-                    <li><button id="theme-toggle" class="theme-btn" title="Schimbă tema">🌙</button></li>
-                </ul>
+                <div style="display: flex; align-items: center;">
+                    <ul class="nav-menu">
+                        <li><a href="#actor-profile">profil</a></li>
+                        <li><a href="#stats-container">statistici</a></li>
+                        <li><a href="#news-feed">știri</a></li>
+                        <li><a href="admin.php">admin</a></li>
+                    </ul>
+                    <button id="theme-toggle" class="theme-btn" title="Schimbă tema">🌙</button>
+                </div>
             </nav>
         </div>
     </header>

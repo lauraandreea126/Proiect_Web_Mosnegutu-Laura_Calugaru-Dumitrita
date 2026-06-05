@@ -3,7 +3,7 @@ session_start();
 header('Content-Type: application/json');
 require_once __DIR__ . '/../config/db.php';
 
-// Verificare autentificare admin
+// vf autentificare admin
 if (!isset($_SESSION['admin_logged_in']) || $_SESSION['admin_logged_in'] !== true) {
     http_response_code(403);
     echo json_encode(['error' => 'Unauthorized']);
@@ -15,14 +15,14 @@ $method = $_SERVER['REQUEST_METHOD'];
 try {
     switch ($method) {
         case 'GET':
-            // Returnează toate sursele
+            // returneaza sursele
             $stmt = $pdo->query("SELECT * FROM news_sources ORDER BY id DESC");
             $sources = $stmt->fetchAll();
             echo json_encode($sources);
             break;
 
         case 'POST':
-            // Preluare date (suport JSON și form-data)
+            // preluare date
             $input = json_decode(file_get_contents('php://input'), true);
             $action = $_POST['action'] ?? $input['action'] ?? 'create';
             
@@ -38,7 +38,7 @@ try {
                 $stmt->execute(['id' => $id]);
                 echo json_encode(['success' => true, 'message' => 'Sursă ștearsă cu succes.']);
             } else {
-                // Creare sursă nouă
+                // creare sursa
                 $name = $_POST['name'] ?? $input['name'] ?? '';
                 $url = $_POST['url'] ?? $input['url'] ?? '';
 
@@ -61,12 +61,12 @@ try {
             break;
 
         case 'DELETE':
-            // Suport opțional pentru metoda DELETE pură
+            // suport delete
             parse_str(file_get_contents("php://input"), $deleteVars);
             $id = $deleteVars['id'] ?? null;
             
             if (!$id) {
-                // Încercăm să luăm din query string dacă nu e în body
+                // verificare id
                 $id = $_GET['id'] ?? null;
             }
 
