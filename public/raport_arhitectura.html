@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Raport Arhitectură - AwA (Actor Awards Visualizer)</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400&family=Playfair+Display:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css?v=999">
+    <style>
+        article {
+            max-width: 1000px;
+            margin: 40px auto;
+            padding: 60px;
+            background: var(--bg-card);
+            box-shadow: 0 4px 20px rgba(197, 160, 89, 0.2);
+            border-radius: 8px;
+            font-family: 'Times New Roman', Times, serif;
+            color: var(--text-main);
+            line-height: 1.8;
+        }
+        body.dark-mode article { box-shadow: 0 4px 25px rgba(0, 0, 0, 0.5); }
+        header h1 { text-align: center; color: var(--accent-gold); font-size: 3em; letter-spacing: 2px; margin-top: 0; font-family: var(--font-serif); }
+        .authors { text-align: center; font-style: italic; margin-bottom: 40px; color: var(--text-muted); font-size: 1.2em; }
+        section { margin-bottom: 50px; text-align: justify; }
+        h2 { border-bottom: 3px solid var(--accent-gold); padding-bottom: 15px; color: var(--accent-gold); text-transform: uppercase; font-size: 1.8em; font-family: var(--font-serif); margin-top: 60px; }
+        h3 { color: var(--accent-gold); font-family: var(--font-serif); font-size: 1.4em; margin-top: 30px; }
+        
+        figure { text-align: center; margin: 40px 0; }
+        figcaption { font-style: italic; margin-top: 10px; color: var(--text-muted); }
+        img { max-width: 100%; height: auto; border: 1px solid var(--accent-gold); border-radius: 4px; }
+        
+        ul, ol { padding-left: 20px; margin-bottom: 20px; }
+        li { margin-bottom: 10px; }
+        code { background: rgba(197, 160, 89, 0.15); padding: 3px 6px; border-radius: 4px; font-family: 'Courier New', Courier, monospace; font-weight: bold; }
+        
+        .biblio { list-style: none; padding-left: 0; }
+        .biblio li { margin-bottom: 20px; border-left: 4px solid var(--accent-gold); padding-left: 20px; background: rgba(197, 160, 89, 0.05); padding: 15px; }
+
+        .scroll-btns { position: fixed; bottom: 30px; right: 30px; display: flex; flex-direction: column; gap: 10px; z-index: 2000; }
+        .scroll-btn { 
+            background: var(--accent-gold); color: white; border: none; border-radius: 50%; width: 50px; height: 50px; font-size: 1.3em; cursor: pointer; display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 12px rgba(0,0,0,0.3); transition: all 0.3s;
+        }
+        .scroll-btn:hover { transform: scale(1.1); background: #b08d4a; }
+    </style>
+</head>
+<body>
+
+<header class="main-header">
+    <div class="container">
+        <nav class="nav-wrapper">
+            <a href="index.php" class="logo">AwA</a>
+            <div style="display: flex; align-items: center;">
+                <ul style="display: flex; list-style: none; margin: 0; padding: 0; gap: 15px; align-items: center; color: var(--text-muted); font-size: 0.8em; font-weight: bold; letter-spacing: 1.5px;">
+                    <li><a href="index.php#actor-profile" style="color: inherit; text-decoration: none;">PROFIL</a></li>
+                    <li style="color: #c5a059; padding: 0 5px;">•</li>
+                    <li><a href="index.php#stats-container" style="color: inherit; text-decoration: none;">STATISTICI</a></li>
+                    <li style="color: #c5a059; padding: 0 5px;">•</li>
+                    <li><a href="index.php#news-feed" style="color: inherit; text-decoration: none;">ȘTIRI</a></li>
+                    <li style="color: #c5a059; padding: 0 5px;">•</li>
+                    <li><a href="raport_cerinte.html" style="color: inherit; text-decoration: none;">RAPORT CERINȚE</a></li>
+                    <li style="color: #c5a059; padding: 0 5px;">•</li>
+                    <li><a href="raport_arhitectura.html" style="color: #c5a059; text-decoration: none; border-bottom: 1px solid #c5a059; padding-bottom: 2px;">RAPORT ARHITECTURĂ</a></li>
+                    <li style="color: #c5a059; padding: 0 5px;">•</li>
+                    <li><a href="admin.php" style="color: inherit; text-decoration: none;">ADMIN</a></li>
+                    <li style="margin-left: 20px;">
+                        <button id="theme-toggle" class="theme-btn" title="Schimbă tema">🌙</button>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+    </div>
+</header>
+
+<main>
+    <article typeof="schema:ScholarlyArticle" class="container">
+        <header>
+            <h1>Design Arhitectural și Tehnologic AwA</h1>
+            <p class="authors">Autori: Dumitrița & Laura</p>
+        </header>
+
+        <section id="introduction">
+            <h2>1. Introducere</h2>
+            <p>
+                Acest raport detaliază deciziile arhitecturale, modelarea datelor și fluxurile tehnologice ale sistemului <strong>AwA</strong>. Arhitectura a fost proiectată pentru a fi modulară, scalabilă și complet independentă de framework-uri, punând în valoare capabilitățile native ale limbajelor PHP și JavaScript moderne.
+            </p>
+        </section>
+
+        <section id="data-modeling">
+            <h2>2. Modelarea Datelor și Persistența</h2>
+            <p>
+                Nucleul sistemului este reprezentat de o bază de date <strong>SQLite 3</strong>, aleasă pentru portabilitatea sa și performanța ridicată în operațiuni de citire. Schema bazei de date este normalizată pentru a minimiza redundanța:
+            </p>
+            <ul>
+                <li><strong>Tabela <code>nominations</code>:</strong> Stochează datele brute despre premii (an, categorie, nominalizat, producție, statut câștigător).</li>
+                <li><strong>Tabela <code>actors</code>:</strong> Funcționează ca un cache local pentru metadatele preluate de la TMDb (biografie, URL imagine, ID TMDb), reducând numărul de apeluri API externe.</li>
+                <li><strong>Tabela <code>news_sources</code>:</strong> Gestionează sursele RSS configurabile de către administrator.</li>
+                <li><strong>Tabela <code>users</code>:</strong> Stochează credențialele administratorilor sub formă de hash-uri securizate.</li>
+            </ul>
+            <p>
+                Importul datelor se realizează prin scriptul <code>import_data.php</code>, care utilizează <strong>tranzacții SQL</strong> pentru a asigura atomicitatea operațiunilor de scriere masivă din fișiere CSV.
+            </p>
+        </section>
+
+        <section id="c4-model">
+            <h2>3. Arhitectura Sistemului (Modelul C4)</h2>
+            <p>Pentru o înțelegere ierarhică a sistemului, am utilizat modelul C4, structurat pe trei niveluri de detaliere:</p>
+
+            <h3>Nivelul 1: Diagrama de Context</h3>
+            <p>
+                Sistemul AwA interacționează cu două tipuri de actori umani (Vizitator și Admin) și trei sisteme externe: 
+                <strong>TMDb API</strong> pentru biografii, <strong>Google News</strong> pentru știri specifice și diverse <strong>servere RSS</strong> pentru fluxuri generale.
+            </p>
+            <figure>
+                <img src="images/diagrams/c4_context.png" alt="Context Diagram">
+                <figcaption>Figura 2: Diagrama de Context - Relația sistemului cu mediul extern</figcaption>
+            </figure>
+
+            <h3>Nivelul 2: Diagrama de Containere</h3>
+            <p>
+                Aplicația este divizată în trei containere principale:
+            </p>
+            <ol>
+                <li><strong>Web Browser Application:</strong> Aplicație Single Page (simulată) construită cu Vanilla JS, responsabilă de interfața utilizator și randarea SVG.</li>
+                <li><strong>PHP API Application:</strong> Un set de endpoint-uri RESTful care gestionează logica de business și comunicarea cu DB.</li>
+                <li><strong>Database (SQLite):</strong> Stocarea fișierelor pe disc, asigurând persistența.</li>
+            </ol>
+            <figure>
+                <img src="images/diagrams/c4_container.png" alt="Container Diagram">
+                <figcaption>Figura 3: Diagrama de Containere - Comunicarea între Frontend, Backend și Bază de Date</figcaption>
+            </figure>
+
+            <h3>Nivelul 3: Diagrama de Componente</h3>
+            <p>
+                În interiorul containerului PHP, componentele sunt izolate logic:
+                <code>Auth Manager</code>, <code>Statistics Engine</code> (care calculează agregatele SQL), <code>News Aggregator</code> și <code>TMDb Connector</code> (care folosește cURL pentru cereri externe).
+            </p>
+            <figure>
+                <img src="images/diagrams/c4_component.png" alt="Component Diagram">
+                <figcaption>Figura 4: Diagrama de Componente - Structura internă a serverului de aplicație</figcaption>
+            </figure>
+        </section>
+
+        <section id="security-implementation">
+            <h2>4. Strategii de Securitate și Imunizare</h2>
+            <p>
+                Securitatea a fost implementată la nivel de design ("Security by Design"), adresând principalele vulnerabilități web:
+            </p>
+            <ul>
+                <li><strong>SQL Injection:</strong> Toate interogările folosesc <code>PDO::prepare()</code> și <code>bindValue()</code>. Nicio variabilă de intrare nu este concatenată direct în șirul SQL.</li>
+                <li><strong>Cross-Site Scripting (XSS):</strong>
+                    <ul>
+                        <li>La nivel de JS: Utilizăm <code>.textContent</code> în loc de <code>.innerHTML</code> pentru orice text provenit din surse externe.</li>
+                        <li>La nivel de PHP: Implementăm o funcție de utilitate <code>escapeHTML</code> care rulează <code>htmlspecialchars()</code> pe orice ieșire.</li>
+                    </ul>
+                </li>
+                <li><strong>Securitatea Sesiunilor:</strong> Utilizăm <code>session_start()</code> cu setări restrictive și hash-uri <code>BCRYPT</code> pentru parole, folosind un cost de procesare ridicat pentru a preveni atacurile de tip brute-force.</li>
+            </ul>
+        </section>
+
+        <section id="visualization-engine">
+            <h2>5. Motorul de Vizualizare SVG</h2>
+            <p>
+                Spre deosebire de soluțiile bazate pe Canvas (care sunt rasterizate), motorul nostru generează elemente <strong>SVG (Scalable Vector Graphics)</strong>. Procesul urmează acești pași:
+            </p>
+            <ol>
+                <li>Preluarea datelor agregate în format JSON de la <code>get_stats.php</code>.</li>
+                <li>Calcularea dimensiunilor (lățime, înălțime, raze) în funcție de containerul părinte.</li>
+                <li>Generarea șirului de caractere XML pentru elemente precum <code>&lt;rect&gt;</code>, <code>&lt;circle&gt;</code> și <code>&lt;path&gt;</code>.</li>
+                <li>Injectarea codului rezultat în DOM, permițând stilizarea ulterioară prin CSS.</li>
+            </ol>
+            <p>
+                Exportul în <strong>WebP</strong> este realizat prin tehnica de "blitting": desenăm elementul SVG pe un context Canvas 2D și utilizăm <code>toDataURL('image/webp')</code> pentru a genera imaginea finală.
+            </p>
+        </section>
+
+        <section id="bibliography" role="doc-bibliography">
+            <h2>6. Bibliografie și Resurse</h2>
+            <ul class="biblio">
+                <li>
+                    <strong>[1] Brown, S. (2022).</strong> <em>The C4 model for visualizing software architecture.</em> 
+                    Disponibil la: <a href="https://c4model.com/">https://c4model.com/</a>. Resursă fundamentală pentru proiectarea diagramelor de nivel 1-3.
+                </li>
+                <li>
+                    <strong>[2] World Wide Web Consortium (W3C).</strong> <em>Scholarly HTML Community Group Report.</em> 
+                    Disponibil la: <a href="https://w3c.github.io/scholarly-html/">https://w3c.github.io/scholarly-html/</a>. Standard pentru formatarea rapoartelor.
+                </li>
+                <li>
+                    <strong>[3] PHP Manual.</strong> <em>PDO - PHP Data Objects.</em> 
+                    Disponibil la: <a href="https://www.php.net/manual/en/book.pdo.php">php.net/manual/en/book.pdo.php</a>. Documentație pentru securitatea interogărilor SQL.
+                </li>
+                <li>
+                    <strong>[4] MDN Web Docs.</strong> <em>SVG: Scalable Vector Graphics.</em> 
+                    Mozilla Foundation. Ghid tehnic pentru generarea elementelor grafice native.
+                </li>
+            </ul>
+        </section>
+    </article>
+</main>
+
+<div class="scroll-btns">
+    <button id="scroll-to-top" class="scroll-btn" title="Sus">▲</button>
+    <button id="scroll-to-bottom" class="scroll-btn" title="Jos">▼</button>
+</div>
+
+<footer class="main-footer">
+    <div class="container">
+        <span class="footer-logo">AwA</span>
+        <p class="copyright">&copy; 2026 awa. proiect realizat de Laura & Dumitrița.</p>
+    </div>
+</footer>
+
+<script src="js/app.js"></script>
+<script>
+    document.getElementById('scroll-to-top').addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+    document.getElementById('scroll-to-bottom').addEventListener('click', () => window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' }));
+</script>
+
+</body>
+</html>

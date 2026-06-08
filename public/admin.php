@@ -78,7 +78,7 @@ $is_logged_in = isset($_SESSION['admin_logged_in']) && $_SESSION['admin_logged_i
                     <label>Parolă</label>
                     <input type="password" id="admin-pass" name="password" required>
                 </div>
-                <button type="submit" class="search-btn">Login</button>
+                <button type="submit" class="search-btn">Autentificare</button>
             </form>
             <p id="login-msg"></p>
         <?php else: ?>

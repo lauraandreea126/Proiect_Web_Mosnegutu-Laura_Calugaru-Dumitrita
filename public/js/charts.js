@@ -27,9 +27,9 @@ async function fetchStats(actorName = null) {
 function renderBarChart(data, containerId, titleSuffix = '') {
     const container = document.getElementById(containerId);
     if (!container) return;
-    const safeTitle = escapeHTML(`Nominalizari pe ani${titleSuffix}`);
+    const safeTitle = escapeHTML(`Nominalizări pe ani${titleSuffix}`);
     if (!data || data.length === 0) {
-        container.innerHTML = `<h3>${safeTitle}</h3><p>nu exista date</p>`;
+        container.innerHTML = `<h3>${safeTitle}</h3><p>nu există date</p>`;
         return;
     }
 
@@ -104,13 +104,13 @@ function renderPieChart(data, containerId, titleSuffix = '') {
 function renderDonutChart(data, containerId, titleSuffix = '') {
     const container = document.getElementById(containerId);
     if (!container) return;
-    const safeTitle = escapeHTML(`Rata castig${titleSuffix}`);
+    const safeTitle = escapeHTML(`Rata de câștig${titleSuffix}`);
 
     const size = 300, radius = 100, innerRadius = 65, centerX = size / 2, centerY = size / 2;
     
     // protectie pt date lipsa
     if (!data) {
-        container.innerHTML = `<h3>${safeTitle}</h3><p>nu exista date</p>`;
+        container.innerHTML = `<h3>${safeTitle}</h3><p>nu există date</p>`;
         return;
     }
 
@@ -119,13 +119,13 @@ function renderDonutChart(data, containerId, titleSuffix = '') {
     const total = winners + nominees;
     
     if (total === 0) {
-        container.innerHTML = `<h3>${safeTitle}</h3><p>nu exista date</p>`;
+        container.innerHTML = `<h3>${safeTitle}</h3><p>nu există date</p>`;
         return;
     }
 
     const chartData = [
-        { label: 'castigatori', count: winners, color: '#4bc0c0' },
-        { label: 'nominalizati', count: nominees, color: '#ff6384' }
+        { label: 'câștigători', count: winners, color: '#4bc0c0' },
+        { label: 'nominalizați', count: nominees, color: '#ff6384' }
     ];
 
     let svg = `<svg width="${size}" height="${size}" viewBox="0 0 ${size} ${size}">`;

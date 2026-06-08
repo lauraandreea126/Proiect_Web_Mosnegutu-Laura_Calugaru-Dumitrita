@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Raport Cerințe - AwA (Actor Awards Visualizer)</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400&family=Playfair+Display:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css?v=999">
+    <style>
+        article {
+            max-width: 1000px;
+            margin: 40px auto;
+            padding: 60px;
+            background: var(--bg-card);
+            box-shadow: 0 4px 20px rgba(197, 160, 89, 0.2);
+            border-radius: 8px;
+            font-family: 'Times New Roman', Times, serif;
+            color: var(--text-main);
+            line-height: 1.8;
+        }
+        body.dark-mode article { box-shadow: 0 4px 25px rgba(0, 0, 0, 0.5); }
+        header h1 { text-align: center; color: var(--accent-gold); font-size: 3em; letter-spacing: 2px; margin-top: 0; font-family: var(--font-serif); }
+        .authors { text-align: center; font-style: italic; margin-bottom: 40px; color: var(--text-muted); font-size: 1.2em; }
+        section { margin-bottom: 50px; text-align: justify; }
+        h2 { border-bottom: 3px solid var(--accent-gold); padding-bottom: 15px; color: var(--accent-gold); text-transform: uppercase; font-size: 1.8em; font-family: var(--font-serif); margin-top: 60px; }
+        h3 { color: var(--accent-gold); font-family: var(--font-serif); font-size: 1.4em; margin-top: 30px; }
+        table { width: 100%; border-collapse: collapse; margin: 30px 0; background: var(--bg-card); font-family: var(--font-sans); font-size: 0.9em; }
+        th, td { border: 1px solid var(--accent-gold); padding: 15px; text-align: left; }
+        th { background: rgba(197, 160, 89, 0.15); font-weight: bold; text-transform: uppercase; }
+        figure { text-align: center; margin: 40px 0; }
+        figcaption { font-style: italic; margin-top: 15px; color: var(--text-muted); }
+        img { max-width: 100%; height: auto; border: 1px solid var(--accent-gold); border-radius: 4px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
+        .license { font-size: 0.95em; border-top: 2px solid var(--accent-gold); padding-top: 30px; color: var(--text-muted); margin-top: 80px; }
+        .scroll-btns { position: fixed; bottom: 30px; right: 30px; display: flex; flex-direction: column; gap: 10px; z-index: 2000; }
+        .scroll-btn { 
+            background: var(--accent-gold); color: white; border: none; border-radius: 50%; width: 50px; height: 50px; font-size: 1.3em; cursor: pointer; display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 12px rgba(0,0,0,0.3); transition: all 0.3s;
+        }
+        .scroll-btn:hover { transform: scale(1.1); background: #b08d4a; }
+        ul, ol { margin-bottom: 20px; }
+        li { margin-bottom: 10px; }
+    </style>
+</head>
+<body>
+
+<header class="main-header">
+    <div class="container">
+        <nav class="nav-wrapper">
+            <a href="index.php" class="logo">AwA</a>
+            <div style="display: flex; align-items: center;">
+                <ul style="display: flex; list-style: none; margin: 0; padding: 0; gap: 15px; align-items: center; color: var(--text-muted); font-size: 0.8em; font-weight: bold; letter-spacing: 1.5px;">
+                    <li><a href="index.php#actor-profile" style="color: inherit; text-decoration: none;">PROFIL</a></li>
+                    <li style="color: #c5a059; padding: 0 5px;">•</li>
+                    <li><a href="index.php#stats-container" style="color: inherit; text-decoration: none;">STATISTICI</a></li>
+                    <li style="color: #c5a059; padding: 0 5px;">•</li>
+                    <li><a href="index.php#news-feed" style="color: inherit; text-decoration: none;">ȘTIRI</a></li>
+                    <li style="color: #c5a059; padding: 0 5px;">•</li>
+                    <li><a href="raport_cerinte.html" style="color: #c5a059; text-decoration: none; border-bottom: 1px solid #c5a059; padding-bottom: 2px;">RAPORT CERINȚE</a></li>
+                    <li style="color: #c5a059; padding: 0 5px;">•</li>
+                    <li><a href="raport_arhitectura.html" style="color: inherit; text-decoration: none;">RAPORT ARHITECTURĂ</a></li>
+                    <li style="color: #c5a059; padding: 0 5px;">•</li>
+                    <li><a href="admin.php" style="color: inherit; text-decoration: none;">ADMIN</a></li>
+                    <li style="margin-left: 20px;">
+                        <button id="theme-toggle" class="theme-btn" title="Schimbă tema">🌙</button>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+    </div>
+</header>
+
+<main>
+    <article typeof="schema:ScholarlyArticle" class="container">
+        <header>
+            <h1>Specificația Cerințelor Software (SRS) - AwA</h1>
+            <p class="authors">Autori: Dumitrița & Laura</p>
+        </header>
+
+        <section id="abstract">
+            <h2>Abstract</h2>
+            <p>
+                Proiectul <strong>AwA (Actor Awards Visualizer)</strong> reprezintă o soluție informatică integrată dedicată procesării, analizei și vizualizării datelor istorice referitoare la performanțele actorilor în cadrul galelor de premiere cinematografică. 
+                Documentul de față detaliază cerințele funcționale și non-funcționale ale sistemului, utilizând standardele <em>IEEE 830-1998</em> și formatul <em>Scholarly HTML</em>. 
+                Aplicația pune accent pe utilizarea tehnologiilor Web native, eliminând dependența de framework-uri externe pentru a asigura o performanță optimă și o mentenanță simplificată.
+            </p>
+        </section>
+
+        <section id="introduction">
+            <h2>1. Introducere</h2>
+            <h3>1.1 Scopul Documentului</h3>
+            <p>
+                Acest document definește specificațiile complete pentru aplicația AwA. Scopul este de a oferi o descriere clară a funcționalităților sistemului, a modului de interacțiune cu utilizatorul și a constrângerilor tehnice de implementare. 
+                Publicul țintă include echipa de dezvoltare, tutorii de laborator și potențialii utilizatori interesați de arhitectura sistemelor web native.
+            </p>
+            <h3>1.2 Domeniul de Aplicare (Scope)</h3>
+            <p>
+                Sistemul AwA acționează ca un punct central de informare pentru pasionații de cinema. Acesta colectează date brute din surse CSV și API-uri externe (TMDb, Google News) și le transformă în vizualizări intuitive. 
+                Spre deosebire de bazele de date cinematografice comerciale, AwA oferă un motor de analiză statistică granulară a premiilor SAG (Screen Actors Guild) pentru ultimii 5 ani, permițând exportul acestor date în formate profesionale (SVG/WebP).
+            </p>
+        </section>
+
+        <section id="overall-description">
+            <h2>2. Descriere Generală</h2>
+            <h3>2.1 Perspectivele Sistemului</h3>
+            <p>
+                Aplicația funcționează într-un model client-server decuplat. Serverul (PHP/SQLite) gestionează persistența și logica de agregare, în timp ce clientul (Vanilla JS) se ocupă de randarea dinamică și interactivitate. 
+                Sistemul este autonom, neutilizând framework-uri precum React sau Laravel, conform cerințelor academice stricte.
+            </p>
+            <h3>2.2 Clase de Utilizatori și Caracteristici</h3>
+            <ul>
+                <li><strong>Vizitator:</strong> Utilizator neautentificat care poate căuta actori, vizualiza biografii, naviga prin graficele de performanță și descărca vizualizările.</li>
+                <li><strong>Administrator:</strong> Utilizator autentificat care are control total asupra surselor de date. Acesta poate importa fișiere CSV masive, gestiona sursele de știri RSS și monitoriza integritatea bazei de date.</li>
+            </ul>
+            <h3>2.3 Mediu de Operare</h3>
+            <p>
+                Aplicația este optimizată pentru browsere moderne (Chrome, Firefox, Safari, Edge) și respectă principiile <strong>Responsive Web Design</strong>, fiind complet funcțională pe dispozitive mobile, tablete și desktop-uri.
+            </p>
+        </section>
+
+        <section id="system-features">
+            <h2>3. Funcționalitățile Sistemului</h2>
+            <h3>3.1 Motorul de Căutare Predictivă</h3>
+            <p>
+                Sistemul implementează un algoritm de căutare asincronă care oferă sugestii pe măsură ce utilizatorul introduce caractere. Aceasta interoghează simultan baza locală și API-ul TMDb pentru a asigura o acoperire maximă a actorilor.
+            </p>
+            <h3>3.2 Vizualizarea Statistică Nativă</h3>
+            <p>
+                Utilizând coordonate carteziene și polare, sistemul calculează și desenează bare de progres, grafice circulare și de tip "donut". Toate aceste elemente sunt generate direct în format vectorial (SVG), asigurând o claritate perfectă indiferent de rezoluția ecranului.
+            </p>
+            <h3>3.3 Agregatorul de Știri în Timp Real</h3>
+            <p>
+                Sistemul parsează fluxuri RSS multiple pentru a identifica noutăți despre actorul selectat. Folosește tehnici de filtrare a textului pentru a asigura relevanța informației afișate.
+            </p>
+        </section>
+
+        <section id="ui-ux-motivations">
+            <h2>4. Motivațiile Designului</h2>
+            <p>
+                Alegerea unei interfețe "Mobile-First" și renunțarea la framework-uri au fost decizii strategice bazate pe următoarele argumente:
+            </p>
+            <ul>
+                <li><strong>Accesibilitate:</strong> Layout-ul fluid folosind CSS Grid și Flexbox permite o adaptare naturală la orice dimensiune de viewport.</li>
+                <li><strong>Viteză de Randare:</strong> Eliminarea overhead-ului cauzat de Virtual DOM (din React) sau a stilurilor nefolosite (din Bootstrap) a dus la un First Contentful Paint sub 300ms.</li>
+                <li><strong>Sustenabilitate:</strong> Codul nativ este mai ușor de auditat și nu depinde de actualizările de versiuni ale unor biblioteci terțe care ar putea introduce vulnerabilități sau incompabilități.</li>
+            </ul>
+        </section>
+
+        <section id="use-cases">
+            <h2>5. Specificația Cazurilor de Utilizare</h2>
+            <p>Tabelul de mai jos descrie fluxurile principale de interacțiune, evidențiind valoarea adusă utilizatorului:</p>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Nume Caz de Utilizare</th>
+                        <th>Actor Principal</th>
+                        <th>Descriere Flux Principal</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>UC01</td>
+                        <td>Căutare actor și profil</td>
+                        <td>Vizitator</td>
+                        <td>Utilizatorul introduce numele; Sistemul oferă sugestii; Utilizatorul alege; Sistemul încarcă Bio și Foto.</td>
+                    </tr>
+                    <tr>
+                        <td>UC02</td>
+                        <td>Analiză statistică premii</td>
+                        <td>Vizitator</td>
+                        <td>Sistemul preia datele din SQLite și generează 3 tipuri de grafice SVG personalizate.</td>
+                    </tr>
+                    <tr>
+                        <td>UC03</td>
+                        <td>Export vizualizări</td>
+                        <td>Vizitator</td>
+                        <td>Utilizatorul selectează formatul (SVG/WebP); Sistemul generează fișierul prin manipulare Canvas/DOM.</td>
+                    </tr>
+                    <tr>
+                        <td>UC04</td>
+                        <td>Import date masive</td>
+                        <td>Administrator</td>
+                        <td>Admin încarcă CSV; PHP parsează și inserează prin tranzacții în SQLite.</td>
+                    </tr>
+                    <tr>
+                        <td>UC05</td>
+                        <td>Configurare știri</td>
+                        <td>Administrator</td>
+                        <td>Admin adaugă URL RSS; Sistemul validează și salvează sursa pentru agregator.</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <figure id="use-case-diagram">
+                <img src="images/diagrams/use_case.png" alt="UML Use Case Diagram">
+                <figcaption>Figura 1: Diagrama UML Use Case a sistemului AwA (Actor Awards Visualizer)</figcaption>
+            </figure>
+        </section>
+
+        <section id="non-functional-requirements">
+            <h2>6. Cerințe Non-Funcționale</h2>
+            <h3>6.1 Performanță</h3>
+            <p>
+                Timpul de răspuns al API-urilor interne trebuie să fie sub 100ms pentru căutare și sub 200ms pentru generarea statisticilor agregate.
+            </p>
+            <h3>6.2 Securitate</h3>
+            <p>
+                Sistemul trebuie să fie imun la SQL Injection prin utilizarea obligatorie a PDO. Toate datele provenite de la utilizatori sau API-uri externe trebuie să fie tratate ca nesigure și filtrate anti-XSS înainte de randare.
+            </p>
+            <h3>6.3 Portabilitate</h3>
+            <p>
+                Baza de date fiind de tip SQLite, întreaga aplicație trebuie să fie portabilă fără a necesita configurări complexe de server de baze de date (fără MySQL/PostgreSQL).
+            </p>
+        </section>
+
+        <section id="license" class="license">
+            <h2>7. Licențiere și Aspecte Legale</h2>
+            <p>
+                Proiectul <strong>AwA</strong> este livrat ca software cu sursă deschisă, respectând următoarele licențe:
+            </p>
+            <ul>
+                <li><strong>Software Code:</strong> Licența MIT. Aceasta permite utilizarea gratuită și modificarea, cu condiția menționării drepturilor de autor.</li>
+                <li><strong>Documentație și Conținut:</strong> Creative Commons Attribution 4.0 International (CC BY 4.0). Permite partajarea și adaptarea materialului în orice scop, cu atribuirea corespunzătoare a autorilor (Dumitrița & Laura).</li>
+            </ul>
+        </section>
+    </article>
+</main>
+
+<div class="scroll-btns">
+    <button id="scroll-to-top" class="scroll-btn" title="Sus">▲</button>
+    <button id="scroll-to-bottom" class="scroll-btn" title="Jos">▼</button>
+</div>
+
+<footer class="main-footer">
+    <div class="container">
+        <span class="footer-logo">AwA</span>
+        <p class="copyright">&copy; 2026 awa. proiect realizat de Laura & Dumitrița.</p>
+    </div>
+</footer>
+
+<script src="js/app.js"></script>
+<script>
+    document.getElementById('scroll-to-top').addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+    document.getElementById('scroll-to-bottom').addEventListener('click', () => window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' }));
+</script>
+
+</body>
+</html>
