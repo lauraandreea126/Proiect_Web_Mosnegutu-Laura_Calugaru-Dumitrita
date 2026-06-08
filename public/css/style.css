@@ -87,6 +87,25 @@ a {
     font-size: 0.8rem;
     text-transform: uppercase;
     color: var(--text-muted);
+    position: relative;
+    transition: color 0.3s ease;
+}
+
+.nav-menu a::after {
+    content: '';
+    position: absolute;
+    width: 100%;
+    transform: scaleX(0);
+    height: 2px;
+    bottom: -4px;
+    left: 0;
+    background-color: var(--accent-gold);
+    transform-origin: bottom center;
+    transition: transform 0.25s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.nav-menu a:hover::after {
+    transform: scaleX(1);
 }
 
 .nav-menu a:hover {
@@ -164,6 +183,12 @@ a {
     border: 1px solid var(--border-soft);
     border-radius: 4px;
     animation: fadeIn 0.5s ease-out;
+    transition: transform 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94), box-shadow 0.3s ease;
+}
+
+.nomination-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 12px 25px rgba(197, 160, 89, 0.2) !important;
 }
 
 .nomination-card.winner {
@@ -430,4 +455,63 @@ body.dark-mode .empty-state-msg {
     .container { width: 95%; }
     .search-container { flex-direction: column; }
     .section-box { padding: 2rem; }
+}
+
+/* EFECT FLUID PE LINK-URILE DIN MENIU */
+nav ul li a {
+    position: relative;
+    transition: color 0.3s ease;
+}
+nav ul li a::after {
+    content: '';
+    position: absolute;
+    width: 100%;
+    transform: scaleX(0);
+    height: 2px;
+    bottom: -4px;
+    left: 0;
+    background-color: var(--accent-gold);
+    transform-origin: bottom center;
+    transition: transform 0.25s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+nav ul li a:hover::after {
+    transform: scaleX(1);
+}
+
+/* CARDURI INTELIGENTE ȘI RIDICARE VECTORIALĂ */
+article, .card-stiri, .actor-card, .stats-box, .section-box {
+    transition: transform 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94), box-shadow 0.3s ease;
+}
+article:hover, .card-stiri:hover, .actor-card:hover, .stats-box:hover, .section-box:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 12px 25px rgba(197, 160, 89, 0.2) !important;
+}
+
+/* ANIMATIE ELASTICĂ PE BUTONUL DE TEMĂ */
+#theme-toggle {
+    transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275), background-color 0.3s;
+}
+#theme-toggle:hover {
+    transform: scale(1.12) rotate(12deg);
+}
+#theme-toggle:active {
+    transform: scale(0.9);
+}
+
+/* PULSAȚIE PE BUTOANELE PLUTITOARE */
+@keyframes floatPulse {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.05); box-shadow: 0 6px 18px rgba(197, 160, 89, 0.35); }
+    100% { transform: scale(1); }
+}
+#scroll-to-top, #scroll-to-bottom, #back-to-top {
+    animation: floatPulse 3s infinite ease-in-out;
+}
+#scroll-to-top:hover, #scroll-to-bottom:hover, #back-to-top:hover {
+    background: #b38f4b !important;
+    transform: scale(1.1) translateY(-3px) !important;
+    animation-play-state: paused;
+}
+#scroll-to-top:active, #scroll-to-bottom:active, #back-to-top:active {
+    transform: scale(0.95) translateY(0) !important;
 }

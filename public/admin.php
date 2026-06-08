@@ -83,7 +83,7 @@ $is_logged_in = isset($_SESSION['admin_logged_in']) && $_SESSION['admin_logged_i
             <p id="login-msg"></p>
         <?php else: ?>
             <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem;">
-                <h2>Panou Administrare</h2>
+                <h1 style="font-size: 1.5em; margin: 0; font-family: var(--font-serif);">Panou Administrare</h1>
                 <a href="logout.php" class="btn-action" style="height: 40px;">Logout</a>
             </div>
 
@@ -281,6 +281,15 @@ $is_logged_in = isset($_SESSION['admin_logged_in']) && $_SESSION['admin_logged_i
             });
         }
     });
+    </script>
+    <!-- butoane plutitoare unificate -->
+    <div style="position: fixed; bottom: 30px; right: 30px; display: flex; flex-direction: column; gap: 12px; z-index: 2000;">
+        <button id="scroll-to-top" style="background: #c5a059; color: white; border: none; border-radius: 50%; width: 42px; height: 42px; font-size: 1.2em; cursor: pointer; display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 12px rgba(0,0,0,0.25); transition: transform 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.2s; animation: floatPulse 3s infinite ease-in-out;">▲</button>
+        <button id="scroll-to-bottom" style="background: #c5a059; color: white; border: none; border-radius: 50%; width: 42px; height: 42px; font-size: 1.2em; cursor: pointer; display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 12px rgba(0,0,0,0.25); transition: transform 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.2s; animation: floatPulse 3s infinite ease-in-out;">▼</button>
+    </div>
+    <script>
+        document.getElementById('scroll-to-top').addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+        document.getElementById('scroll-to-bottom').addEventListener('click', () => window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' }));
     </script>
 </body>
 </html>
