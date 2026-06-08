@@ -40,6 +40,13 @@
         .scroll-btn:hover { transform: scale(1.1); background: #b08d4a; }
         ul, ol { margin-bottom: 20px; }
         li { margin-bottom: 10px; }
+        html { scroll-behavior: smooth; }
+        #toc { background: rgba(197, 160, 89, 0.05); padding: 25px 35px; border-radius: 6px; border-left: 4px solid var(--accent-gold); margin-bottom: 50px; }
+        #toc h2 { margin-top: 0; border-bottom: none; font-size: 1.5em; padding-bottom: 0; }
+        #toc ul { list-style-type: none; padding-left: 0; }
+        #toc li { margin-bottom: 10px; }
+        #toc a { color: var(--text-main); text-decoration: none; font-weight: bold; transition: color 0.3s; }
+        #toc a:hover { color: var(--accent-gold); text-decoration: underline; }
     </style>
 </head>
 <body>
@@ -76,6 +83,20 @@
             <h1>Specificația Cerințelor Software (SRS) - AwA</h1>
             <p class="authors">Autori: Dumitrița & Laura</p>
         </header>
+
+        <section id="toc" role="doc-toc">
+            <h2>Cuprins</h2>
+            <ul>
+                <li><a href="#abstract">Abstract</a></li>
+                <li><a href="#introduction">1. Introducere</a></li>
+                <li><a href="#overall-description">2. Descriere Generală</a></li>
+                <li><a href="#system-features">3. Funcționalitățile Sistemului</a></li>
+                <li><a href="#ui-ux-motivations">4. Motivațiile Designului</a></li>
+                <li><a href="#use-cases">5. Specificația Cazurilor de Utilizare</a></li>
+                <li><a href="#non-functional-requirements">6. Cerințe Non-Funcționale</a></li>
+                <li><a href="#license">7. Licențiere și Aspecte Legale</a></li>
+            </ul>
+        </section>
 
         <section id="abstract">
             <h2>Abstract</h2>
