@@ -29,7 +29,7 @@ async function fetchNews(query) {
     container.innerHTML = '';
     
     const loadingMsg = document.createElement('p');
-    loadingMsg.textContent = 'se incarca ultimele stiri...';
+    loadingMsg.textContent = 'se încarcă ultimele știri...';
     container.appendChild(loadingMsg);
 
     try {
@@ -49,7 +49,7 @@ async function fetchNews(query) {
         container.innerHTML = '';
         const errorMsg = document.createElement('p');
         errorMsg.className = 'error-msg';
-        errorMsg.textContent = 'nu am putut prelua stirile în acest moment.';
+        errorMsg.textContent = 'nu am putut prelua știrile în acest moment.';
         container.appendChild(errorMsg);
     }
 }
@@ -63,7 +63,7 @@ function renderNews(data, container) {
 
     if (actorNews.length === 0 && generalNews.length === 0) {
         const emptyMsg = document.createElement('p');
-        emptyMsg.textContent = 'nu am gasit stiri recente.';
+        emptyMsg.textContent = 'nu am găsit știri recente.';
         container.appendChild(emptyMsg);
         return;
     }

@@ -35,7 +35,7 @@ document.addEventListener('DOMContentLoaded', () => {
     function renderSuggestions(data) {
         resultsContainer.innerHTML = '';
         if (data.length === 0) {
-            resultsContainer.innerHTML = '<div class="search-item">niciun actor gasit</div>';
+            resultsContainer.innerHTML = '<div class="search-item">niciun actor găsit</div>';
             resultsContainer.style.display = 'block';
             return;
         }
@@ -69,7 +69,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const profileBox = document.getElementById('actor-profile');
         const safeNominee = escapeHTML(actor.nominee);
         if (profileBox) {
-            profileBox.innerHTML = `<h2>Profil actor: ${safeNominee}</h2><p>se incarca...</p>`;
+            profileBox.innerHTML = `<h2>Profil actor: ${safeNominee}</h2><p>se încarcă...</p>`;
             profileBox.scrollIntoView({ behavior: 'smooth' });
         }
 
@@ -79,7 +79,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
             if (profileBox) {
                 // securizare: bio poate conține HTML malițios dacă vine dintr-o sursă externă
-                const safeBio = escapeHTML(details.bio || 'biografie indisponibila');
+                const safeBio = escapeHTML(details.bio || 'biografie indisponibilă');
                 const safeImageUrl = escapeHTML(details.image_url);
 
                 profileBox.innerHTML = `

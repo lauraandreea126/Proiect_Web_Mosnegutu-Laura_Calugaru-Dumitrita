@@ -15,13 +15,22 @@
             <nav class="nav-wrapper">
                 <a href="index.php" class="logo">AwA</a>
                 <div style="display: flex; align-items: center;">
-                    <ul class="nav-menu">
-                        <li><a href="#actor-profile">profil</a></li>
-                        <li><a href="#stats-container">statistici</a></li>
-                        <li><a href="#news-feed">știri</a></li>
-                        <li><a href="admin.php">admin</a></li>
+                    <ul style="display: flex; list-style: none; margin: 0; padding: 0; gap: 15px; align-items: center; color: var(--text-muted); font-size: 0.8em; font-weight: bold; letter-spacing: 1.5px;">
+                        <li><a href="index.php#actor-profile" style="color: inherit; text-decoration: none;">PROFIL</a></li>
+                        <li style="color: #c5a059; padding: 0 5px;">•</li>
+                        <li><a href="index.php#stats-container" style="color: inherit; text-decoration: none;">STATISTICI</a></li>
+                        <li style="color: #c5a059; padding: 0 5px;">•</li>
+                        <li><a href="index.php#news-feed" style="color: inherit; text-decoration: none;">ȘTIRI</a></li>
+                        <li style="color: #c5a059; padding: 0 5px;">•</li>
+                        <li><a href="raport_cerinte.html" style="color: inherit; text-decoration: none;">RAPORT CERINȚE</a></li>
+                        <li style="color: #c5a059; padding: 0 5px;">•</li>
+                        <li><a href="raport_arhitectura.html" style="color: inherit; text-decoration: none;">RAPORT ARHITECTURĂ</a></li>
+                        <li style="color: #c5a059; padding: 0 5px;">•</li>
+                        <li><a href="admin.php" style="color: inherit; text-decoration: none;">ADMIN</a></li>
+                        <li style="margin-left: 20px;">
+                            <button id="theme-toggle" style="background: none; border: 1px solid #c5a059; border-radius: 50%; width: 38px; height: 38px; display: flex; align-items: center; justify-content: center; cursor: pointer; color: #c5a059; font-size: 1.1em; transition: all 0.3s;">🌙</button>
+                        </li>
                     </ul>
-                    <button id="theme-toggle" class="theme-btn" title="Schimbă tema">🌙</button>
                 </div>
             </nav>
         </div>
@@ -58,28 +67,28 @@
                 <div class="chart-controls hidden">
                     <div id="bar-chart-container" class="chart-wrapper"></div>
                     <div class="export-actions">
-                        <button class="export-btn" onclick="exportSVG('bar-chart-container')">Download SVG</button>
-                        <button class="export-btn" onclick="exportWebP('bar-chart-container')">Download WebP</button>
+                        <button class="export-btn" onclick="exportSVG('bar-chart-container')">Descarcă SVG</button>
+                        <button class="export-btn" onclick="exportWebP('bar-chart-container')">Descarcă WebP</button>
                     </div>
                 </div>
                 <div class="chart-controls hidden">
                     <div id="pie-chart-container" class="chart-wrapper"></div>
                     <div class="export-actions">
-                        <button class="export-btn" onclick="exportSVG('pie-chart-container')">Download SVG</button>
-                        <button class="export-btn" onclick="exportWebP('pie-chart-container')">Download WebP</button>
+                        <button class="export-btn" onclick="exportSVG('pie-chart-container')">Descarcă SVG</button>
+                        <button class="export-btn" onclick="exportWebP('pie-chart-container')">Descarcă WebP</button>
                     </div>
                 </div>
                 <div class="chart-controls hidden">
                     <div id="donut-chart-container" class="chart-wrapper"></div>
                     <div class="export-actions">
-                        <button class="export-btn" onclick="exportSVG('donut-chart-container')">Download SVG</button>
-                        <button class="export-btn" onclick="exportWebP('donut-chart-container')">Download WebP</button>
+                        <button class="export-btn" onclick="exportSVG('donut-chart-container')">Descarcă SVG</button>
+                        <button class="export-btn" onclick="exportWebP('donut-chart-container')">Descarcă WebP</button>
                     </div>
                 </div>
             </section>
 
             <section id="news-feed" class="section-box">
-                <h2>Stiri & noutati</h2>
+                <h2>Știri & noutăți</h2>
                 <div class="empty-state-msg">
                     <p>Rămâneți la curent. Cele mai noi știri din sursele internaționale vor fi agregate aici în funcție de căutarea dumneavoastră.</p>
                 </div>
