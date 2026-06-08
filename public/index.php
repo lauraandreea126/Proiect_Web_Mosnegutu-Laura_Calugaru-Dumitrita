@@ -121,13 +121,21 @@
         </div>
     </footer>
 
-    <!-- buton sus -->
-    <button id="back-to-top" title="înapoi sus">&#8593;</button>
+    <!-- butoane plutitoare unificate -->
+    <div style="position: fixed; bottom: 30px; right: 30px; display: flex; flex-direction: column; gap: 12px; z-index: 2000;">
+        <button id="scroll-to-top" style="background: #c5a059; color: white; border: none; border-radius: 50%; width: 42px; height: 42px; font-size: 1.2em; cursor: pointer; display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 12px rgba(0,0,0,0.25); transition: transform 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.2s; animation: floatPulse 3s infinite ease-in-out;">▲</button>
+        <button id="scroll-to-bottom" style="background: #c5a059; color: white; border: none; border-radius: 50%; width: 42px; height: 42px; font-size: 1.2em; cursor: pointer; display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 12px rgba(0,0,0,0.25); transition: transform 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.2s; animation: floatPulse 3s infinite ease-in-out;">▼</button>
+    </div>
+    
     <script src="js/app.js?v=999"></script>
     <script src="js/charts.js?v=999"></script>
     <script src="js/charts_v2.js?v=999"></script>
     <script src="js/search_v2.js?v=999"></script>
     <script src="js/news.js?v=999"></script>
+    <script>
+        document.getElementById('scroll-to-top').addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+        document.getElementById('scroll-to-bottom').addEventListener('click', () => window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' }));
+    </script>
 </body>
 </html>
 
