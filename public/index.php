@@ -15,24 +15,39 @@
             <nav class="nav-wrapper">
                 <a href="index.php" class="logo">AwA</a>
                 <div style="display: flex; align-items: center;">
-                    <ul style="display: flex; list-style: none; margin: 0; padding: 0; gap: 15px; align-items: center; color: var(--text-muted); font-size: 0.8em; font-weight: bold; letter-spacing: 1.5px;">
-                        <li><a href="index.php#actor-profile" style="color: inherit; text-decoration: none;">PROFIL</a></li>
-                        <li style="color: #c5a059; padding: 0 5px;">•</li>
-                        <li><a href="index.php#stats-container" style="color: inherit; text-decoration: none;">STATISTICI</a></li>
-                        <li style="color: #c5a059; padding: 0 5px;">•</li>
-                        <li><a href="index.php#news-feed" style="color: inherit; text-decoration: none;">ȘTIRI</a></li>
-                        <li style="color: #c5a059; padding: 0 5px;">•</li>
-                        <li><a href="raport_cerinte.html" style="color: inherit; text-decoration: none;">RAPORT CERINȚE</a></li>
-                        <li style="color: #c5a059; padding: 0 5px;">•</li>
-                        <li><a href="raport_arhitectura.html" style="color: inherit; text-decoration: none;">RAPORT ARHITECTURĂ</a></li>
-                        <li style="color: #c5a059; padding: 0 5px;">•</li>
-                        <li><a href="admin.php" style="color: inherit; text-decoration: none;">ADMIN</a></li>
-                        <li style="margin-left: 20px;">
-                            <button id="theme-toggle" style="background: none; border: 1px solid #c5a059; border-radius: 50%; width: 38px; height: 38px; display: flex; align-items: center; justify-content: center; cursor: pointer; color: #c5a059; font-size: 1.1em; transition: all 0.3s;">🌙</button>
-                        </li>
+                    <ul class="desktop-nav">
+                        <li><a href="index.php#actor-profile">PROFIL</a></li>
+                        <li class="nav-dot">•</li>
+                        <li><a href="index.php#stats-container">STATISTICI</a></li>
+                        <li class="nav-dot">•</li>
+                        <li><a href="index.php#news-feed">ȘTIRI</a></li>
+                        <li class="nav-dot">•</li>
+                        <li><a href="raport_cerinte.html">RAPORT CERINȚE</a></li>
+                        <li class="nav-dot">•</li>
+                        <li><a href="raport_arhitectura.html">RAPORT ARHITECTURĂ</a></li>
+                        <li class="nav-dot">•</li>
+                        <li><a href="admin.php">ADMIN</a></li>
                     </ul>
+                    <div style="display: flex; align-items: center; margin-left: 20px;">
+                        <button id="theme-toggle" class="theme-btn" style="margin: 0;">🌙</button>
+                        <button class="hamburger-btn" id="mobile-toggle" aria-label="Menu" style="margin-left: 15px;">
+                            <span class="hamburger-line"></span>
+                            <span class="hamburger-line"></span>
+                            <span class="hamburger-line"></span>
+                        </button>
+                    </div>
                 </div>
             </nav>
+        </div>
+        <div class="mobile-nav-drawer" id="mobile-drawer">
+            <ul class="mobile-nav-list">
+                <li><a href="index.php#actor-profile">PROFIL</a></li>
+                <li><a href="index.php#stats-container">STATISTICI</a></li>
+                <li><a href="index.php#news-feed">ȘTIRI</a></li>
+                <li><a href="raport_cerinte.html">RAPORT CERINȚE</a></li>
+                <li><a href="raport_arhitectura.html">RAPORT ARHITECTURĂ</a></li>
+                <li><a href="admin.php">ADMIN</a></li>
+            </ul>
         </div>
     </header>
 

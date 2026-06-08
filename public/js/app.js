@@ -38,6 +38,39 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
+    // navigatie responsive
+    const mobileToggle = document.getElementById('mobile-toggle');
+    const mobileDrawer = document.getElementById('mobile-drawer');
+    
+    if (mobileToggle && mobileDrawer) {
+        const toggleMenu = (show) => {
+            const isActive = show !== undefined ? show : !mobileDrawer.classList.contains('active');
+            mobileDrawer.classList.toggle('active', isActive);
+            mobileToggle.classList.toggle('active', isActive);
+        };
+
+        mobileToggle.addEventListener('click', (e) => {
+            e.stopPropagation();
+            toggleMenu();
+        });
+
+        document.addEventListener('click', (e) => {
+            if (mobileDrawer.classList.contains('active') && !mobileDrawer.contains(e.target) && !mobileToggle.contains(e.target)) {
+                toggleMenu(false);
+            }
+        });
+
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && mobileDrawer.classList.contains('active')) {
+                toggleMenu(false);
+            }
+        });
+
+        mobileDrawer.querySelectorAll('a').forEach(link => {
+            link.addEventListener('click', () => toggleMenu(false));
+        });
+    }
+
     // buton inapoi sus
     const backToTopBtn = document.getElementById('back-to-top');
 
@@ -58,5 +91,4 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // console.log('AwA: Aplicatie pornita (v2)');
 });

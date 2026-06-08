@@ -59,10 +59,30 @@ $is_logged_in = isset($_SESSION['admin_logged_in']) && $_SESSION['admin_logged_i
             <nav class="nav-wrapper">
                 <a href="index.php" class="logo">AwA Admin</a>
                 <div style="display: flex; align-items: center;">
-                    <a href="index.php" style="margin-right: 1rem;">Înapoi la site</a>
-                    <button id="theme-toggle" class="theme-btn" title="Schimbă tema">🌙</button>
+                    <ul class="desktop-nav">
+                        <li><a href="index.php" style="margin-right: 1rem;">Înapoi la site</a></li>
+                    </ul>
+                    <div style="display: flex; align-items: center;">
+                        <button id="theme-toggle" class="theme-btn" title="Schimbă tema" style="margin: 0;">🌙</button>
+                        <button class="hamburger-btn" id="mobile-toggle" aria-label="Menu" style="margin-left: 15px;">
+                            <span class="hamburger-line"></span>
+                            <span class="hamburger-line"></span>
+                            <span class="hamburger-line"></span>
+                        </button>
+                    </div>
                 </div>
             </nav>
+        </div>
+        <div class="mobile-nav-drawer" id="mobile-drawer">
+            <ul class="mobile-nav-list">
+                <li><a href="index.php">Înapoi la site</a></li>
+                <li style="border-top: 1px solid var(--border-soft); padding-top: 1rem; margin-top: 0.5rem; opacity: 0.5; font-size: 0.7rem;">Navigație Site:</li>
+                <li><a href="index.php#actor-profile">PROFIL</a></li>
+                <li><a href="index.php#stats-container">STATISTICI</a></li>
+                <li><a href="index.php#news-feed">ȘTIRI</a></li>
+                <li><a href="raport_cerinte.html">RAPORT CERINȚE</a></li>
+                <li><a href="raport_arhitectura.html">RAPORT ARHITECTURĂ</a></li>
+            </ul>
         </div>
     </header>
 
