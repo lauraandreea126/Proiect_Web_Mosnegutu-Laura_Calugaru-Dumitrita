@@ -43,6 +43,13 @@
             background: var(--accent-gold); color: white; border: none; border-radius: 50%; width: 50px; height: 50px; font-size: 1.3em; cursor: pointer; display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 12px rgba(0,0,0,0.3); transition: all 0.3s;
         }
         .scroll-btn:hover { transform: scale(1.1); background: #b08d4a; }
+        html { scroll-behavior: smooth; }
+        #toc { background: rgba(197, 160, 89, 0.05); padding: 25px 35px; border-radius: 6px; border-left: 4px solid var(--accent-gold); margin-bottom: 50px; }
+        #toc h2 { margin-top: 0; border-bottom: none; font-size: 1.5em; padding-bottom: 0; }
+        #toc ul { list-style-type: none; padding-left: 0; }
+        #toc li { margin-bottom: 10px; }
+        #toc a { color: var(--text-main); text-decoration: none; font-weight: bold; transition: color 0.3s; }
+        #toc a:hover { color: var(--accent-gold); text-decoration: underline; }
     </style>
 </head>
 <body>
@@ -79,6 +86,18 @@
             <h1>Design Arhitectural și Tehnologic AwA</h1>
             <p class="authors">Autori: Dumitrița & Laura</p>
         </header>
+
+        <section id="toc" role="doc-toc">
+            <h2>Cuprins</h2>
+            <ul>
+                <li><a href="#introduction">1. Introducere</a></li>
+                <li><a href="#data-modeling">2. Modelarea Datelor și Persistența</a></li>
+                <li><a href="#c4-model">3. Arhitectura Sistemului (Modelul C4)</a></li>
+                <li><a href="#security-implementation">4. Strategii de Securitate și Imunizare</a></li>
+                <li><a href="#visualization-engine">5. Motorul de Vizualizare SVG</a></li>
+                <li><a href="#bibliography">6. Bibliografie și Resurse</a></li>
+            </ul>
+        </section>
 
         <section id="introduction">
             <h2>1. Introducere</h2>
