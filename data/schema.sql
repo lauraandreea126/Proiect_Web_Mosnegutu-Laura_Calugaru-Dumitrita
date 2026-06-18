@@ -24,5 +24,15 @@ CREATE TABLE IF NOT EXISTS news_sources (
 CREATE TABLE IF NOT EXISTS users (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     username TEXT UNIQUE NOT NULL,
-    password_hash TEXT NOT NULL
+    email TEXT UNIQUE NOT NULL,
+    password_hash TEXT NOT NULL,
+    role TEXT NOT NULL DEFAULT 'user'
+);
+
+CREATE TABLE IF NOT EXISTS favorite_actors (
+    user_id INTEGER NOT NULL,
+    actor_id INTEGER NOT NULL,
+    PRIMARY KEY (user_id, actor_id),
+    FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE,
+    FOREIGN KEY (actor_id) REFERENCES actors(id) ON DELETE CASCADE
 );

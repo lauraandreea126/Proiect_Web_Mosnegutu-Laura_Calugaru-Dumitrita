@@ -113,6 +113,48 @@ $is_logged_in = isset($_SESSION['admin_logged_in']) && $_SESSION['admin_logged_i
                 </div>
             </section>
 
+            <section style="margin-bottom: 3rem; padding-bottom: 2rem; border-bottom: 2px solid var(--border-soft);">
+                <h2>Gestionare Actori</h2>
+                <h3>Adaugă Actor Nou</h3>
+                <form id="add-actor-form">
+                    <div class="form-group">
+                        <label for="actor-name">Nume Actor</label>
+                        <input type="text" id="actor-name" name="name" placeholder="ex: Tom Hanks" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="actor-bio">Biografie</label>
+                        <textarea id="actor-bio" name="bio" placeholder="Scurtă descriere..." rows="4" required></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="actor-image-url">URL Imagine</label>
+                        <input type="url" id="actor-image-url" name="image_url" placeholder="https://exemplu.com/imagine.jpg" required>
+                    </div>
+                     <div class="form-group">
+                        <label for="actor-tmdb-id">ID TMDB (Optional)</label>
+                        <input type="number" id="actor-tmdb-id" name="tmdb_id" placeholder="ex: 12345">
+                    </div>
+                    <button type="submit" class="search-btn">Adaugă Actor</button>
+                </form>
+                <div id="actor-status-msg" style="margin-top: 1rem; font-weight: bold; min-height: 1.2rem;"></div>
+
+                <h3 style="margin-top: 2rem;">Actorii Curenți</h3>
+                <table class="source-list hidden" id="actors-table">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Nume</th>
+                            <th>Biografie</th>
+                            <th>Imagine URL</th>
+                            <th>Acțiuni</th>
+                        </tr>
+                    </thead>
+                    <tbody id="actors-tbody">
+                        <!-- Actors will be loaded here via JavaScript -->
+                    </tbody>
+                </table>
+                <p id="no-actors-msg" class="hidden" style="padding: 1rem; background: rgba(0,0,0,0.05); text-align: center; border-radius: 4px;">Nu există actori adăugați.</p>
+            </section>
+
             <h2>Gestionare Surse Știri (RSS)</h2>
             <form id="add-source-form">
                 <div class="form-group">
@@ -281,6 +323,128 @@ $is_logged_in = isset($_SESSION['admin_logged_in']) && $_SESSION['admin_logged_i
             });
         }
     });
+    </script>
+    <script>
+        // Helper function to escape HTML for safe display
+        function escapeHTML(str) {
+            const div = document.createElement('div');
+            div.appendChild(document.createTextNode(str));
+            return div.innerHTML;
+        }
+
+        function showActorStatus(msg, isError = false) {
+            const el = document.getElementById('actor-status-msg');
+            if (!el) return;
+            el.textContent = msg;
+            el.style.color = isError ? '#ff6384' : '#4bc0c0';
+            setTimeout(() => { el.textContent = ''; }, 3000);
+        }
+
+        async function loadActors() {
+            const tbody = document.getElementById('actors-tbody');
+            const noActorsMsg = document.getElementById('no-actors-msg');
+            const table = document.getElementById('actors-table');
+            if (!tbody) return;
+
+            try {
+                const response = await fetch('api/actors.php');
+                if (!response.ok) throw new Error('Eroare server');
+                
+                const actors = await response.json();
+                tbody.innerHTML = '';
+                
+                if (!actors || actors.length === 0) {
+                    noActorsMsg.classList.remove('hidden');
+                    table.classList.add('hidden');
+                    return;
+                }
+
+                noActorsMsg.classList.add('hidden');
+                table.classList.remove('hidden');
+
+                actors.forEach(actor => {
+                    const tr = document.createElement('tr');
+                    // Escape all actor properties to prevent XSS
+                    const safeId = escapeHTML(actor.id);
+                    const safeName = escapeHTML(actor.name);
+                    const safeBio = escapeHTML(actor.bio).substring(0, 100) + '...'; // Truncate bio for display
+                    const safeImageUrl = escapeHTML(actor.image_url);
+                    
+                    tr.innerHTML = `
+                        <td>${safeId}</td>
+                        <td>${safeName}</td>
+                        <td>${safeBio}</td>
+                        <td><a href="${safeImageUrl}" target="_blank" rel="noopener noreferrer">${safeImageUrl.substring(0, 30)}...</a></td>
+                        <td><button class="btn-action btn-delete" onclick="deleteActor(${safeId})">Șterge</button></td>
+                    `;
+                    tbody.appendChild(tr);
+                });
+            } catch (error) {
+                console.error('Eroare loadActors:', error);
+                showActorStatus('Nu am putut incarca actorii.', true);
+            }
+        }
+
+        async function deleteActor(id) {
+            if (!confirm('Sigur vrei să ștergi acest actor?')) return;
+            try {
+                const response = await fetch('api/actors.php?id=' + id, {
+                    method: 'DELETE'
+                });
+                if (response.ok) {
+                    showActorStatus('Actor șters.');
+                    loadActors(); // Reload actors to update the list
+                } else {
+                    const res = await response.json();
+                    showActorStatus(res.message || 'Eroare la ștergere.', true);
+                }
+            } catch (err) {
+                showActorStatus('Eroare rețea.', true);
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            // Existing DOMContentLoaded logic for login and source management...
+            // ... (keeping existing script for sources)
+
+            const addActorForm = document.getElementById('add-actor-form');
+            if (addActorForm) {
+                loadActors(); // Load actors when admin panel is loaded
+                addActorForm.addEventListener('submit', async (e) => {
+                    e.preventDefault();
+                    const name = document.getElementById('actor-name').value;
+                    const bio = document.getElementById('actor-bio').value;
+                    const imageUrl = document.getElementById('actor-image-url').value;
+                    const tmdbId = document.getElementById('actor-tmdb-id').value;
+
+                    try {
+                        const response = await fetch('api/actors.php', {
+                            method: 'POST',
+                            headers: { 
+                                'Content-Type': 'application/json',
+                                'X-Requested-With': 'XMLHttpRequest'
+                            },
+                            body: JSON.stringify({
+                                name: name,
+                                bio: bio,
+                                image_url: imageUrl,
+                                tmdb_id: tmdbId
+                            })
+                        });
+                        if (response.ok) {
+                            showActorStatus('Actor adăugat!');
+                            addActorForm.reset();
+                            loadActors(); // Reload actors to update the list
+                        } else {
+                            const res = await response.json();
+                            showActorStatus(res.message || 'Eroare la adăugare.', true);
+                        }
+                    } catch (err) {
+                        showActorStatus('Eroare rețea.', true);
+                    }
+                });
+            }
+        });
     </script>
     <!-- butoane plutitoare unificate -->
     <div style="position: fixed; bottom: 30px; right: 30px; display: flex; flex-direction: column; gap: 12px; z-index: 2000;">
