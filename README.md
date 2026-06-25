@@ -1,3 +1,54 @@
+# 🎬 ProiectWEB - Platformă de Gestiune și Preferințe Actori
+
+O aplicație web dinamică dezvoltată în cadrul ecosistemului XAMPP (`htdocs/ProiectWEB`), destinată utilizatorilor pasionați de cinematografie și administratorilor care doresc un control total asupra bazei de date cu actori, utilizatori și statistici globale.
+
+Noul video de  prezentare al aplicatiei poate fi gasit la adresa:  https://youtu.be/g5Tx0paU0lo
+
+## 🚀 Funcționalități Noi și Modificări Recente
+
+Aplicația a suferit o refacere masivă a logicii de business, securității și interfeței grafice. Mai jos sunt detaliate modulele implementate în această versiune:
+
+### 👤 1. Modulul pentru Clienți (Utilizatori Autentificați)
+* **Autentificare pe bază de Email:** Înregistrarea și logarea clienților se realizează securizat pe baza adresei de email și a unei parole criptate.
+* **Securitate prin Cookie de Sesiune:** Identificarea și menținerea utilizatorilor conectați se face prin cookie-uri de sesiune securizate. Datele de autentificare rămân salvate pe durata vizitei fără a expune token-uri sensibile în URL sau în LocalStorage, asigurând o comunicare sigură cu REST API-ul.
+* **Gestionare Actori Favoriți:** Fiecare client are acum posibilitatea de a-și adăuga actorii preferați într-o listă dedicată și de a-i elimina printr-un singur click.
+* **Sistem de Notificări în Timp Real:** Utilizatorul primește o notificare instantă (cu timestamp - dată și oră) în momentul în care un nou actor este adăugat cu succes în lista sa de favoriți.
+
+### 📊 2. Pagina Principală (Dashboard Public & Statistici)
+* **Statistici Globale Înfrumusețate:** Secțiunea de statistici de pe pagina principală a fost redesenată complet vizual (CSS modern, animații fluide). 
+* **Date Dinamice:** Graficele și numerele reflectă în timp real activitatea de pe platformă: numărul total de clienți înregistrați, numărul total de actori din baza de date și interacțiunile recente.
+
+### 🛡️ 3. Panoul de Administrare (Admin Panel)
+Administratorii beneficiază de un set extins de unelte pentru managementul întregului ecosistem:
+* **Conturi Impersonale de Admin:** Administratorii au conturi dedicate din care pot simula acțiuni, testa fluxuri, adăuga biografii/poze sau elimina entități, având propriul sistem de notificări administrative.
+* **Managementul Complet al Clienților:** 
+  * Vizualizarea listei complete de clienți înregistrați pe platformă.
+  * Posibilitatea de a **șterge definitiv** conturile clienților.
+  * Monitorizarea preferințelor: adminul poate vedea în detaliu ce actori are fiecare client la favoriți.
+* **Podium Global (Top 3 Actori Favoriți):** Algoritmul centralizează automat toate listele de favoriți ale clienților și generează un podium interactiv cu *Top 3 cei mai iubiți actori* din platformă.
+* **Baza de Date de Actori (CRUD complet):** Adminul poate insera actori noi în baza de date (completând nume, biografie și încărcând o poză de profil) și poate șterge actori existenți.
+
+### 📰 4. Funcționalități Păstrate (Legacy)
+* A rămas pe deplin funcțională opțiunea implementată anterior: modulul de **adăugare și gestionare știri / noutăți**, care permite publicarea de articole direct pe platformă.
+
+---
+
+## 🛠️ Tehnologii Utilizate
+* **Backend:** PHP (OOP), REST API nativ
+* **Autentificare:** Cookie-uri de sesiune securizate (Session Cookies)
+* **Frontend:** HTML5, CSS3 (Validat, design modernizat), JavaScript (notificări dinamice și manipulare DOM)
+
+---
+
+## 📂 Structura Folderelor Relevante
+* `/config` - Conține scripturile de conexiune la baza de date și configurările pentru securitatea sesiunilor.
+* `/data` - Scripturi pentru prelucrarea informațiilor, interogările SQL pentru podium și gestionarea logurilor.
+
+
+
+
+
+
 Plan de Proiect: AwA (Actor Awards Visualizer)
 
 Echipa: Dumitrița (Student 1) & Laura (Student 2)
