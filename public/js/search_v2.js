@@ -78,13 +78,13 @@ document.addEventListener('DOMContentLoaded', () => {
             const details = await response.json();
 
             if (profileBox) {
-                // securizare: bio poate conține HTML malițios dacă vine dintr-o sursă externă
+                // Securizare: bio poate conține HTML malițios dacă vine dintr-o sursă externă
                 const safeBio = escapeHTML(details.bio || 'biografie indisponibilă');
                 const safeImageUrl = escapeHTML(details.image_url);
 
                 profileBox.innerHTML = `
                     <h2>Profil actor: ${safeNominee}</h2>
-                    <div class="tmdb-details" style="display: flex; gap: 20px; margin-top: 20px;">
+                    <div class="tmdb-details" data-actor-id="${details.id || actor.id || ''}" style="display: flex; gap: 20px; margin-top: 20px;">
                         ${safeImageUrl ? `<img src="${safeImageUrl}" alt="${safeNominee}" class="actor-photo" style="width: 150px; border-radius: 8px;">` : ''}
                         <div><p class="actor-bio" style="font-size: 1.1rem;">${safeBio}</p></div>
                     </div>
@@ -92,7 +92,7 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         } catch (error) {
             console.error('eroare detalii:', error);
-        }
+        } 
 
         // actualizare grafice si stiri
         if (typeof fetchStats === 'function') fetchStats(actor.nominee);

@@ -3,11 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Raport Cerințe - AwA (Actor Awards Visualizer)</title>
+    <title>Specificația Cerințelor Software (SRS) - AwA</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400&family=Playfair+Display:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght=300;400;500;600&family=Playfair+Display:wght=400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="css/style.css?v=999">
+    <script src="js/theme.js?v=999"></script>
     <style>
         article {
             max-width: 1000px;
@@ -51,32 +52,23 @@
 </head>
 <body>
 
-<header class="main-header">
-    <div class="container">
-        <nav class="nav-wrapper">
-            <a href="index.php" class="logo">AwA</a>
-            <div style="display: flex; align-items: center;">
-                <ul style="display: flex; list-style: none; margin: 0; padding: 0; gap: 15px; align-items: center; color: var(--text-muted); font-size: 0.8em; font-weight: bold; letter-spacing: 1.5px;">
-                    <li><a href="index.php#actor-profile" style="color: inherit; text-decoration: none;">PROFIL</a></li>
-                    <li style="color: #c5a059; padding: 0 5px;">•</li>
-                    <li><a href="index.php#stats-container" style="color: inherit; text-decoration: none;">STATISTICI</a></li>
-                    <li style="color: #c5a059; padding: 0 5px;">•</li>
-                    <li><a href="index.php#news-feed" style="color: inherit; text-decoration: none;">ȘTIRI</a></li>
-                    <li style="color: #c5a059; padding: 0 5px;">•</li>
-                    <li><a href="raport_cerinte.html" style="color: #c5a059; text-decoration: none; border-bottom: 1px solid #c5a059; padding-bottom: 2px;">RAPORT CERINȚE</a></li>
-                    <li style="color: #c5a059; padding: 0 5px;">•</li>
-                    <li><a href="raport_arhitectura.html" style="color: inherit; text-decoration: none;">RAPORT ARHITECTURĂ</a></li>
-                    <li style="color: #c5a059; padding: 0 5px;">•</li>
-                    <li><a href="admin.php" style="color: inherit; text-decoration: none;">ADMIN</a></li>
-                    <li style="margin-left: 20px;">
-                        <button id="theme-toggle" class="theme-btn" title="Schimbă tema">🌙</button>
-                    </li>
-                </ul>
+<header class="main-header" style="background: var(--bg-card); border-bottom: 1px solid var(--border-soft); padding: 15px 0; position: sticky; top: 0; z-index: 1000;">
+        <div class="container" style="max-width: 1000px; margin: 0 auto; padding: 0 20px; display: flex; justify-content: space-between; align-items: center;">
+            
+            <a href="index.php" class="btn-back-home" style="display: inline-flex; align-items: center; gap: 8px; color: var(--accent-gold); font-family: var(--font-sans); font-weight: bold; font-size: 0.9rem; text-transform: uppercase; letter-spacing: 1px; text-decoration: none; border: 1px solid var(--accent-gold); padding: 8px 16px; border-radius: 4px; transition: all 0.3s ease;"
+               onmouseover="this.style.background='var(--accent-gold)'; this.style.color='#fff';" 
+               onmouseout="this.style.background='transparent'; this.style.color='var(--accent-gold)';">
+                ← Înapoi la Aplicație
+            </a>
+            
+            <div style="display: flex; align-items: center; gap: 20px;">
+                <span style="font-family: var(--font-serif); font-size: 1.4rem; letter-spacing: 2px; color: var(--accent-gold); font-weight: bold;">AwA DOCS</span>
+                
+                <button id="toggle-theme" class="theme-btn" style="background: transparent; border: 1px solid var(--accent-gold); color: var(--accent-gold); width: 40px; height: 40px; border-radius: 50%; cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 1.2rem; transition: 0.3s; margin: 0;">🌙</button>
             </div>
-        </nav>
-    </div>
-</header>
-
+            
+        </div>
+    </header>
 <main>
     <article typeof="schema:ScholarlyArticle" class="container">
         <header>
@@ -109,67 +101,114 @@
 
         <section id="introduction">
             <h2>1. Introducere</h2>
-            <h3>1.1 Scopul Documentului</h3>
+            <h3>1.1 Scopul și Obiectivele Documentului</h3>
             <p>
-                Acest document definește specificațiile complete pentru aplicația AwA. Scopul este de a oferi o descriere clară a funcționalităților sistemului, a modului de interacțiune cu utilizatorul și a constrângerilor tehnice de implementare. 
-                Publicul țintă include echipa de dezvoltare, tutorii de laborator și potențialii utilizatori interesați de arhitectura sistemelor web native.
+                Acest document constituie Specificația Cerințelor Software (SRS - Software Requirements Specification) pentru platforma <strong>AwA (Actor Awards Visualizer)</strong>. Redactat în conformitate cu standardul internațional <em>IEEE 830-1998</em> și structurat semantic prin formatul <em>Scholarly HTML</em>, scopul acestui raport este de a defini riguros arhitectura funcțională, constrângerile de design și specificațiile tehnice ale sistemului. 
             </p>
-            <h3>1.2 Domeniul de Aplicare (Scope)</h3>
             <p>
-                Sistemul AwA acționează ca un punct central de informare pentru pasionații de cinema. Acesta colectează date brute din surse CSV și API-uri externe (TMDb, Google News) și le transformă în vizualizări intuitive. 
-                Spre deosebire de bazele de date cinematografice comerciale, AwA oferă un motor de analiză statistică granulară a premiilor SAG (Screen Actors Guild) pentru ultimii 5 ani, permițând exportul acestor date în formate profesionale (SVG/WebP).
+                Documentul servește ca un contract tehnic și ghid de dezvoltare pentru echipa de inginerie software, asigurând că toate interacțiunile utilizatorilor și fluxurile de date din fundal sunt mapate corect pe cerințele academice. Publicul țintă include evaluatorii de proiect, dezvoltatorii web nativi și auditorii de securitate interesați de sisteme web decuplate.
             </p>
+            <h3>1.2 Domeniul de Aplicare și Contextul Industrial (Scope)</h3>
+            <p>
+                În industria cinematografică actuală, istoricul și evoluția premiilor obținute de actori (cum sunt cele decernate de Screen Actors Guild - SAG) reprezintă o resursă valoroasă pentru critici, jurnaliști și pasionații de artă digitală. Totuși, majoritatea platformelor existente oferă seturi de date sub formă tabelară rigidă sau text chior, îngreunând identificarea tendințelor istorice sau a ratelor de succes.
+            </p>
+            <p>
+                Sistemul AwA rezolvă această problemă acționând ca un punct centralizat de analiză asincronă. Aplicația preia seturi masive de date brute din fișiere CSV, le corelează inteligent cu metadate biografice prin API-uri media internaționale și le convertește instantaneu în grafice vectoriale interactive (SVG). Proiectul nu se rezumă la afișarea de date statistice, ci include module complexe de notificare în timp real pentru utilizatorii autentificați, un agregator dinamic de știri bazat pe parsare de fluxuri XML și un panou administrativ securizat de control global pentru managementul bazei de date și al clienților.
+            </p>
+            <h3>1.3 Definiții, Acronime și Abrevieri</h3>
+            <ul>
+                <li><strong>SRS (Software Requirements Specification):</strong> Document formal ce descrie funcționalitățile și performanțele unui sistem software.</li>
+                <li><strong>SVG (Scalable Vector Graphics):</strong> Format de imagine vectorială bazat pe XML, utilizat pentru randarea graficelor fără pierderi de rezoluție.</li>
+                <li><strong>API (Application Programming Interface):</strong> Set de endpoint-uri HTTP utilizat pentru schimbul asincron de date între sisteme.</li>
+                <li><strong>TMDb (The Movie Database):</strong> Serviciu web extern utilizat pentru preluarea biografiilor și imaginilor oficiale ale actorilor.</li>
+                <li><strong>CRUD (Create, Read, Update, Delete):</strong> Cele patru operații fundamentale ale persistenței datelor.</li>
+                <li><strong>ACID (Atomicity, Consistency, Isolation, Durability):</strong> Set de proprietăți care garantează că tranzacțiile din baza de date sunt procesate în condiții de deplină siguranță.</li>
+            </ul>
         </section>
 
         <section id="overall-description">
             <h2>2. Descriere Generală</h2>
-            <h3>2.1 Perspectivele Sistemului</h3>
+            <h3>2.1 Perspectivele și Arhitectura Macro a Sistemului</h3>
             <p>
-                Aplicația funcționează într-un model client-server decuplat. Serverul (PHP/SQLite) gestionează persistența și logica de agregare, în timp ce clientul (Vanilla JS) se ocupă de randarea dinamică și interactivitate. 
-                Sistemul este autonom, neutilizând framework-uri precum React sau Laravel, conform cerințelor academice stricte.
+                Platforma AwA este proiectată ca o aplicație distribuită, bazată pe un model client-server complet decuplat. Aceasta înseamnă că logica de afișare și randare (Frontend) este complet separată de logica de business, persistență și procesare matematică (Backend).
             </p>
-            <h3>2.2 Clase de Utilizatori și Caracteristici</h3>
-            <ul>
-                <li><strong>Vizitator:</strong> Utilizator neautentificat care poate căuta actori, vizualiza biografii, naviga prin graficele de performanță și descărca vizualizările.</li>
-                <li><strong>Administrator:</strong> Utilizator autentificat care are control total asupra surselor de date. Acesta poate importa fișiere CSV masive, gestiona sursele de știri RSS și monitoriza integritatea bazei de date.</li>
-            </ul>
-            <h3>2.3 Mediu de Operare</h3>
             <p>
-                Aplicația este optimizată pentru browsere moderne (Chrome, Firefox, Safari, Edge) și respectă principiile <strong>Responsive Web Design</strong>, fiind complet funcțională pe dispozitive mobile, tablete și desktop-uri.
+                Interfața client rulează ca o aplicație Single Page (SPA) nativă în browser-ul utilizatorului, fiind construită exclusiv în HTML5, CSS3 și JavaScript modern. Comunicarea cu serverul se face asincron prin protocolul HTTPS, trimițând cereri de tip <code>Fetch API</code> și primind înapoi seturi de date structurate exclusiv în format JSON. Backend-ul este un API RESTful dezvoltat în PHP 8 nativ, care interacționează direct cu un motor relațional embedded SQLite 3. Această structură elimină nevoia de framework-uri grele și oferă un control total asupra execuției codului și utilizării memoriei.
+            </p>
+            <h3>2.2 Clase de Utilizatori, Roluri și Matricea de Privilegii</h3>
+            <p>
+                Sistemul identifică trei tipuri distincte de utilizatori umani, fiecare având un nivel diferit de interacțiune, drepturi de acces și comportament în raport cu sistemul de notificări al platformei:
+            </p>
+            <ul>
+                <li><strong>Vizitator Anonim (Utilizator Neautentificat):</strong> 
+                    <br><em>Caracteristici:</em> Reprezintă publicul larg care accesează platforma din exterior fără un cont de acces.
+                    <br><em>Drepturi:</em> Poate folosi bara de căutare predictivă pentru a găsi actori, poate citi profilurile publice populate din cache-ul local sau TMDb și poate vizualiza și exporta graficele macro native SVG. Nu are acces la zona de știri personalizate, nu poate interacționa cu sistemul de notificări tranzacționale și nu își poate salva preferințele în baza de date.
+                </li>
+                <li><strong>Client (Utilizator Autentificat în Platformă):</strong>
+                    <br><em>Caracteristici:</em> Deține un set valid de credențiale în tabela <code>users</code> și a fost validat prin cookie-ul de sesiune.
+                    <br><em>Drepturi:</em> Beneficiază de un tablou de bord complet personalizat. Are dreptul de a marca actori ca „Favoriți”, acțiune ce declanșează instantaneu o notificare vizuală de tip Toast în interfață și salvează legătura în baza de date. Primește notificări automate în timp real bazate pe parsarea fluxurilor RSS cinematografice și are capacitatea de a genera exporturi personalizate (.svg sau de înaltă rezoluție comprimată .webp) ale datelor din profilul său de consum.
+                </li>
+                <li><strong>Administrator Sistem (Power User):</strong>
+                    <br><em>Caracteristici:</em> Utilizator cu privilegii depline (Global Control Overlord) autentificat securizat în panoul administrativ.
+                    <br><em>Drepturi:</em> Supraveghează și modifică direct starea întregului ecosistem AwA. Execută importuri masive de date prin încărcarea și parsarea de fișiere CSV (folosind tranzacții atomice pentru a asigura integritatea), controlează catalogul de actori prin operații CRUD extinse, auditează și elimină conturile clienților din sistem și gestionează fluxurile externe active de știri RSS cinematografice.
+                </li>
+            </ul>
+            <h3>2.3 Mediu de Operare și Constrângeri Tehnice</h3>
+            <p>
+                Platforma este proiectată să funcționeze pe orice server web capabil să ruleze interpretorul PHP 8 (ex: Apache din suita XAMPP) și care are extensia <code>pdo_sqlite</code> activată. La nivel de client, aplicația este optimizată pentru a respecta cu strictețe principiile de <strong>Responsive Web Design (RWD)</strong>.
+            </p>
+            <p>
+                Interfața este adaptabilă dinamic folosind exclusiv CSS Flexbox și Grid Layout, garantând o afișare corectă și fluidă pe ecrane de telefoane mobile, tablete și monitoare desktop, fără colapsarea elementelor de text sau suprapunerea butoanelor de notificare. Nu se acceptă dependențe de framework-uri CSS (cum ar fi Bootstrap sau Tailwind), asigurând un cod curat, ușor de întreținut și de auditat conform standardelor W3C.
             </p>
         </section>
-
         <section id="system-features">
             <h2>3. Funcționalitățile Sistemului</h2>
-            <h3>3.1 Motorul de Căutare Predictivă</h3>
+            
+            <h3>3.1 Autentificare, Cookie-uri și Persistența Sesiunii (Clienți & Admini)</h3>
             <p>
-                Sistemul implementează un algoritm de căutare asincronă care oferă sugestii pe măsură ce utilizatorul introduce caractere. Aceasta interoghează simultan baza locală și API-ul TMDb pentru a asigura o acoperire maximă a actorilor.
+                Platforma implementează un modul robust de gestionare a stării utilizatorilor. La autentificare, serverul validează credențialele și emite un cookie de sesiune criptat. Pentru clienți, acest cookie permite recunoașterea automată la nivel de browser și personalizarea întregii pagini principale (schimbarea elementelor din meniu, deblocarea butoanelor de adăugare la favoriți). Deconectarea distruge complet cookie-ul și token-urile asociate, curățând memoria locală a browserului.
             </p>
-            <h3>3.2 Vizualizarea Statistică Nativă</h3>
+
+            <h3>3.2 Modulul de Căutare Asincronă și Managementul Catalogului de Actori</h3>
             <p>
-                Utilizând coordonate carteziene și polare, sistemul calculează și desenează bare de progres, grafice circulare și de tip "donut". Toate aceste elemente sunt generate direct în format vectorial (SVG), asigurând o claritate perfectă indiferent de rezoluția ecranului.
+                Sistemul utilizează un mecanism hibrid de căutare. Când un utilizator (vizitator sau client) introduce caractere în câmpul de căutare, o cerere asincronă interoghează baza locală SQLite 3 (care joacă rol de cache). Dacă datele nu sunt complete, sistemul apelează în fundal prin cURL API-ul extern TMDb, salvează automat rezultatele local pentru a optimiza apelurile viitoare și randează profilul complet (biografie, imagini oficiale, listă istorică de nominalizări).
             </p>
-            <h3>3.3 Agregatorul de Știri în Timp Real</h3>
+
+            <h3>3.3 Motorul de Randare SVG și Modulul de Export Multi-Format</h3>
             <p>
-                Sistemul parsează fluxuri RSS multiple pentru a identifica noutăți despre actorul selectat. Folosește tehnici de filtrare a textului pentru a asigura relevanța informației afișate.
+                Datele agregate privind ratele de câștig, nominalizările repetate și topurile pe categorii de premii sunt transmise sub formă de obiecte structurate JSON către scriptul de frontend. Aici, un motor matematic calculează razele și coordonatele carteziene pentru a desena dinamic elemente vectoriale native <code>&lt;svg&gt;</code>. Utilizatorii autentificați (clienții) pot exporta aceste structuri fie ca fișiere vectoriale pure (.svg), fie transformate prin intermediul unui context Canvas 2D invizibil în imagini de înaltă rezoluție comprimată (.webp).
+            </p>
+
+            <h3>3.4 Sistemul de Notificări în Timp Real</h3>
+            <p>
+                Aplicația încorporează un sistem dinamic de avertizare și notificare a clienților și administratorilor. Acesta acționează pe două niveluri:
+            </p>
+            <ul>
+                <li><strong>Notificări de Sistem (Tranzacționale):</strong> Alertează utilizatorul în mod direct când o acțiune a fost finalizată cu succes (ex: „Actorul a fost adăugat la favoriți!”, „Importul fișierului CSV a fost finalizat cu succes!”, „Eroare la autentificare – credențiale invalide!”).</li>
+                <li><strong>Notificări de Conținut:</strong> Clienții sunt avertizați vizual printr-un sistem de badges sau mesaje dinamice în momentul în care administratorul aduce modificări catalogului de actori sau când o nouă sursă RSS de știri a fost activată pe platformă.</li>
+            </ul>
+
+            <h3>3.5 Panoul de Control Global (Drepturi Administrative)</h3>
+            <p>
+                Dedicat exclusiv administratorului, acest modul controlează starea întregii platforme. Adminul are la dispoziție instrumente de audit pentru vizualizarea și ștergerea conturilor de clienți, monitorizarea statisticilor privind preferințele acestora (ce actori au fost salvați cel mai des la favoriți), executarea de importuri masive prin parsarea fișierelor CSV și configurarea completă (CRUD) a surselor RSS cinematografice.
             </p>
         </section>
 
         <section id="ui-ux-motivations">
             <h2>4. Motivațiile Designului</h2>
             <p>
-                Alegerea unei interfețe "Mobile-First" și renunțarea la framework-uri au fost decizii strategice bazate pe următoarele argumente:
+                Alegerea unei interfețe fluidizate și renunțarea la framework-uri mari au fost decizii strategice bazate pe următoarele argumente:
             </p>
             <ul>
-                <li><strong>Accesibilitate:</strong> Layout-ul fluid folosind CSS Grid și Flexbox permite o adaptare naturală la orice dimensiune de viewport.</li>
-                <li><strong>Viteză de Randare:</strong> Eliminarea overhead-ului cauzat de Virtual DOM (din React) sau a stilurilor nefolosite (din Bootstrap) a dus la un First Contentful Paint sub 300ms.</li>
-                <li><strong>Sustenabilitate:</strong> Codul nativ este mai ușor de auditat și nu depinde de actualizările de versiuni ale unor biblioteci terțe care ar putea introduce vulnerabilități sau incompabilități.</li>
+                <li><strong>Accesibilitate și Aliniere:</strong> Layout-ul organizat prin CSS Grid și Flexbox permite o adaptare naturală la orice ecran. Câmpurile de căutare și butoanele folosesc reguli de aliniere și spațiere interioară (padding) explicite pentru a preveni colapsarea elementelor sau lipirea textului de margini.</li>
+                <li><strong>Viteză de Randare:</strong> Eliminarea overhead-ului cauzat de structuri Virtual DOM grele a dăruit o viteză excelentă și un First Contentful Paint extrem de mic.</li>
+                <li><strong>Sustenabilitate:</strong> Codul scris în tehnologii web native (Vanilla JS) este mai sigur, ușor de auditat și independent de actualizări ale unor module terțe.</li>
             </ul>
         </section>
 
         <section id="use-cases">
             <h2>5. Specificația Cazurilor de Utilizare</h2>
-            <p>Tabelul de mai jos descrie fluxurile principale de interacțiune, evidențiind valoarea adusă utilizatorului:</p>
+            <p>Următoarea structură tabelară descrie cazurile de utilizare actualizate, evidențiind interacțiunile clienților și sistemul de notificări:</p>
 
             <table>
                 <thead>
@@ -177,73 +216,120 @@
                         <th>ID</th>
                         <th>Nume Caz de Utilizare</th>
                         <th>Actor Principal</th>
-                        <th>Descriere Flux Principal</th>
+                        <th>Descriere Flux și Notificări din Spate</th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr>
                         <td>UC01</td>
-                        <td>Căutare actor și profil</td>
-                        <td>Vizitator</td>
-                        <td>Utilizatorul introduce numele; Sistemul oferă sugestii; Utilizatorul alege; Sistemul încarcă Bio și Foto.</td>
+                        <td>Căutare predictivă și afișare profil</td>
+                        <td>Vizitator / Client</td>
+                        <td>Utilizatorul introduce numele; Sistemul oferă sugestii; Utilizatorul alege; Sistemul încarcă Bio și Foto din cache și TMDb.</td>
                     </tr>
                     <tr>
                         <td>UC02</td>
-                        <td>Analiză statistică premii</td>
-                        <td>Vizitator</td>
-                        <td>Sistemul preia datele din SQLite și generează 3 tipuri de grafice SVG personalizate.</td>
+                        <td>Adăugare actor la Favoriți</td>
+                        <td>Client Autentificat</td>
+                        <td>Clientul apasă pe butonul de salvare; serverul actualizează tabela <code>favorites</code>; <strong>Sistemul declanșează o notificare vizuală de succes</strong> în UI.</td>
                     </tr>
                     <tr>
                         <td>UC03</td>
-                        <td>Export vizualizări</td>
-                        <td>Vizitator</td>
-                        <td>Utilizatorul selectează formatul (SVG/WebP); Sistemul generează fișierul prin manipulare Canvas/DOM.</td>
+                        <td>Export grafice statistice</td>
+                        <td>Vizitator / Client</td>
+                        <td>Generarea fișierelor SVG/WebP din interfață. <strong>Se trimite notificare de descărcare inițiată</strong>.</td>
                     </tr>
                     <tr>
                         <td>UC04</td>
-                        <td>Import date masive</td>
-                        <td>Administrator</td>
-                        <td>Admin încarcă CSV; PHP parsează și inserează prin tranzacții în SQLite.</td>
+                        <td>Autentificare și generare cookie</td>
+                        <td>Client / Administrator</td>
+                        <td>Se verifică credențialele. Dacă eșuează, <strong>se trimite notificare flash de eroare</strong>; dacă reușește, se emite cookie-ul <code>PHPSESSID</code>.</td>
                     </tr>
                     <tr>
                         <td>UC05</td>
-                        <td>Configurare știri</td>
+                        <td>Abonare și vizualizare notificări RSS</td>
+                        <td>Client Autentificat</td>
+                        <td>Aplicația parsează fluxurile XML; interfața afișează notificări cu cele mai noi știri dedicate actorilor din lista de favoriți.</td>
+                    </tr>
+                    <tr>
+                        <td>UC06</td>
+                        <td>Import masiv date CSV</td>
                         <td>Administrator</td>
-                        <td>Admin adaugă URL RSS; Sistemul validează și salvează sursa pentru agregator.</td>
+                        <td>Adminul încarcă fișierul de nominalizări; serverul rulează tranzacția SQL; <strong>sistemul trimite o notificare globală de succes</strong>.</td>
+                    </tr>
+                    <tr>
+                        <td>UC07</td>
+                        <td>Gestiune conturi clienți & Audit</td>
+                        <td>Administrator</td>
+                        <td>Adminul accesează panoul, listează utilizatorii înregistrați, analizează preferințele lor și poate exporta datele în JSON/CSV.</td>
+                    </tr>
+                    <tr>
+                        <td>UC08</td>
+                        <td>Configurare surse RSS (CRUD)</td>
+                        <td>Administrator</td>
+                        <td>Adăugarea, modificarea sau ștergerea surselor externe de știri cinematografice din baza de date.</td>
                     </tr>
                 </tbody>
             </table>
 
             <figure id="use-case-diagram">
-                <img src="images/diagrams/use_case.png" alt="UML Use Case Diagram">
-                <figcaption>Figura 1: Diagrama UML Use Case a sistemului AwA (Actor Awards Visualizer)</figcaption>
+                <img src="images/diagrams/use_case.png?v=1" alt="UML Use Case Diagram">
+                <figcaption>Figura 1: Diagrama UML Use Case detaliată a sistemului AwA</figcaption>
             </figure>
         </section>
 
         <section id="non-functional-requirements">
             <h2>6. Cerințe Non-Funcționale</h2>
-            <h3>6.1 Performanță</h3>
+            
+            <h3>6.1 Performanță, Timpi de Răspuns și Metricile de Rețea</h3>
             <p>
-                Timpul de răspuns al API-urilor interne trebuie să fie sub 100ms pentru căutare și sub 200ms pentru generarea statisticilor agregate.
+                Deoarece aplicația AwA funcționează ca o platformă de vizualizare în timp real, performanța percepută de clienți este critică pentru reținerea acestora pe pagină. Constrângerile de viteză sunt segmentate astfel:
             </p>
-            <h3>6.2 Securitate</h3>
+            <ul>
+                <li><strong>Latența Căutării Predictive (Sub 100ms):</strong> Pentru operațiunile de tastare în bara de căutare asincronă, timpul total de răspuns (Round Trip Time - RTT) de la declanșarea evenimentului <code>input</code> în JavaScript până la afișarea dropdown-ului cu sugestii nu trebuie să depășească 100ms. Această performanță este atinsă prin implementarea unei tehnici de <em>de-bouncing</em> de 200ms în frontend (care previne trimiterea de cereri HTTP la fiecare tastă apasată frenetic) și prin utilizarea indecșilor de tip <code>B-Tree</code> pe coloana <code>nominalizat</code> în baza SQLite.</li>
+                <li><strong>Generarea Agregărilor Statistice (Sub 200ms):</strong> Execuția interogărilor de numărare și însumare pe tabela <code>nominations</code> (care poate conține zeci de mii de înregistrări istorice) și transmiterea pachetului de date brute JSON către motorul SVG trebuie să fie finalizată în maximum 200ms. Evitarea operațiunilor de tip <code>JOIN</code> grele în fundal și scrierea de interogări curate optimizează acest timp.</li>
+                <li><strong>Eficiența Memoriei Frontend:</strong> Scripturile de randare a graficelor vectoriale nu trebuie să cauzeze scurgeri de memorie (memory leaks). Elementele SVG vechi sunt distruse complet din memoria DOM înainte ca o nouă diagramă să fie injectată dinamic.</li>
+            </ul>
+
+            <h3>6.2 Securitate, Imunizare și Managementul Vulnerabilităților Web</h3>
             <p>
-                Sistemul trebuie să fie imun la SQL Injection prin utilizarea obligatorie a PDO. Toate datele provenite de la utilizatori sau API-uri externe trebuie să fie tratate ca nesigure și filtrate anti-XSS înainte de randare.
+                Sistemul aplică standardele <strong>OWASP Top 10</strong> pentru a asigura o imunizare completă la nivel de design structural („Security by Design”):
             </p>
-            <h3>6.3 Portabilitate</h3>
+            <ul>
+                <li><strong>Imunizare împotriva Injecțiilor (SQLi):</strong> Toate interogările executate din scripturile backend ale API-ului folosesc exclusiv obiectul <code>PDO</code> cu parametrizare strictă (<code>Prepared Statements</code>). Variabilele trimise de clienți nu sunt interpretate niciodată ca instrucțiuni executabile, neutralizând complet riscul de SQL Injection.</li>
+                <li><strong>Prevenirea Execuției de Scripturi Malițioase (XSS):</strong> Datele obținute asincron din surse externe (biografii din API-ul TMDb sau string-uri din fluxurile RSS XML) sunt considerate implicit compromise și nesigure. La nivel de PHP, acestea sunt filtrate prin <code>htmlspecialchars()</code>, iar la nivel de frontend sunt introduse în pagină exclusiv prin proprietatea nativă <code>textContent</code>, blocând orice tentativă de Cross-Site Scripting.</li>
+                <li><strong>Managementul Securizat al Parolelor:</strong> Platforma respinge stocarea parolelor în clar sau sub formă de hash-uri slabe (cum ar fi MD5 sau SHA1). Se utilizează funcția nativă PHP <code>password_hash()</code> cu algoritmul autoreglabil <strong>BCRYPT</strong>, aplicând un factor de cost computațional ridicat (<code>cost => 12</code>) pentru a face atacurile de tip brute-force sau rainbow tables imposibile din punct de vedere matematic.</li>
+                <li><strong>Securitatea Sesiunilor Client:</strong> Identificatorul <code>PHPSESSID</code> transmis prin cookie folosește directivele directivele <code>HttpOnly</code> (care oprește furtul sesiunii prin console JavaScript) și <code>SameSite=Strict</code> (care oprește atacurile de tip Cross-Site Request Forgery - CSRF).</li>
+            </ul>
+
+            <h3>6.3 Portabilitate, Scalabilitate și Independență de Mediu</h3>
             <p>
-                Baza de date fiind de tip SQLite, întreaga aplicație trebuie să fie portabilă fără a necesita configurări complexe de server de baze de date (fără MySQL/PostgreSQL).
+                Un criteriu non-funcțional cheie în arhitectura AwA este eliminarea fricțiunilor de instalare și configurare (Zero-Configuration Deployment).
             </p>
+            <ul>
+                <li><strong>Persistență Autonomă pe Disc:</strong> Utilizarea motorului relațional embedded SQLite 3 implică faptul că întreaga bază de date, cu utilizatori, preferințe, configurări RSS și nominalizări, rezidă într-un singur fișier fizic (<code>data/awa.db</code>). Aplicația este complet portabilă: nu necesită instalarea, pornirea, securizarea sau configurarea unui server de baze de date mamut independent (fără dependențe de MySQL, MariaDB sau PostgreSQL).</li>
+                <li><strong>Portabilitatea Codului Sursă:</strong> Structura de directoare este organizată relativ. Proiectul poate fi mutat prin simplu copy-paste din directorul <code>htdocs</code> de pe un laptop de dezvoltare pe un server de producție Linux sau cloud, funcționând instantaneu atât timp cât interpretorul core PHP 8 este activ.</li>
+            </ul>
         </section>
 
         <section id="license" class="license">
             <h2>7. Licențiere și Aspecte Legale</h2>
+            <h3>7.1 Regimul Juridic al Codului Sursă: Licența MIT</h3>
             <p>
-                Proiectul <strong>AwA</strong> este livrat ca software cu sursă deschisă, respectând următoarele licențe:
+                Întregul nucleu software al aplicației AwA (scripturile PHP din API, modulele JavaScript de randare SVG, fișierele de configurare și stilurile CSS native) este distribuit în mod deschis sub auspiciile <strong>Licenței MIT</strong>. Aceasta reprezintă o licență permisivă, extrem de populară în comunitatea open-source, aleasă datorită următoarelor considerente legale:
             </p>
             <ul>
-                <li><strong>Software Code:</strong> Licența MIT. Aceasta permite utilizarea gratuită și modificarea, cu condiția menționării drepturilor de autor.</li>
-                <li><strong>Documentație și Conținut:</strong> Creative Commons Attribution 4.0 International (CC BY 4.0). Permite partajarea și adaptarea materialului în orice scop, cu atribuirea corespunzătoare a autorilor (Dumitrița & Laura).</li>
+                <li><strong>Libertate de Utilizare și Modificare:</strong> Permite oricărui utilizator terț, student sau instituție academică să descarce codul, să îl ruleze, să îl modifice în mod privat sau public și chiar să îl redistribuie fără restricții.</li>
+                <li><strong>Obligația de Atribuire:</strong> Singura constrângere legală impusă de licența MIT este păstrarea intactă a textului original privind drepturile de autor (Copyright notice) în toate copiile sau porțiunile substanțiale de cod redistribuite.</li>
+                <li><strong>Excluderea Garanțiilor (Limitation of Liability):</strong> Software-ul este livrat „ca atare” ("as is"), fără niciun fel de garanție explicită sau implicită. Autorii (Dumitrița & Laura) nu pot fi ținuți responsabili legal pentru eventuale daune sau disfuncționalități apărute în urma utilizării aplicației.</li>
+            </ul>
+
+            <h3>7.2 Regimul Conținutului și Documentației: Creative Commons</h3>
+            <p>
+                În ceea ce privește materialele text, rapoartele de specificații tehnice, diagramele ierarhice de arhitectură Model C4 și elementele media realizate în cadrul acestui proiect, regimul juridic este guvernat de licența internațională <strong>Creative Commons Attribution 4.0 International (CC BY 4.0)</strong>.
+            </p>
+            <ul>
+                <li><strong>Permisiuni:</strong> Oricine are dreptul legal de a distribui, remixa, adapta și construi pe baza acestor rapoarte, chiar și în scopuri comerciale.</li>
+                <li><strong>Condiții:</strong> Utilizatorul terț este obligat prin lege să ofere atribuirea corespunzătoare, menționând numele autorilor originali (Dumitrița & Laura), să ofere un link către licență și să specifice clar dacă au fost efectuate modificări asupra materialului original.</li>
             </ul>
         </section>
     </article>
@@ -253,6 +339,7 @@
     <button id="scroll-to-top" class="scroll-btn" title="Sus">▲</button>
     <button id="scroll-to-bottom" class="scroll-btn" title="Jos">▼</button>
 </div>
+
 <footer class="main-footer">
     <div class="container">
         <span class="footer-logo">AwA</span>
@@ -271,6 +358,21 @@
 <script>
     document.getElementById('scroll-to-top').addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
     document.getElementById('scroll-to-bottom').addEventListener('click', () => window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' }));
+document.getElementById('toggle-theme').addEventListener('click', () => {
+    document.body.classList.toggle('dark-theme');
+    const isDark = document.body.classList.contains('dark-theme');
+    localStorage.setItem('theme', isDark ? 'dark' : 'light');
+    document.getElementById('toggle-theme').textContent = isDark ? '☀️' : '🌙';
+});
+
+// Verifică tema salvată la încărcarea paginii
+document.addEventListener('DOMContentLoaded', () => {
+    const savedTheme = localStorage.getItem('theme');
+    if (savedTheme === 'dark') {
+        document.body.classList.add('dark-theme');
+        document.getElementById('toggle-theme').textContent = '☀️';
+    }
+});
 </script>
 
 </body>

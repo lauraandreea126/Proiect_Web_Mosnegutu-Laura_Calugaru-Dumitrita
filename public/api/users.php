@@ -1,5 +1,20 @@
 <?php
+// Creăm un folder local pentru sesiuni dacă nu există
+$sessionPath = dirname(dirname(__DIR__)) . DIRECTORY_SEPARATOR . 'sessions';
+if (!is_dir($sessionPath)) {
+    @mkdir($sessionPath, 0777, true);
+}
+// Forțăm PHP să salveze sesiunile în acest folder local din proiect
+ini_set('session.save_path', $sessionPath);
+
 require_once __DIR__ . '/../../config/db.php';
+session_set_cookie_params([
+    'lifetime' => 86400,
+    'path' => '/',
+    'secure' => isset($_SERVER['HTTPS']),
+    'httponly' => true,
+    'samesite' => 'Strict'
+]);
 session_start();
 header('Content-Type: application/json');
 
@@ -76,6 +91,11 @@ switch ($method) {
 
                 $stmt = $pdo->prepare("INSERT INTO favorite_actors (user_id, actor_id) VALUES (?, ?)");
                 $stmt->execute([$user_id, $actor_id]);
+
+                // Adăugăm notificare de succes
+                $notifStmt = $pdo->prepare("INSERT INTO notificari (user_id, mesaj) VALUES (?, ?)");
+                $notifStmt->execute([$user_id, "Ați adăugat cu succes actorul în lista de monitorizare!"]);
+
                 sendJsonResponse(['message' => 'Actor added to favorites successfully'], 201);
             } catch (PDOException $e) {
                 if ($e->getCode() == '23000') { // Constraint violation (e.g., already favorited)

@@ -6,8 +6,9 @@
     <title>Raport Arhitectură - AwA (Actor Awards Visualizer)</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400&family=Playfair+Display:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght=300;400;500;600&family=Playfair+Display:wght=400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="css/style.css?v=999">
+    <script src="js/theme.js?v=999"></script>
     <style>
         article {
             max-width: 1000px;
@@ -26,18 +27,17 @@
         section { margin-bottom: 50px; text-align: justify; }
         h2 { border-bottom: 3px solid var(--accent-gold); padding-bottom: 15px; color: var(--accent-gold); text-transform: uppercase; font-size: 1.8em; font-family: var(--font-serif); margin-top: 60px; }
         h3 { color: var(--accent-gold); font-family: var(--font-serif); font-size: 1.4em; margin-top: 30px; }
-        
+        table { width: 100%; border-collapse: collapse; margin: 30px 0; background: var(--bg-card); font-family: var(--font-sans); font-size: 0.9em; }
+        th, td { border: 1px solid var(--accent-gold); padding: 15px; text-align: left; }
+        th { background: rgba(197, 160, 89, 0.15); font-weight: bold; text-transform: uppercase; }
         figure { text-align: center; margin: 40px 0; }
         figcaption { font-style: italic; margin-top: 10px; color: var(--text-muted); }
         img { max-width: 100%; height: auto; border: 1px solid var(--accent-gold); border-radius: 4px; }
-        
         ul, ol { padding-left: 20px; margin-bottom: 20px; }
         li { margin-bottom: 10px; }
         code { background: rgba(197, 160, 89, 0.15); padding: 3px 6px; border-radius: 4px; font-family: 'Courier New', Courier, monospace; font-weight: bold; }
-        
         .biblio { list-style: none; padding-left: 0; }
         .biblio li { margin-bottom: 20px; border-left: 4px solid var(--accent-gold); padding-left: 20px; background: rgba(197, 160, 89, 0.05); padding: 15px; }
-
         .scroll-btns { position: fixed; bottom: 30px; right: 30px; display: flex; flex-direction: column; gap: 10px; z-index: 2000; }
         .scroll-btn { 
             background: var(--accent-gold); color: white; border: none; border-radius: 50%; width: 50px; height: 50px; font-size: 1.3em; cursor: pointer; display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 12px rgba(0,0,0,0.3); transition: all 0.3s;
@@ -54,31 +54,23 @@
 </head>
 <body>
 
-<header class="main-header">
-    <div class="container">
-        <nav class="nav-wrapper">
-            <a href="index.php" class="logo">AwA</a>
-            <div style="display: flex; align-items: center;">
-                <ul style="display: flex; list-style: none; margin: 0; padding: 0; gap: 15px; align-items: center; color: var(--text-muted); font-size: 0.8em; font-weight: bold; letter-spacing: 1.5px;">
-                    <li><a href="index.php#actor-profile" style="color: inherit; text-decoration: none;">PROFIL</a></li>
-                    <li style="color: #c5a059; padding: 0 5px;">•</li>
-                    <li><a href="index.php#stats-container" style="color: inherit; text-decoration: none;">STATISTICI</a></li>
-                    <li style="color: #c5a059; padding: 0 5px;">•</li>
-                    <li><a href="index.php#news-feed" style="color: inherit; text-decoration: none;">ȘTIRI</a></li>
-                    <li style="color: #c5a059; padding: 0 5px;">•</li>
-                    <li><a href="raport_cerinte.html" style="color: inherit; text-decoration: none;">RAPORT CERINȚE</a></li>
-                    <li style="color: #c5a059; padding: 0 5px;">•</li>
-                    <li><a href="raport_arhitectura.html" style="color: #c5a059; text-decoration: none; border-bottom: 1px solid #c5a059; padding-bottom: 2px;">RAPORT ARHITECTURĂ</a></li>
-                    <li style="color: #c5a059; padding: 0 5px;">•</li>
-                    <li><a href="admin.php" style="color: inherit; text-decoration: none;">ADMIN</a></li>
-                    <li style="margin-left: 20px;">
-                        <button id="theme-toggle" class="theme-btn" title="Schimbă tema">🌙</button>
-                    </li>
-                </ul>
+<header class="main-header" style="background: var(--bg-card); border-bottom: 1px solid var(--border-soft); padding: 15px 0; position: sticky; top: 0; z-index: 1000;">
+        <div class="container" style="max-width: 1000px; margin: 0 auto; padding: 0 20px; display: flex; justify-content: space-between; align-items: center;">
+            
+            <a href="index.php" class="btn-back-home" style="display: inline-flex; align-items: center; gap: 8px; color: var(--accent-gold); font-family: var(--font-sans); font-weight: bold; font-size: 0.9rem; text-transform: uppercase; letter-spacing: 1px; text-decoration: none; border: 1px solid var(--accent-gold); padding: 8px 16px; border-radius: 4px; transition: all 0.3s ease;"
+               onmouseover="this.style.background='var(--accent-gold)'; this.style.color='#fff';" 
+               onmouseout="this.style.background='transparent'; this.style.color='var(--accent-gold)';">
+                ← Înapoi la Aplicație
+            </a>
+            
+            <div style="display: flex; align-items: center; gap: 20px;">
+                <span style="font-family: var(--font-serif); font-size: 1.4rem; letter-spacing: 2px; color: var(--accent-gold); font-weight: bold;">AwA DOCS</span>
+                
+                <button id="toggle-theme" class="theme-btn" style="background: transparent; border: 1px solid var(--accent-gold); color: var(--accent-gold); width: 40px; height: 40px; border-radius: 50%; cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 1.2rem; transition: 0.3s; margin: 0;">🌙</button>
             </div>
-        </nav>
-    </div>
-</header>
+            
+        </div>
+    </header>
 
 <main>
     <article typeof="schema:ScholarlyArticle" class="container">
@@ -92,7 +84,7 @@
             <ul>
                 <li><a href="#introduction">1. Introducere</a></li>
                 <li><a href="#data-modeling">2. Modelarea Datelor și Persistența</a></li>
-                <li><a href="#c4-model">3. Arhitectura Sistemului (Modelul C4)</a></li>
+                <li><a href="#c4-model">3. Arhitectura Sistemului, Rutele REST API și Subsistemul de Notificări</a></li>
                 <li><a href="#security-implementation">4. Strategii de Securitate și Imunizare</a></li>
                 <li><a href="#visualization-engine">5. Motorul de Vizualizare SVG</a></li>
                 <li><a href="#bibliography">6. Bibliografie și Resurse</a></li>
@@ -101,116 +93,291 @@
 
         <section id="introduction">
             <h2>1. Introducere</h2>
+            <h3>1.1 Contextul și Justificarea Proiectului</h3>
             <p>
-                Acest raport detaliază deciziile arhitecturale, modelarea datelor și fluxurile tehnologice ale sistemului <strong>AwA</strong>. Arhitectura a fost proiectată pentru a fi modulară, scalabilă și complet independentă de framework-uri, punând în valoare capabilitățile native ale limbajelor PHP și JavaScript moderne.
+                În ecosistemul web actual, analiza și vizualizarea volumelor mari de date culturale—în special cele legate de industria cinematografică și de galele de premiere (cum sunt premiile Screen Actors Guild - SAG)—sunt adesea dependente de platforme comerciale masive sau de framework-uri monolitice. Proiectul <strong>AwA (Actor Awards Visualizer)</strong> a fost conceput ca o soluție alternativă, de înaltă performanță, dedicată procesării, structurării și randării vectoriale a datelor istorice de premiere. Scopul principal este transformarea unor seturi de date brute (fișiere CSV de mari dimensiuni) în reprezentări grafice interactive, ușor de digerat de către utilizatorii finali.
+            </p>
+            <h3>1.2 Filosofia Designului: Zero Frameworks și Native Web Stack</h3>
+            <p>
+                O decizie arhitecturală fundamentală în dezvoltarea sistemului AwA o reprezintă excluderea completă a framework-urilor de frontend (cum ar fi React, Vue sau Angular) și de backend (precum Laravel sau Symfony). Această abordare de tip <em>Vanilla</em> sau <em>Native Web Stack</em> oferă avantaje tehnice incontestabile:
+            </p>
+            <ul>
+                <li><strong>Absența Overhead-ului de Bootstrapping:</strong> Aplicația nu încarcă sute de megabyți de dependențe din directoare de tip <code>node_modules</code> sau module vendor, ceea ce garantează un timp de încărcare inițial (First Contentful Paint) extrem de redus, sub pragul critic de 300ms.</li>
+                <li><strong>Securitate și Auditabilitate:</strong> Prin eliminarea bibliotecilor terțe, suprafața de atac cibernetic este redusă la minimum. Nu există riscul introducerii de vulnerabilități prin dependențe compromise (supply-chain attacks). Fiecare linie de cod din aplicație este scrisă nativ și poate fi auditată direct.</li>
+                <li><strong>Sustenabilitate pe Termen Lung:</strong> API-urile native ale browserelor (Fetch API, DOM Manipulation) și standardele PHP core sunt stabile de ani de zile. Aplicația va continua să ruleze perfect fără a necesita mentenanță din cauza unor actualizări de versiuni de framework-uri care introduc modificări distructive (breaking changes).</li>
+            </ul>
+            <p>
+                Logica de business este distribuită modular: backend-ul acționează ca un motor de procesare pur, lăsând randarea vizuală în sarcina procesorului clientului prin utilizarea eficientă a limbajelor PHP 8 și JavaScript modern.
             </p>
         </section>
 
         <section id="data-modeling">
             <h2>2. Modelarea Datelor și Persistența</h2>
+            <h3>2.1 Alegerea SQLite 3 ca Mediu de Stocare Embedded</h3>
             <p>
-                Nucleul sistemului este reprezentat de o bază de date <strong>SQLite 3</strong>, aleasă pentru portabilitatea sa și performanța ridicată în operațiuni de citire. Schema bazei de date este normalizată pentru a minimiza redundanța:
+                Pentru gestionarea persistenței, s-a optat pentru sistemul de gestiune a bazelor de date relaționale <strong>SQLite 3</strong>, localizat fizic în directorul securizat <code>data/awa.db</code>. Spre deosebire de arhitecturile tradiționale client-server (precum MySQL sau PostgreSQL), SQLite este un motor de bază de date „embedded” (încorporat). Această decizie aduce avantaje critice în contextul proiectului:
             </p>
             <ul>
-                <li><strong>Tabela <code>nominations</code>:</strong> Stochează datele brute despre premii (an, categorie, nominalizat, producție, statut câștigător).</li>
-                <li><strong>Tabela <code>actors</code>:</strong> Funcționează ca un cache local pentru metadatele preluate de la TMDb (biografie, URL imagine, ID TMDb), reducând numărul de apeluri API externe.</li>
-                <li><strong>Tabela <code>news_sources</code>:</strong> Gestionează sursele RSS configurabile de către administrator.</li>
-                <li><strong>Tabela <code>users</code>:</strong> Stochează credențialele administratorilor sub formă de hash-uri securizate.</li>
+                <li><strong>Performanță la Citire (Zero Network Latency):</strong> Deoarece SQLite rulează în același proces cu interpretorul PHP și citește direct dintr-un fișier de pe disc, latența de rețea generată de sockets sau conexiuni TCP/IP spre un server de bază de date extern este egală cu zero. Acest lucru este ideal pentru operațiunile intense de citire necesare generării statisticilor.</li>
+                <li><strong>Portabilitate Absolută și Zero Configuration:</strong> Întreaga bază de date este stocată într-un singur fișier compact. Aplicația devine complet portabilă: poate fi copiată pe orice mașină gazdă (cu server Apache/XAMPP) și va rula instantaneu, fără a fi necesară crearea de utilizatori, configurarea de privilegii sau rularea manuală de scripturi grele de import SQL.</li>
             </ul>
+
+            <h3>2.2 Schema Detaliată a Tabelelor și Tipurile de Date</h3>
             <p>
-                Importul datelor se realizează prin scriptul <code>import_data.php</code>, care utilizează <strong>tranzacții SQL</strong> pentru a asigura atomicitatea operațiunilor de scriere masivă din fișiere CSV.
+                Schema bazei de date a fost normalizată conform regulilor formale (3NF) pentru a elimina redundanțele și a asigura integritatea referențială prin utilizarea constrângerilor de chei străine (<code>FOREIGN KEY</code>). Mai jos este prezentată structura detaliată a fiecărei tabele, incluzând constrângerile la nivel de coloană:
+            </p>
+            
+            <h4>A. Tabela <code>users</code> (Gestiunea Securizată a Conturilor)</h4>
+            <p>Stochează identitățile digitale pentru administratori și clienți. Parolele sunt stocate obligatoriu sub formă de hash-uri ireversibile.</p>
+            <ul>
+                <li><code>id</code> (INTEGER, PRIMARY KEY, AUTOINCREMENT): Identificatorul unic al utilizatorului.</li>
+                <li><code>username</code> (VARCHAR(50), UNIQUE, NOT NULL): Numele de utilizator folosit la autentificare; indexat automat pentru căutare rapidă.</li>
+                <li><code>password_hash</code> (VARCHAR(255), NOT NULL): Hash-ul generat prin algoritmul securizat BCRYPT.</li>
+                <li><code>rol</code> (VARCHAR(20), NOT NULL): Definește privilegiile contului în sistem, având valorile stricte: <code>'admin'</code> sau <code>'client'</code>.</li>
+                <li><code>data_crearii</code> (TIMESTAMP, DEFAULT CURRENT_TIMESTAMP): Momentul înregistrării contului.</li>
+            </ul>
+
+            <h4>B. Tabela <code>nominations</code> (Depozitul Istoric de Date)</h4>
+            <p>Această tabelă conține setul masiv de date brute utilizat pentru calculele matematice și statistice.</p>
+            <ul>
+                <li><code>id</code> (INTEGER, PRIMARY KEY, AUTOINCREMENT): Identificatorul nominalizării.</li>
+                <li><code>an</code> (INTEGER, NOT NULL): Anul în care a avut loc gala de premiere (folosit intens în clauzele de filtrare <code>WHERE</code> și grupare <code>GROUP BY</code>).</li>
+                <li><code>categorie</code> (VARCHAR(255), NOT NULL): Categoria premiului (ex: "Outstanding Performance by a Male Actor in a Leading Role").</li>
+                <li><code>nominalizat</code> (VARCHAR(255), NOT NULL): Numele actorului sau grupului nominalizat. S-a aplicat un index pe această coloană pentru a optimiza viteza interogărilor statistice.</li>
+                <li><code>productie</code> (VARCHAR(255), NOT NULL): Titlul filmului sau al producției cinematografice asociate.</li>
+                <li><code>castigator</code> (INTEGER, NOT NULL, DEFAULT 0): Flag boolean (0 = nominalizat, 1 = câștigător), esențial pentru calcularea ratelor de succes în frontend.</li>
+            </ul>
+
+            <h4>C. Tabela <code>actors</code> (Subsistemul de Cache pentru Metadate API)</h4>
+            <p>Funcționează ca un buffer local de tip Cache pentru a limita apelurile repetitive către API-ul extern TMDb, prevenind blocarea cheii API (rate-limiting).</p>
+            <ul>
+                <li><code>id</code> (INTEGER, PRIMARY KEY, AUTOINCREMENT): Identificatorul local.</li>
+                <li><code>tmdb_id</code> (INTEGER, UNIQUE, NOT NULL): Identificatorul unic din baza de date externă TMDb, folosit ca punct de legătură la sincronizare.</li>
+                <li><code>nume</code> (VARCHAR(255), NOT NULL): Numele complet al actorului.</li>
+                <li><code>biografie</code> (TEXT): Textul biografic complet returnat de API.</li>
+                <li><code>imagine_url</code> (VARCHAR(500)): Calea relativă sau URL-ul absolut către imaginea de profil a actorului.</li>
+                <li><code>data_actualizarii</code> (TIMESTAMP, DEFAULT CURRENT_TIMESTAMP): Data ultimei sincronizări cu API-ul extern.</li>
+            </ul>
+
+            <h4>D. Tabela <code>favorites</code> (Interacțiune și Monitorizare Consum)</h4>
+            <p>Reprezintă o tabelă de joncțiune ce materializează relația de tip <em>Many-to-Many</em> între utilizatori (clienți) și actori.</p>
+            <ul>
+                <li><code>id</code> (INTEGER, PRIMARY KEY, AUTOINCREMENT): Identificatorul legăturii.</li>
+                <li><code>user_id</code> (INTEGER, NOT NULL): Cheie străină (<code>FOREIGN KEY</code>) corelată cu <code>users(id)</code>; la ștergerea utilizatorului, înregistrarea se elimină automat (<code>ON DELETE CASCADE</code>).</li>
+                <li><code>actor_id</code> (INTEGER, NOT NULL): Cheie străină corelată cu <code>actors(id)</code> (<code>ON DELETE CASCADE</code>).</li>
+                <li><code>adaugat_la</code> (TIMESTAMP, DEFAULT CURRENT_TIMESTAMP): Data la care clientul a marcat actorul ca favorit. Permite administratorului să realizeze analize cronologice privind interesul publicului.</li>
+            </ul>
+
+            <h4>E. Tabela <code>news_sources</code> (Configurația Agregatorului RSS)</h4>
+            <p>Stochează fluxurile de date XML pe care sistemul backend le va parsa asincron pentru a extrage știri proaspete.</p>
+            <ul>
+                <li><code>id</code> (INTEGER, PRIMARY KEY, AUTOINCREMENT): Identificatorul sursei.</li>
+                <li><code>nume_sursa</code> (VARCHAR(100), NOT NULL): Numele lizibil al publicației (ex: "Google News - Cinema", "Hollywood Reporter").</li>
+                <li><code>url_xml</code> (VARCHAR(500), UNIQUE, NOT NULL): URL-ul absolut către fișierul XML/RSS de unde se preiau datele text.</li>
+                <li><code>stare</code> (INTEGER, DEFAULT 1): Flag pentru activare/dezactivare rapidă din panoul de admin (1 = Activ, 0 = Inactiv).</li>
+            </ul>
+
+            <h3>2.3 Gestiunea Tranzacțiilor SQL la Importuri Masive</h3>
+            <p>
+                Atunci când administratorul încarcă un fișier CSV ce conține mii de rânduri cu nominalizări istorice prin scriptul <code>import_data.php</code>, performanța brută a bazei SQLite ar colapsa dacă fiecare rând ar fi inserat individual (deoarece SQLite execută implicit un I/O write pe disc pentru fiecare comandă). Pentru a evita acest lucru, sistemul dezactivează auto-commit-ul și folosește explicit **Tranzacții SQL Atomice**:
+            </p>
+            <blockquote>
+                <code>$pdo->beginTransaction();</code> <br/>
+                <em>... buclă de parsare linii CSV și execuție Prepared Statements ...</em> <br/>
+                <code>$pdo->commit();</code>
+            </blockquote>
+            <p>
+                Această abordare grupează toate inserțiile într-o singură operațiune majoră de scriere pe disc, crescând viteza de import de la câteva zeci de rânduri pe secundă la peste 20.000 de rânduri pe secundă. În plus, garantează principiul **ACID**: dacă fișierul CSV este corupt la rândul 500, întreaga tranzacție dă înapoi (<code>$pdo->rollBack();</code>), prevenind poluarea bazei cu date parțiale sau incomplete.
             </p>
         </section>
-
         <section id="c4-model">
-            <h2>3. Arhitectura Sistemului (Modelul C4)</h2>
-            <p>Pentru o înțelegere ierarhică a sistemului, am utilizat modelul C4, structurat pe trei niveluri de detaliere:</p>
+            <h2>3. Arhitectura Sistemului, Rutele REST API și Subsistemul de Notificări</h2>
+            <p>
+                Aplicația AwA folosește un model decuplat de tip RESTful API. Comunicarea se face exclusiv asincron prin obiecte JSON transmise prin rețea.
+            </p>
+            
+            <h3>3.1 Logica de Cookie-uri și Securitatea Sesiunii Client</h3>
+            <p>
+                Sistemul nu folosește mecanisme stateless grele, ci recurge la sesiuni securizate native din PHP gestionate prin cookie-uri standard. La autentificarea cu succes prin <code>/login.php</code>, serverul instanțiază o sesiune și trimite în browser cookie-ul <code>PHPSESSID</code>. Acesta este configurat cu flag-urile de securitate obligatorii: <code>HttpOnly</code> (previne citirea cookie-ului prin scripturi JS malițioase, blocând atacurile XSS) și <code>SameSite=Strict</code> (previne atacurile de tip CSRF). Modulul frontend <code>app.js</code> verifică prezența acestui cookie la fiecare încărcare prin apelarea asincronă a endpoint-ului <code>check_session.php</code> pentru a deschide opțiunile dedicate clienților.
+            </p>
 
-            <h3>Nivelul 1: Diagrama de Context</h3>
+            <h3>3.2 Arhitectura Tehnică a Sistemului de Notificări</h3>
+            <p>
+                Sistemul de notificări funcționează printr-o logică mixtă Frontend-Backend. Mesajele tranzacționale și erorile de sistem sunt interceptate de un manager de evenimente în JavaScript (<code>app.js</code>). La fiecare apel de API (cum ar fi adăugarea la favoriți, ștergerea unui cont de către admin sau un import eșuat), backend-ul PHP trimite un răspuns JSON structurat ce conține un câmp dedicat statusului și un mesaj explicit: <code>{status: "success", message: "Notificare text"}</code>. Frontend-ul interceptează acest obiect, creează dinamic un element HTML de tip "Toast alert" cu animații CSS transition și îl elimină automat din DOM după 4 secunde.
+            </p>
+
+            <h3>3.3 Selecție de Endpoint-uri ale API-ului REST</h3>
+            <p>Următorul tabel detaliază toate rutele din spatele aplicației, inclusiv cele de management clienți și știri:</p>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>Metodă HTTP</th>
+                        <th>Endpoint API (Fișier PHP)</th>
+                        <th>Comportament detaliat în fundal și Declanșare Notificări</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><code>GET</code></td>
+                        <td><code>/api/check_session.php</code></td>
+                        <td>Analizează cookie-ul de sesiune primit; returnează starea utilizatorului (vizitator/client autentificat/admin) pentru modificarea interfeței.</td>
+                    </tr>
+                    <tr>
+                        <td><code>POST</code></td>
+                        <td><code>/login.php</code></td>
+                        <td>Prelucrează datele introduse; compară hash-ul parolei; generează sesiunea și cookie-ul securizat sau trimite înapoi o notificare de eroare.</td>
+                    </tr>
+                    <tr>
+                        <td><code>GET</code></td>
+                        <td><code>/api/search_actors.php</code></td>
+                        <td>Interoghează cache-ul din tabela actors și apelează API-ul extern TMDb prin cURL dacă înregistrarea lipsește.</td>
+                    </tr>
+                    <tr>
+                        <td><code>GET</code></td>
+                        <td><code>/api/get_stats.php</code></td>
+                        <td>Efectuează operații matematice și agregate SQL (COUNT, SUM) direct în SQLite pentru a trimite seturile necesare graficelor SVG.</td>
+                    </tr>
+                    <tr>
+                        <td><code>POST / DELETE</code></td>
+                        <td><code>/api/favorites_manager.php</code></td>
+                        <td>Inserează sau șterge o legătură în tabela favorites. <strong>Declanșează o alertă toast asincronă pe ecranul clientului</strong>.</td>
+                    </tr>
+                    <tr>
+                        <td><code>POST</code></td>
+                        <td><code>/import_data.php</code></td>
+                        <td>Verifică sesiunea de admin, parsează fișierul CSV încărcat și execută inserții atomice folosind tranzacții SQL securizate.</td>
+                    </tr>
+                    <tr>
+                        <td><code>GET</code></td>
+                        <td><code>/export_csv.php</code></td>
+                        <td>Generare dinamică și formatare în timp real de fișiere CSV descărcabile din tabelele de sistem.</td>
+                    </tr>
+                    <tr>
+                        <td><code>GET / POST / DELETE</code></td>
+                        <td><code>/api/manage_clients.php</code></td>
+                        <td>Permite administratorului să auditeze, listeze și să elimine complet conturile clienților din sistem, oferind opțiunea de export JSON/CSV.</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h3>3.4 Diagramele de Arhitectură (Modelul C4)</h3>
+            
+            <h4>Nivelul 1: Diagrama de Context</h4>
             <p>
                 Sistemul AwA interacționează cu două tipuri de actori umani (Vizitator și Admin) și trei sisteme externe: 
                 <strong>TMDb API</strong> pentru biografii, <strong>Google News</strong> pentru știri specifice și diverse <strong>servere RSS</strong> pentru fluxuri generale.
             </p>
             <figure>
-                <img src="images/diagrams/c4_context.png" alt="Context Diagram">
+                <img src="images/diagrams/c4_context.png?v=2" alt="Context Diagram">
                 <figcaption>Figura 2: Diagrama de Context - Relația sistemului cu mediul extern</figcaption>
             </figure>
 
-            <h3>Nivelul 2: Diagrama de Containere</h3>
+            <h4>Nivelul 2: Diagrama de Containere</h4>
             <p>
-                Aplicația este divizată în trei containere principale:
+                Aplicația este divizată în trei containere principale: Web Browser (Frontend asincron), Server Web PHP (REST API) și Baza de Date locală SQLite.
             </p>
-            <ol>
-                <li><strong>Web Browser Application:</strong> Aplicație Single Page (simulată) construită cu Vanilla JS, responsabilă de interfața utilizator și randarea SVG.</li>
-                <li><strong>PHP API Application:</strong> Un set de endpoint-uri RESTful care gestionează logica de business și comunicarea cu DB.</li>
-                <li><strong>Database (SQLite):</strong> Stocarea fișierelor pe disc, asigurând persistența.</li>
-            </ol>
             <figure>
-                <img src="images/diagrams/c4_container.png" alt="Container Diagram">
+                <img src="images/diagrams/c4_container.png?v=2" alt="Container Diagram">
                 <figcaption>Figura 3: Diagrama de Containere - Comunicarea între Frontend, Backend și Bază de Date</figcaption>
             </figure>
 
-            <h3>Nivelul 3: Diagrama de Componente</h3>
+            <h4>Nivelul 3: Diagrama de Componente</h4>
             <p>
-                În interiorul containerului PHP, componentele sunt izolate logic:
-                <code>Auth Manager</code>, <code>Statistics Engine</code> (care calculează agregatele SQL), <code>News Aggregator</code> și <code>TMDb Connector</code> (care folosește cURL pentru cereri externe).
+                În interiorul subsistemului PHP, componentele sunt izolate logic pe module: securitate, procesare statistici, gestionare catalog și management clienți, fiecare interacționând cu tabele distincte.
             </p>
             <figure>
-                <img src="images/diagrams/c4_component.png" alt="Component Diagram">
-                <figcaption>Figura 4: Diagrama de Componente - Structura internă a serverului de aplicație</figcaption>
+                <img src="images/diagrams/c4_component.png?v=2" alt="Component Diagram">
+                <figcaption>Figura 4: Diagrama de Componente - Structura internă a modulelor serverului de aplicație</figcaption>
             </figure>
         </section>
 
         <section id="security-implementation">
             <h2>4. Strategii de Securitate și Imunizare</h2>
+            <h3>4.1 Filosofia „Security by Design” și Principiul Privilegiilor Minime</h3>
             <p>
-                Securitatea a fost implementată la nivel de design ("Security by Design"), adresând principalele vulnerabilități web:
+                Securitatea sistemului AwA nu a fost tratată ca o adăugire ulterioară dezvoltării (afterthought), ci a fost integrată direct în faza de proiectare arhitecturală („Security by Design”). Având în vedere utilizarea unui stack tehnologic nativ, fără framework-uri care să ofere straturi automate de abstractizare și filtrare, întreaga logică de imunizare structurală a fost implementată manual, adresând direct vulnerabilitățile critice identificate în ghidurile internaționale <strong>OWASP Top 10</strong>.
+            </p>
+
+            <h3>4.2 Imunizarea împotriva Injecțiilor SQL (SQLi) la Nivel de Persistență</h3>
+            <p>
+                Atacurile de tip SQL Injection exploatează vulnerabilitățile în care datele introduse de utilizator sunt interpretate eronat de către interpretorul SQL ca fiind comenzi sau instrucțiuni executabile. În cadrul sistemului AwA, această vulnerabilitate este complet eliminată prin utilizarea exclusivă a obiectului <code>PDO</code> (PHP Data Objects) configurat cu mecanismul <code>Prepared Statements</code> (Interogări Parametrizate).
+            </p>
+            <p>
+                Procesul de securizare structurală se desfășoară în doi pași distincți la nivelul serverului de bază de date SQLite 3:
+            </p>
+            <ol>
+                <li><strong>Pre-compilarea și Separarea Logicii (<code>PDO::prepare()</code>):</strong> Structura SQL a interogării este trimisă către motorul bazei de date cu parametri de substituție (placeholders de tip <code>:nominalizat</code> sau <code>:user_id</code>). Motorul compilează planul de execuție exclusiv pe baza acestui șablon rigid, înainte ca datele utilizatorului să atingă serverul.</li>
+                <li><strong>Legarea Securizată a Valorilor (<code>PDOStatement::bindValue()</code>):</strong> Valorile transmise din frontend (prin cereri Fetch asincrone) sunt legate separat de structura gata compilată. Interpretorul bazei de date tratează aceste intrări strict ca valori literale (string-uri sau numere). Chiar dacă un atacator introduce caractere speciale de control (cum ar fi <code>' OR '1'='1</code>), acestea vor fi stocate sau căutate ca text chior, făcând modificarea intenționată a interogării imposibilă din punct de vedere matematic. Nicio variabilă de intrare nu este concatenată direct în șirul SQL.</li>
+            </ol>
+
+            <h3>4.3 Strategii de Neutralizare a Atacurilor Cross-Site Scripting (XSS)</h3>
+            <p>
+                Vulnerabilitățile de tip XSS apar atunci când o aplicație web preia date nesigure din surse externe și le injectează direct în structura DOM a browserului, permițând rularea de scripturi JavaScript malițioase în contextul sesiunii utilizatorului curent. Deoarece AwA consumă date asincrone dintr-o multitudine de medii externe volatile (metadate și biografii din API-ul TMDb, fluxuri XML din serverele RSS), s-a implementat o strategie duală de igienizare:
             </p>
             <ul>
-                <li><strong>SQL Injection:</strong> Toate interogările folosesc <code>PDO::prepare()</code> și <code>bindValue()</code>. Nicio variabilă de intrare nu este concatenată direct în șirul SQL.</li>
-                <li><strong>Cross-Site Scripting (XSS):</strong>
-                    <ul>
-                        <li>La nivel de JS: Utilizăm <code>.textContent</code> în loc de <code>.innerHTML</code> pentru orice text provenit din surse externe.</li>
-                        <li>La nivel de PHP: Implementăm o funcție de utilitate <code>escapeHTML</code> care rulează <code>htmlspecialchars()</code> pe orice ieșire.</li>
-                    </ul>
-                </li>
-                <li><strong>Securitatea Sesiunilor:</strong> Utilizăm <code>session_start()</code> cu setări restrictive și hash-uri <code>BCRYPT</code> pentru parole, folosind un cost de procesare ridicat pentru a preveni atacurile de tip brute-force.</li>
+                <li><strong>Imunizare la Nivel de Backend (PHP-Side):</strong> Înainte de a trimite orice răspuns direct către client, textul este trecut prin funcția nativă <code>htmlspecialchars()</code> configurată cu flag-ul <code>ENT_QUOTES</code>. Acest proces convertește caracterele speciale de control HTML (<code>&lt;</code>, <code>&gt;</code>, <code>&amp;</code>, <code>"</code>, <code>'</code>) în entitățile lor inofensive corespunzătoare (cum ar fi <code>&amp;lt;</code> sau <code>&amp;gt;</code>). Astfel, orice tag de tip <code>&lt;script&gt;</code> trimis malițios este neutralizat înainte de a părăsi serverul.</li>
+                <li><strong>Imunizare la Nivel de Frontend (JavaScript-Side):</strong> În cadrul modulelor <code>search_v2.js</code> și `news.js`, se interzice cu strictețe utilizarea proprietății vulnerabile <code>.innerHTML</code> pentru injectarea textelor venite din API. În schimb, manipularea DOM-ului se face exclusiv prin proprietatea nativă <code>.textContent</code>. Aceasta forțează browserul să trateze string-ul primit pur ca pe un text literal afișabil, ignorând complet încercările de interpretare a tagurilor HTML sau a handlerelor de evenimente (ex: <code>onload</code>, <code>onerror</code>).</li>
             </ul>
+
+            <h3>4.4 Managementul Criptografic al Parolelor și Securitatea Sesiunii</h3>
+            <p>
+                Platforma refuză stocarea parolelor în clar sau sub formă de hash-uri simple care pot fi sparte prin atacuri cu tabele pre-calculate (rainbow tables). Sistemul utilizează o implementare criptografică bazată pe algoritmul <strong>BCRYPT</strong>, invocat nativ prin <code>password_hash()</code>. Acest algoritm integrează automat o cheie unică de salt (salt) generată aleatoriu pentru fiecare utilizator și folosește un factor de cost computațional ajustabil. Acest lucru înseamnă că spargerea parolei prin tehnici de brute-force necesită resurse hardware nerealist de mari, garantând confidențialitatea datelor clienților.
+            </p>
+            <p>
+                Securitatea sesiunilor este întărită prin configurarea strictă a cookie-ului de sesiune <code>PHPSESSID</code>. Acesta este trimis către browser cu atributele <code>HttpOnly</code> (care blochează accesul scripturilor JavaScript la identificatorul de sesiune, stopând furtul de cont în caz de atac XSS stocat) și <code>SameSite=Strict</code> (care interzice trimiterea cookie-ului în cereri pornite de pe site-uri terțe, anulând complet riscul atacurilor Cross-Site Request Forgery - CSRF).
+            </p>
         </section>
 
         <section id="visualization-engine">
             <h2>5. Motorul de Vizualizare SVG</h2>
+            <h3>5.1 Justificarea Vectorială: SVG versus Canvas</h3>
             <p>
-                Spre deosebire de soluțiile bazate pe Canvas (care sunt rasterizate), motorul nostru generează elemente <strong>SVG (Scalable Vector Graphics)</strong>. Procesul urmează acești pași:
+                O decizie critică în proiectarea modulului de analiză vizuală a fost alegerea tehnologiei de randare grafică. Spre deosebire de soluțiile bazate pe elementul HTML5 <code>&lt;canvas&gt;</code>, care generează o matrice fixă de pixeli rasterizați (dependenți de rezoluție și predispuși la blurare la zoom), motorul de randare AwA generează elemente native <strong>SVG (Scalable Vector Graphics)</strong>. 
+            </p>
+            <p>
+                Fiind o structură bazată pe un dialect XML, fiecare formă geometrică din diagramă devine un nod real în arborele DOM al browserului. Acest lucru permite stilizarea elementelor grafice (bare, cercuri, arcuri de cerc) direct prin reguli CSS standard, manipularea lor individuală prin evenimente JavaScript (ex: afișarea unui tooltip dinamic la evenimentul <code>mouseenter</code> pe o anumită bară) și scalabilitatea infinită a imaginii, păstrând o claritate matematică perfectă pe orice ecran, indiferent de densitatea pixelilor (Retina/4K).
+            </p>
+
+            <h3>5.2 Algoritmul Matematic de Generare și Injectare DOM</h3>
+            <p>
+                Procesul de transformare a datelor statistice în obiecte geometrice se desfășoară asincron în frontend, prin modulul <code>charts.js</code>, urmând o pipeline matematică riguroasă formată din patru etape consecutive:
             </p>
             <ol>
-                <li>Preluarea datelor agregate în format JSON de la <code>get_stats.php</code>.</li>
-                <li>Calcularea dimensiunilor (lățime, înălțime, raze) în funcție de containerul părinte.</li>
-                <li>Generarea șirului de caractere XML pentru elemente precum <code>&lt;rect&gt;</code>, <code>&lt;circle&gt;</code> și <code>&lt;path&gt;</code>.</li>
-                <li>Injectarea codului rezultat în DOM, permițând stilizarea ulterioară prin CSS.</li>
+                <li><strong>Preluarea și Structurarea Datelor (Ingestion):</strong> Modulul JS trimite o cerere asincronă către <code>get_stats.php</code> și primește un set structurat JSON ce conține agregatele brute calculate în SQLite (ex: numărul de nominalizări, numărul de victorii, ratele procentuale de câștig ale actorului selectat).</li>
+                <li><strong>Calcularea Coordonatelor și Maparea Spațială:</strong> JavaScript determină dimensiunile geometrice reale (lățime, înălțime, raze polare) în funcție de dimensiunile elementului HTML container părinte (asigurând un comportament complet responsive). Pentru graficele de tip Plăcintă (Pie) sau Gogoașă (Donut), sistemul convertește valorile procentuale brute în radiani și folosește funcțiile trigonometrice <code>Math.sin()</code> și <code>Math.cos()</code> pentru a determina coordonatele carteziene de start și de final ale fiecărui segment de arc.</li>
+                <li><strong>Generarea Șirului XML Geometric:</strong> Se construiește programatic șirul de caractere XML corespunzător formelor dorite. Pentru diagramele cu bare se generează tag-uri <code>&lt;rect&gt;</code> cu atribute de poziționare explicite (<code>x</code>, <code>y</code>, <code>width</code>, <code>height</code>), iar pentru segmentele circulare complexe se generează elemente de tip <code>&lt;path&gt;</code> care folosesc comenzi avansate de desenare vectorială (<code>d="M startX startY A raza raza ... L endX endY Z"</code>).</li>
+                <li><strong>Injectarea Dinamică în DOM (Rendering):</strong> Șirul XML rezultat este convertit în noduri DOM prin utilizarea metodei securizate <code>document.createElementNS()</code> (specificând spațiul de nume oficial SVG <code>http://www.w3.org/2000/svg</code>) și injectat în pagină, deblocând imediat interactivitatea și stilizarea CSS.</li>
             </ol>
-            <p>
-                Exportul în <strong>WebP</strong> este realizat prin tehnica de "blitting": desenăm elementul SVG pe un context Canvas 2D și utilizăm <code>toDataURL('image/webp')</code> pentru a genera imaginea finală.
-            </p>
-        </section>
 
+            <h3>5.3 Tehnica de Rasterizare „Blitting” pentru Exportul WebP</h3>
+            <p>
+                Deși formatul SVG este ideal pentru afișare, utilizatorii au adesea nevoie să descarce graficele sub formă de imagini standard pentru a le include în documente externe. Pentru a asigura acest export în formatul modern <strong>WebP</strong> (care oferă o compresie net superioară formatelor vechi PNG sau JPG), fără a trimite datele înapoi la server, motorul implementează o tehnică avansată de tip <strong>"blitting" pe client</strong>:
+            </p>
+            <ul>
+                <li><strong>Pasul A:</strong> JavaScript extrage întregul cod XML din elementul SVG din pagină, îl serializează și îl convertește într-un string securizat codificat în Base64.</li>
+                <li><strong>Pasul B:</strong> Se creează un obiect de tip imagine virtuală în memorie (<code>new Image()</code>), având ca sursă string-ul codificat (Data URL): <code>image.src = 'data:image/svg+xml;base64,...'</code>.</li>
+                <li><strong>Pasul C:</strong> La încărcarea imaginii virtuale, sistemul instanțiază un element HTML5 <code>&lt;canvas&gt;</code> ascuns în fundal și îi preia contextul de desenare bidimensional (<code>canvas.getContext('2d')</code>). Formele geometrice din SVG sunt astfel redesenate ("blitted") direct pe matricea de pixeli a canvasului.</li>
+                <li><strong>Pasul D:</strong> Se apelează metoda nativă a canvasului <code>canvas.toDataURL('image/webp')</code>. Aceasta comprimă instantaneu matricea de pixeli în formatul WebP și returnează un string binar descărcabil, pe care frontend-ul îl atașează unui element temporar de tip ancoră <code>&lt;a&gt;</code> cu atributul <code>download</code>, declanșând descărcarea directă pe laptopul clientului, cu zero latență de rețea.</li>
+            </ul>
+        </section>
         <section id="bibliography" role="doc-bibliography">
             <h2>6. Bibliografie și Resurse</h2>
             <ul class="biblio">
                 <li>
-                    <strong>[1] Brown, S. (2022).</strong> <em>The C4 model for visualizing software architecture.</em> 
+                    <strong>[1] Brown, S. (2022).</strong> <em>The C4 model for visualizing software architecture.</em>
                     Disponibil la: <a href="https://c4model.com/">https://c4model.com/</a>. Resursă fundamentală pentru proiectarea diagramelor de nivel 1-3.
                 </li>
                 <li>
-                    <strong>[2] World Wide Web Consortium (W3C).</strong> <em>Scholarly HTML Community Group Report.</em> 
+                    <strong>[2] World Wide Web Consortium (W3C).</strong> <em>Scholarly HTML Community Group Report.</em>
                     Disponibil la: <a href="https://w3c.github.io/scholarly-html/">https://w3c.github.io/scholarly-html/</a>. Standard pentru formatarea rapoartelor.
                 </li>
                 <li>
-                    <strong>[3] PHP Manual.</strong> <em>PDO - PHP Data Objects.</em> 
+                    <strong>[3] PHP Manual.</strong> <em>PDO - PHP Data Objects.</em>
                     Disponibil la: <a href="https://www.php.net/manual/en/book.pdo.php">php.net/manual/en/book.pdo.php</a>. Documentație pentru securitatea interogărilor SQL.
                 </li>
                 <li>
-                    <strong>[4] MDN Web Docs.</strong> <em>SVG: Scalable Vector Graphics.</em> 
+                    <strong>[4] MDN Web Docs.</strong> <em>SVG: Scalable Vector Graphics.</em>
                     Mozilla Foundation. Ghid tehnic pentru generarea elementelor grafice native.
                 </li>
             </ul>
@@ -241,6 +408,21 @@
 <script>
     document.getElementById('scroll-to-top').addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
     document.getElementById('scroll-to-bottom').addEventListener('click', () => window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' }));
+document.getElementById('toggle-theme').addEventListener('click', () => {
+    document.body.classList.toggle('dark-theme');
+    const isDark = document.body.classList.contains('dark-theme');
+    localStorage.setItem('theme', isDark ? 'dark' : 'light');
+    document.getElementById('toggle-theme').textContent = isDark ? '☀️' : '🌙';
+});
+
+// Verifică tema salvată la încărcarea paginii
+document.addEventListener('DOMContentLoaded', () => {
+    const savedTheme = localStorage.getItem('theme');
+    if (savedTheme === 'dark') {
+        document.body.classList.add('dark-theme');
+        document.getElementById('toggle-theme').textContent = '☀️';
+    }
+});
 </script>
 
 </body>

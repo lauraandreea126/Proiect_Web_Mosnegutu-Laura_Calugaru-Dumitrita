@@ -2,21 +2,27 @@
 header('Content-Type: application/json');
 require_once __DIR__ . '/../config/db.php';
 
+// daca avem un actor specific in url, calculam statistici doar pentru el
+// altfel calculam statistici globale (pentru toata baza de date)
 $actor = isset($_GET['actor']) ? trim($_GET['actor']) : null;
 
 try {
     if ($actor) {
-        // stats categorii pt actor (case-insensitive)
+        // ============================================================
+        // statistici pentru un actor anume
+        // ============================================================
+
+        // statistici pe categorii pentru actor (case-insensitive)
         $stmt1 = $pdo->prepare("SELECT category, COUNT(*) as count FROM nominations WHERE nominee = :actor COLLATE NOCASE GROUP BY category");
         $stmt1->execute(['actor' => $actor]);
         $byCategory = $stmt1->fetchAll();
 
-        // stats pe ani pt actor
+        // statistici pe ani pentru actor
         $stmt2 = $pdo->prepare("SELECT year, COUNT(*) as count FROM nominations WHERE nominee = :actor COLLATE NOCASE GROUP BY year ORDER BY year ASC");
         $stmt2->execute(['actor' => $actor]);
         $byYear = $stmt2->fetchAll();
 
-        // win vs lost pt actor
+        // raport castigatori vs nominalizari pentru actor
         $stmt3 = $pdo->prepare("SELECT 
             SUM(CASE WHEN is_winner = 1 THEN 1 ELSE 0 END) as winners,
             SUM(CASE WHEN is_winner = 0 THEN 1 ELSE 0 END) as nominees
@@ -24,7 +30,10 @@ try {
         $stmt3->execute(['actor' => $actor]);
         $winLoss = $stmt3->fetch();
     } else {
-        // stats globale
+        // ============================================================
+        // statistici globale (toata baza de date, fara filtrare pe actor)
+        // ============================================================
+
         $stmt1 = $pdo->query("SELECT category, COUNT(*) as count FROM nominations GROUP BY category");
         $byCategory = $stmt1->fetchAll();
 
@@ -38,11 +47,12 @@ try {
         $winLoss = $stmt3->fetch();
     }
 
+    // raspuns final, identic ca structura pentru ambele cazuri (cu sau fara actor)
     echo json_encode([
         'byCategory' => $byCategory,
-        'byYear' => $byYear,
-        'winLoss' => $winLoss,
-        'actor' => $actor
+        'byYear'     => $byYear,
+        'winLoss'    => $winLoss,
+        'actor'      => $actor
     ]);
 
 } catch (PDOException $e) {

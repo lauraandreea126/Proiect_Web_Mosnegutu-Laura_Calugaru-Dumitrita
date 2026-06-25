@@ -1,3 +1,11 @@
+/* ============================================================ */
+/* style.css - foaia de stiluri principala a proiectului awa */
+/* contine variabilele de culoare, layout-ul general, componentele */
+/* (header, hero, cautare, carduri, grafice, stiri) si suportul */
+/* pentru tema deschisa/intunecata (light/dark theme) */
+/* ============================================================ */
+
+/* variabilele de culoare/font folosite in toata aplicatia (tema deschisa) */
 :root {
     --bg-warm: #f7ede2;     
     --bg-card: #ffffff;  
@@ -10,28 +18,56 @@
     --font-sans: 'Inter', system-ui, sans-serif;
     --container-max-width: 1200px;
     --section-gap: 5rem;
+
+    /* Variabile cerute pentru Light Mode */
+    --bg-main: #fcf9f5;
+    --text-color: #222222;
+    --border-color: #e2d7cd;
 }
 
+/* ============================================================ */
+/* variabile culoare pentru tema intunecata (dark mode) */
+/* ============================================================ */
+/* Clasa globală pentru Night Mode */
+body.dark-theme, html.dark-theme {
+    --bg-main: #121212;
+    --bg-card: #1e1e1e;
+    --text-color: #f5f5f5;
+    --border-color: #333333;
+
+    /* Sincronizare cu stilurile existente */
+    --bg-warm: #121212;
+    --text-main: #f5f5f5;
+    --text-muted: #a0a0a0;
+    --border-soft: rgba(197, 160, 89, 0.4);
+}
+
+/* animatie folosita la aparitia elementelor pe ecran (fade in) */
 /* animatie intrare */
 @keyframes fadeIn {
     from { opacity: 0; transform: translateY(10px); }
     to { opacity: 1; transform: translateY(0); }
 }
 
+/* ============================================================ */
+/* reset general - eliminam marginile si padding-urile implicite */
+/* ============================================================ */
 * {
     box-sizing: border-box;
     margin: 0;
     padding: 0;
 }
 
+/* scroll lin la navigare pe ancore, marime de baza a fontului */
 html {
     scroll-behavior: smooth;
     font-size: 16px;
 }
 
+/* stiluri de baza pentru corpul paginii */
 body {
-    background-color: var(--bg-warm);
-    color: var(--text-main);
+    background-color: var(--bg-main);
+    color: var(--text-color);
     font-family: var(--font-sans);
     line-height: 1.7;
     overflow-x: hidden;
@@ -39,23 +75,31 @@ body {
     min-height: 100vh;
 }
 
+/* titluri - folosim fontul serif pentru aspect elegant */
 h1, h2, h3 {
     font-family: var(--font-serif);
     font-weight: 700;
 }
 
+/* linkuri fara subliniere, culoare luata din parinte */
 a {
     text-decoration: none;
     color: inherit;
     transition: 0.3s;
 }
 
+/* ============================================================ */
+/* container principal - limiteaza latimea continutului pe ecrane mari */
+/* ============================================================ */
 .container {
     width: 90%;
     max-width: var(--container-max-width);
     margin: 0 auto;
 }
 
+/* ============================================================ */
+/* antet (header) - bara de sus cu logo si meniu, lipicios (sticky) */
+/* ============================================================ */
 .main-header {
     padding: 1.5rem 0;
     background: #fff;
@@ -65,12 +109,14 @@ a {
     z-index: 100;
 }
 
+/* aliniaza logo-ul si meniul pe orizontala, la capete opuse */
 .nav-wrapper {
     display: flex;
     justify-content: space-between;
     align-items: center;
 }
 
+/* stilul textului pentru logo */
 .logo {
     font-family: var(--font-serif);
     font-size: 2rem;
@@ -78,11 +124,13 @@ a {
     text-transform: uppercase;
 }
 
+/* lista de linkuri din meniul de navigare */
 .nav-menu {
     display: flex;
     gap: 2rem;
 }
 
+/* stilul fiecarui link din meniu */
 .nav-menu a {
     font-size: 0.8rem;
     text-transform: uppercase;
@@ -91,6 +139,7 @@ a {
     transition: color 0.3s ease;
 }
 
+/* linie animata sub link la trecerea cu mouse-ul (hover) */
 .nav-menu a::after {
     content: '';
     position: absolute;
@@ -112,6 +161,9 @@ a {
     color: var(--accent-gold);
 }
 
+/* ============================================================ */
+/* sectiunea hero - banner-ul mare de sus, cu titlu si cautare */
+/* ============================================================ */
 .hero {
     height: 60vh;
     display: flex;
@@ -123,6 +175,7 @@ a {
     animation: fadeIn 0.8s ease-out;
 }
 
+/* limiteaza latimea textului din hero si il centreaza */
 .hero-content {
     text-align: center;
     max-width: 800px;
@@ -133,21 +186,30 @@ a {
     margin-bottom: 1rem;
 }
 
+/* ============================================================ */
+/* bara de cautare actori - input plus buton plus lista de sugestii */
+/* ============================================================ */
 .search-container {
     margin-top: 2rem;
     display: flex;
+    align-items: stretch;
     box-shadow: 0 10px 30px rgba(0,0,0,0.03);
     position: relative; 
 }
 
+/* campul de input pentru cautare */
 #search-actor {
     flex: 1;
     padding: 1.2rem 2rem;
     border: 1px solid var(--border-soft);
+    border-right: none;
     outline: none;
     font-family: var(--font-sans);
+    font-size: 1rem;
+    line-height: 1.5;
 }
 
+/* lista derulanta cu sugestii sub campul de cautare */
 .search-suggestions {
     position: absolute;
     top: 100%; 
@@ -163,6 +225,7 @@ a {
     box-shadow: 0 10px 25px rgba(0,0,0,0.1);
 }
 
+/* fiecare rand din lista de sugestii */
 .search-item {
     padding: 1rem;
     border-bottom: 1px solid #f0f0f0;
@@ -175,6 +238,9 @@ a {
     color: var(--accent-gold);
 }
 
+/* ============================================================ */
+/* carduri pentru rezultatele de nominalizari (cautare + tmdb) */
+/* ============================================================ */
 /* Stiluri pentru rezultatele căutării și TMDb */
 .nomination-card {
     background: #fff;
@@ -188,13 +254,14 @@ a {
 
 .nomination-card:hover {
     transform: translateY(-5px);
-    box-shadow: 0 12px 25px rgba(197, 160, 89, 0.2) !important;
+    box-shadow: 0 12px 25px rgba(197, 160, 89, 0.2);
 }
 
 .nomination-card.winner {
     border-left: 5px solid var(--accent-gold);
 }
 
+/* zona cu poza si biografia actorului, luate de pe tmdb */
 .tmdb-details {
     display: flex;
     gap: 1.5rem;
@@ -203,6 +270,7 @@ a {
     border-top: 1px solid #eee;
 }
 
+/* poza actorului */
 .actor-photo {
     width: 100px;
     height: 150px;
@@ -211,12 +279,16 @@ a {
     box-shadow: 0 4px 8px rgba(0,0,0,0.1);
 }
 
+/* textul biografiei actorului */
 .actor-bio {
     font-size: 0.9rem;
     color: var(--text-muted);
     font-style: italic;
 }
 
+/* ============================================================ */
+/* stiluri pentru graficele de statistici (chart.js) */
+/* ============================================================ */
 /* Stiluri pentru Grafice */
 .chart-wrapper {
     margin-bottom: 1.5rem;
@@ -237,10 +309,12 @@ a {
     font-family: var(--font-serif);
 }
 
+/* spatiul de sub controale (filtre) inainte de grafic */
 .chart-controls {
     margin-bottom: 60px;
 }
 
+/* butoanele de export csv/json, aliniate pe centru */
 .export-actions {
     display: flex;
     gap: 10px;
@@ -248,6 +322,7 @@ a {
     margin-top: 5px;
 }
 
+/* stilul unui buton de export */
 .export-btn {
     background: transparent;
     border: 1px solid var(--accent-gold);
@@ -267,6 +342,9 @@ a {
     color: #fff;
 }
 
+/* ============================================================ */
+/* stiluri pentru lista de stiri (rss) afisata pe pagina actorului */
+/* ============================================================ */
 /* Stiluri pentru Știri */
 .news-list {
     list-style: none;
@@ -287,12 +365,14 @@ a {
     color: var(--accent-gold);
 }
 
+/* eticheta cu numele sursei de stire */
 .news-source {
     font-size: 0.8rem;
     color: var(--accent-gold);
     text-transform: uppercase;
 }
 
+/* butonul de cautare, langa campul de input */
 .search-btn {
     padding: 0 2.5rem;
     background: var(--accent-gold);
@@ -302,12 +382,19 @@ a {
     text-transform: uppercase;
     font-weight: 600;
     transition: 0.3s;
+    align-self: stretch;
+    font-size: 0.85rem;
+    letter-spacing: 1px;
+    white-space: nowrap;
 }
 
 .search-btn:hover {
     background: #c2a366;
 }
 
+/* ============================================================ */
+/* layout general al sectiunilor de continut din pagina */
+/* ============================================================ */
 /* sectiuni continut */
 .grid-layout {
     display: flex;
@@ -315,6 +402,7 @@ a {
     gap: 5rem;
 }
 
+/* cutie/card pentru o sectiune de continut */
 .section-box {
     background: var(--bg-card);
     padding: 4rem;
@@ -335,6 +423,9 @@ a {
     padding-left: 1.5rem;
 }
 
+/* ============================================================ */
+/* subsolul (footer) paginii */
+/* ============================================================ */
 .main-footer {
     padding: 5rem 0;
     text-align: center;
@@ -342,6 +433,9 @@ a {
     font-size: 0.75rem;
 }
 
+/* ============================================================ */
+/* buton flotant - revino sus pe pagina */
+/* ============================================================ */
 #back-to-top {
     position: fixed;
     bottom: 30px;
@@ -364,6 +458,13 @@ a {
     visibility: visible;
 }
 
+/* atentie: tot acest bloc (stari de asteptare, dark mode, theme toggle,
+   efecte hover, animatii) este DUPLICAT mai jos in fisier (inca o data
+   identic, plus o repetare a acestui comentariu). pare o eroare aparuta
+   la o copiere anterioara. nu am sters nimic ca sa nu modific logica,
+   dar ar trebui curatat manual - una dintre cele doua copii e de prisos
+   si chiar produce o regula css invalida (vezi mai jos unde
+   #scroll-to-top:hover se intrerupe brusc cu #back-to-top.show in interior) */
 /* Stiluri pentru stările de așteptare */
 .empty-state-msg {
     padding: 2rem;
@@ -380,11 +481,11 @@ a {
 }
 
 .hidden {
-    display: none !important;
+    display: none;
 }
 
-/* Dark Mode Overrides */
-body.dark-mode {
+/* Dark Mode/Theme Overrides */
+body.dark-theme, body.dark-mode {
     --bg-warm: #121212;
     --bg-card: #1e1e1e;
     --text-main: #f5f5f5;
@@ -392,41 +493,86 @@ body.dark-mode {
     --border-soft: rgba(197, 160, 89, 0.4);
 }
 
-body.dark-mode .main-header,
-body.dark-mode .hero,
-body.dark-mode .search-suggestions,
-body.dark-mode .nomination-card,
-body.dark-mode .chart-wrapper {
+body.dark-theme, body.dark-mode,
+body.dark-theme .main-header, body.dark-mode .main-header,
+body.dark-theme .hero, body.dark-mode .hero,
+body.dark-theme .search-suggestions, body.dark-mode .search-suggestions,
+body.dark-theme .nomination-card, body.dark-mode .nomination-card,
+body.dark-theme .chart-wrapper, body.dark-mode .chart-wrapper {
     background-color: var(--bg-card);
     color: var(--text-main);
 }
 
-body.dark-mode #search-actor {
+body.dark-theme #search-actor, body.dark-mode #search-actor {
     background-color: #2a2a2a;
     color: #fff;
     border-color: var(--border-soft);
 }
 
-body.dark-mode .search-item:hover {
+body.dark-theme .search-item:hover, body.dark-mode .search-item:hover {
     background: #2d2d2d;
 }
 
-body.dark-mode .section-box {
+body.dark-theme .section-box, body.dark-mode .section-box {
     background: var(--bg-card);
     box-shadow: 12px 12px 0px rgba(230, 184, 175, 0.2);
 }
 
-body.dark-mode .section-box:hover {
+body.dark-theme .section-box:hover, body.dark-mode .section-box:hover {
     box-shadow: 12px 12px 0px var(--accent-gold);
 }
 
-body.dark-mode .tmdb-details {
+body.dark-theme .tmdb-details, body.dark-mode .tmdb-details {
     border-top-color: #333;
 }
 
-body.dark-mode .empty-state-msg {
+body.dark-theme .empty-state-msg, body.dark-mode .empty-state-msg {
     background: #1a1a1a;
     border-color: #333;
+}
+
+/* Stilizări speciale de suprascriere pentru Panoul de Admin și Client în Night Mode */
+body.dark-theme .admin-container, 
+body.dark-theme .section-box-admin, 
+body.dark-theme .io-card,
+body.dark-theme .client-container,
+body.dark-mode .admin-container, 
+body.dark-mode .section-box-admin, 
+body.dark-mode .io-card,
+body.dark-mode .client-container {
+    background-color: var(--bg-card);
+    color: var(--text-color);
+    border-color: var(--border-color);
+}
+
+body.dark-theme .form-group input,
+body.dark-theme .form-group textarea,
+body.dark-theme .search-row input,
+body.dark-theme input[type="text"],
+body.dark-theme input[type="password"],
+body.dark-theme input[type="email"],
+body.dark-mode .form-group input,
+body.dark-mode .form-group textarea,
+body.dark-mode .search-row input,
+body.dark-mode input[type="text"],
+body.dark-mode input[type="password"],
+body.dark-mode input[type="email"] {
+    background-color: #2a2a2a;
+    color: var(--text-color);
+    border-color: var(--border-color);
+}
+
+body.dark-theme .source-list th,
+body.dark-mode .source-list th {
+    background-color: #1a1a1a;
+    color: var(--accent-gold);
+    border-color: var(--border-color);
+}
+
+body.dark-theme .source-list td,
+body.dark-mode .source-list td {
+    border-color: var(--border-color);
+    color: var(--text-color);
 }
 
 /* Theme Toggle Button Style */
@@ -484,7 +630,7 @@ article, .card-stiri, .actor-card, .stats-box, .section-box {
 }
 article:hover, .card-stiri:hover, .actor-card:hover, .stats-box:hover, .section-box:hover {
     transform: translateY(-5px);
-    box-shadow: 0 12px 25px rgba(197, 160, 89, 0.2) !important;
+    box-shadow: 0 12px 25px rgba(197, 160, 89, 0.2);
 }
 
 /* ANIMATIE ELASTICĂ PE BUTONUL DE TEMĂ */
@@ -508,10 +654,531 @@ article:hover, .card-stiri:hover, .actor-card:hover, .stats-box:hover, .section-
     animation: floatPulse 3s infinite ease-in-out;
 }
 #scroll-to-top:hover, #scroll-to-bottom:hover, #back-to-top:hover {
-    background: #b38f4b !important;
-    transform: scale(1.1) translateY(-3px) !important;
+#back-to-top.show {
+    opacity: 1;
+    visibility: visible;
+}
+
+/* Stiluri pentru stările de așteptare */
+.empty-state-msg {
+    padding: 2rem;
+    text-align: center;
+    border: 1px dashed var(--border-soft);
+    background: #fdfaf7;
+}
+
+.empty-state-msg p {
+    font-family: var(--font-serif);
+    font-style: italic;
+    color: var(--text-muted);
+    font-size: 1.1rem;
+}
+
+.hidden {
+    display: none;
+}
+
+/* Dark Mode/Theme Overrides */
+body.dark-theme, body.dark-mode {
+    --bg-warm: #121212;
+    --bg-card: #1e1e1e;
+    --text-main: #f5f5f5;
+    --text-muted: #a0a0a0;
+    --border-soft: rgba(197, 160, 89, 0.4);
+}
+
+body.dark-theme, body.dark-mode,
+body.dark-theme .main-header, body.dark-mode .main-header,
+body.dark-theme .hero, body.dark-mode .hero,
+body.dark-theme .search-suggestions, body.dark-mode .search-suggestions,
+body.dark-theme .nomination-card, body.dark-mode .nomination-card,
+body.dark-theme .chart-wrapper, body.dark-mode .chart-wrapper {
+    background-color: var(--bg-card);
+    color: var(--text-main);
+}
+
+body.dark-theme #search-actor, body.dark-mode #search-actor {
+    background-color: #2a2a2a;
+    color: #fff;
+    border-color: var(--border-soft);
+}
+
+body.dark-theme .search-item:hover, body.dark-mode .search-item:hover {
+    background: #2d2d2d;
+}
+
+body.dark-theme .section-box, body.dark-mode .section-box {
+    background: var(--bg-card);
+    box-shadow: 12px 12px 0px rgba(230, 184, 175, 0.2);
+}
+
+body.dark-theme .section-box:hover, body.dark-mode .section-box:hover {
+    box-shadow: 12px 12px 0px var(--accent-gold);
+}
+
+body.dark-theme .tmdb-details, body.dark-mode .tmdb-details {
+    border-top-color: #333;
+}
+
+body.dark-theme .empty-state-msg, body.dark-mode .empty-state-msg {
+    background: #1a1a1a;
+    border-color: #333;
+}
+
+/* Stilizări speciale de suprascriere pentru Panoul de Admin și Client în Night Mode */
+body.dark-theme .admin-container, 
+body.dark-theme .section-box-admin, 
+body.dark-theme .io-card,
+body.dark-theme .client-container,
+body.dark-mode .admin-container, 
+body.dark-mode .section-box-admin, 
+body.dark-mode .io-card,
+body.dark-mode .client-container {
+    background-color: var(--bg-card);
+    color: var(--text-color);
+    border-color: var(--border-color);
+}
+
+body.dark-theme .form-group input,
+body.dark-theme .form-group textarea,
+body.dark-theme .search-row input,
+body.dark-theme input[type="text"],
+body.dark-theme input[type="password"],
+body.dark-theme input[type="email"],
+body.dark-mode .form-group input,
+body.dark-mode .form-group textarea,
+body.dark-mode .search-row input,
+body.dark-mode input[type="text"],
+body.dark-mode input[type="password"],
+body.dark-mode input[type="email"] {
+    background-color: #2a2a2a;
+    color: var(--text-color);
+    border-color: var(--border-color);
+}
+
+body.dark-theme .source-list th,
+body.dark-mode .source-list th {
+    background-color: #1a1a1a;
+    color: var(--accent-gold);
+    border-color: var(--border-color);
+}
+
+body.dark-theme .source-list td,
+body.dark-mode .source-list td {
+    border-color: var(--border-color);
+    color: var(--text-color);
+}
+
+/* Theme Toggle Button Style */
+.theme-btn {
+    background: transparent;
+    border: 1px solid var(--accent-gold);
+    color: var(--accent-gold);
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.2rem;
+    transition: 0.3s;
+    margin-left: 1rem;
+}
+
+.theme-btn:hover {
+    background: var(--accent-gold);
+    color: #fff;
+}
+
+@media (max-width: 768px) {
+    .container { width: 95%; }
+    .search-container { flex-direction: column; }
+    .section-box { padding: 2rem; }
+}
+
+/* EFECT FLUID PE LINK-URILE DIN MENIU */
+nav ul li a {
+    position: relative;
+    transition: color 0.3s ease;
+}
+nav ul li a::after {
+    content: '';
+    position: absolute;
+    width: 100%;
+    transform: scaleX(0);
+    height: 2px;
+    bottom: -4px;
+    left: 0;
+    background-color: var(--accent-gold);
+    transform-origin: bottom center;
+    transition: transform 0.25s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+nav ul li a:hover::after {
+    transform: scaleX(1);
+}
+
+/* CARDURI INTELIGENTE ȘI RIDICARE VECTORIALĂ */
+article, .card-stiri, .actor-card, .stats-box, .section-box {
+    transition: transform 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94), box-shadow 0.3s ease;
+}
+article:hover, .card-stiri:hover, .actor-card:hover, .stats-box:hover, .section-box:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 12px 25px rgba(197, 160, 89, 0.2);
+}
+
+/* ANIMATIE ELASTICĂ PE BUTONUL DE TEMĂ */
+#theme-toggle {
+    transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275), background-color 0.3s;
+}
+#theme-toggle:hover {
+    transform: scale(1.12) rotate(12deg);
+}
+#theme-toggle:active {
+    transform: scale(0.9);
+}
+
+/* PULSAȚIE PE BUTOANELE PLUTITOARE */
+@keyframes floatPulse {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.05); box-shadow: 0 6px 18px rgba(197, 160, 89, 0.35); }
+    100% { transform: scale(1); }
+}
+#scroll-to-top, #scroll-to-bottom, #back-to-top {
+    animation: floatPulse 3s infinite ease-in-out;
+}
+#scroll-to-top:hover, #scroll-to-bottom:hover, #back-to-top:hover {
+    background: #b38f4b;
+    transform: scale(1.1) translateY(-3px);
     animation-play-state: paused;
 }
 #scroll-to-top:active, #scroll-to-bottom:active, #back-to-top:active {
-    transform: scale(0.95) translateY(0) !important;
+    transform: scale(0.95) translateY(0);
+}
+
+/* Forțare temă neagră pe containere și box-uri din Admin și Client (Task 10) */
+body.dark-theme, body.dark-theme .admin-container, body.dark-theme .client-container, body.dark-theme .section-box-admin {
+    background-color: #121212;
+    background: #121212;
+    color: #f5f5f5;
+}
+body.dark-theme table, body.dark-theme tr, body.dark-theme td, body.dark-theme th {
+    background-color: #1e1e1e;
+    color: #f5f5f5;
+    border-color: #333333;
+}
+body.dark-theme input, body.dark-theme select, body.dark-theme textarea {
+    background-color: #252525;
+    color: #ffffff;
+    border: 1px solid #444444;
+}
+
+/* Cardurile și cutiile interne primesc o nuanță de gri închis premium (card design) */
+body.dark-theme .section-box-admin,
+body.dark-theme .io-card,
+body.dark-theme .client-container,
+body.dark-theme .section-box,
+body.dark-theme .empty-state-msg,
+body.dark-theme div[style*="background: #fff"], 
+body.dark-theme div[style*="background-color: #fff"],
+body.dark-theme div[style*="background-color: white"] {
+    background-color: #1e1e1e;
+    background: #1e1e1e;
+    border-color: #333333;
+}
+
+body.dark-theme th {
+    background-color: #252525;
+    color: #c5a059; /* Păstrăm auriul premium pentru header tabel */
+}
+
+/* Media query pentru ecrane de mobil (Task 15) */
+@media (max-width: 768px) {
+    .admin-container, .client-container {
+        width: 100%;
+        padding: 10px;
+        margin: 0;
+    }
+    .section-box-admin, .io-card {
+        width: 100%;
+        box-sizing: border-box;
+    }
+    /* Transformare tabele mari în blocuri responsive pe mobil */
+    table, thead, tbody, th, td, tr { 
+        display: block; 
+    }
+    th {
+        display: none; /* Ascundem header-ul clasic pe mobil */
+    }
+    tr {
+        margin-bottom: 15px;
+        border: 1px solid var(--border-color);
+    }
+    td {
+        text-align: right;
+        padding-left: 50%;
+        position: relative;
+        border-bottom: 1px solid var(--border-color);
+    }
+    td::before {
+        content: attr(data-label);
+        position: absolute;
+        left: 10px;
+        width: 45%;
+        text-align: left;
+        font-weight: bold;
+        color: var(--text-color);
+    }
+
+    /* Forțăm header-ul să își stivuiască elementele pe verticală și să ocupe tot spațiul */
+    header, .main-header .container, .header-container, nav, .nav-wrapper {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        width: 100%;
+        height: auto;
+        padding: 10px 0;
+        text-align: center;
+    }
+
+    /* Logo-ul sau Titlul site-ului primește spațiu dedesubt */
+    .logo, header h1, header .brand {
+        margin-bottom: 12px;
+    }
+
+    /* Forțăm lista de link-uri (sau containerul lor direct) să devină o listă verticală, curată */
+    nav ul, .nav-links, nav div, .main-header .container > div {
+        display: flex;
+        flex-direction: column;
+        gap: 8px; /* Spațiu elegant între opțiunile meniului */
+        width: 100%;
+        padding: 0;
+        margin: 0;
+        align-items: center;
+    }
+
+    /* Transformăm fiecare link într-un buton lat, ușor de apăsat cu degetul pe telefon */
+    nav a:not(.logo), .nav-links a:not(.logo), .main-header .container a:not(.logo) {
+        display: block;
+        width: 90%;
+        margin: 0 auto;
+        padding: 10px;
+        background-color: var(--bg-card);
+        border: 1px solid var(--border-color);
+        border-radius: 4px;
+        box-sizing: border-box;
+    }
+
+    /* Hiding the bullet separators on mobile menu */
+    nav ul li {
+        width: 100%;
+    }
+    nav ul li:not(:has(a)):not(:has(span)) {
+        display: none;
+    }
+
+    #hamburger-btn {
+        display: block; /* Afișăm butonul doar pe mobil */
+    }
+    #nav-menu {
+        display: none; /* Ascundem implicit meniul pe mobil */
+        flex-direction: column;
+        width: 100%;
+        background-color: #1a1a1a;
+        padding: 10px 0;
+        border-top: 1px solid #c5a059;
+    }
+    #nav-menu.active {
+        display: flex; /* Când are clasa 'active', meniul se deschide vertical */
+    }
+    #nav-menu a {
+        display: block;
+        width: 90%;
+        margin: 5px auto;
+        padding: 12px;
+        text-align: center;
+        border: 1px solid #c5a059;
+        color: #c5a059;
+        background: #252525;
+    }
+}
+
+/* Proprietăți structurale valabile pentru ambele teme */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 15px;
+    margin-bottom: 15px;
+}
+
+th, td {
+    padding: 12px;
+    text-align: left;
+}
+
+/* --- Stiluri specifice pentru LIGHT MODE --- */
+body:not(.dark-theme) table, 
+body:not(.dark-theme) th, 
+body:not(.dark-theme) td {
+    border: 1px solid #dddddd; /* Linii gri deschis standard pe alb */
+}
+body:not(.dark-theme) thead th {
+    background-color: #f5f5f5;
+    border-bottom: 2px solid #999999;
+}
+
+/* --- Stiluri specifice pentru DARK MODE --- */
+body.dark-theme table, 
+body.dark-theme th, 
+body.dark-theme td {
+    border: 1px solid #333333; /* Linii gri închis pe fundal negru */
+}
+body.dark-theme thead th {
+    border-bottom: 2px solid #c5a059; /* Linie auriu premium în dark mode */
+}
+
+/* Borduri subtile pentru secțiuni și carduri */
+.section-box-admin, .io-card, .section-box {
+    border: 1px solid #333333;
+}
+
+/* ==========================================================================
+   STILIZARE COMPLETĂ TABELE (LIGHT & DARK MODE)
+   ========================================================================== */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 20px 0;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+    border-radius: 4px;
+    overflow: hidden;
+}
+
+th, td {
+    padding: 12px 15px;
+    text-align: left;
+}
+
+/* --- LIGHT MODE (Implicit) --- */
+body:not(.dark-theme) table {
+    background-color: #ffffff; /* Fundalul alb curat al tabelului */
+    border: 1px solid #e0e0e0;
+}
+body:not(.dark-theme) thead tr {
+    background-color: #f5f5f5;
+    color: #333333;
+    border-bottom: 2px solid #dddddd;
+}
+body:not(.dark-theme) tbody tr {
+    border-bottom: 1px solid #eeeeee;
+    background-color: #ffffff;
+}
+body:not(.dark-theme) tbody tr:nth-child(even) {
+    background-color: #f9f9f9; /* Rânduri alternative gri deschis */
+}
+
+/* --- DARK MODE --- */
+body.dark-theme table {
+    background-color: #1a1a1a; /* Fundal închis premium */
+    border: 1px solid #333333;
+}
+body.dark-theme thead tr {
+    background-color: #252525;
+    color: #c5a059; /* Cap de tabel auriu */
+    border-bottom: 2px solid #c5a059;
+}
+body.dark-theme tbody tr {
+    border-bottom: 1px solid #2a2a2a;
+    background-color: #1a1a1a;
+}
+body.dark-theme tbody tr:nth-child(even) {
+    background-color: #222222; /* Rânduri alternative închise */
+}
+
+/* Forțăm tabelele să lipească celulele pentru a permite borduri clasice */
+table, .table {
+    border-collapse: collapse;
+    width: 100%;
+    margin-top: 15px;
+    margin-bottom: 25px;
+}
+
+/* Punem o linie clară sub fiecare celulă din tabel */
+table th, table td {
+    padding: 12px 10px;
+    text-align: left;
+}
+
+/* --- REGLAJ CULORI LINII PENTRU LIGHT MODE --- */
+body:not(.dark-theme) table th, 
+body:not(.dark-theme) table td {
+    border-bottom: 1px solid #cccccc; /* Linie gri clasică sub fiecare rând */
+}
+body:not(.dark-theme) thead th {
+    border-bottom: 3px solid #999999; /* Linie mai groasă sub capul de tabel */
+    background-color: #f9f9f9;
+}
+
+/* --- REGLAJ CULORI LINII PENTRU DARK MODE --- */
+body.dark-theme table th, 
+body.dark-theme table td {
+    border-bottom: 1px solid #333333; /* Linie gri închis în tema dark */
+}
+body.dark-theme thead th {
+    border-bottom: 3px solid #c5a059; /* Linie auriu sub capul de tabel pe dark */
+}
+
+/* --- LIGHT MODE SPECIFIC (Fundaluri albe și borduri gri clare) --- */
+body:not(.dark-theme) .section-box-admin,
+body:not(.dark-theme) .io-card,
+body:not(.dark-theme) .section-box {
+    background-color: #ffffff;
+    border: 1px solid #cccccc;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+    margin-bottom: 20px;
+    padding: 20px;
+    border-radius: 6px;
+}
+
+body:not(.dark-theme) tbody tr {
+    background-color: #ffffff;
+}
+body:not(.dark-theme) th, body:not(.dark-theme) td {
+    border-color: #cccccc;
+}
+
+/* --- DARK MODE SPECIFIC (Fundaluri închise și borduri fine) --- */
+body.dark-theme .section-box-admin,
+body.dark-theme .io-card,
+body.dark-theme .section-box {
+    background-color: #1a1a1a;
+    border: 1px solid #333333;
+    margin-bottom: 20px;
+    padding: 20px;
+    border-radius: 6px;
+}
+
+body.dark-theme tbody tr {
+    background-color: #1a1a1a;
+}
+body.dark-theme th, body.dark-theme td {
+    border-color: #333333;
+}
+body.dark-theme thead th {
+    border-color: #c5a059;
+    color: #c5a059;
+    }
+    /* Corecție culori pentru bara de căutare nativă cu ID-ul original în ambele moduri */
+#search-actor {
+    background-color: #ffffff;
+    background: #ffffff;
+    color: #333333;
+}
+
+body.dark-theme #search-actor {
+    background-color: #242424;
+    background: #242424;
+    color: #ffffff;
+    border: 1px solid #c5a059;
+}
 }
